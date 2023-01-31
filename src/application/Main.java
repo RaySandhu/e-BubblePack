@@ -5,6 +5,8 @@ import javafx.stage.Stage;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 
+import java.util.Scanner;
+
 
 public class Main extends Application {
 	@Override
@@ -21,6 +23,18 @@ public class Main extends Application {
 	}
 	
 	public static void main(String[] args) {
-		System.out.println("The project is e-BubblePack - test commit");
+		
+		Scanner input = new Scanner(System.in);
+		
+		System.out.println("""
+				
+				Welcome to the e-BubblePack! Please select on of the following options:
+					1. Update current medication
+					2. Manage today's medications
+					3. Display medications for another day
+					4. All missed medications
+					5. All medications (alphabetical)
+				
+				""");
 	}
 }
