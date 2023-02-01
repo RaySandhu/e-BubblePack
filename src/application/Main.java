@@ -1,12 +1,14 @@
 package application;
 	
+import java.text.SimpleDateFormat;
+import java.time.LocalTime;
+import java.util.Date;
+import java.util.Locale;
+
 import javafx.application.Application;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
-
-import java.util.Scanner;
-
 
 public class Main extends Application {
 	@Override
@@ -23,18 +25,8 @@ public class Main extends Application {
 	}
 	
 	public static void main(String[] args) {
-		
-		Scanner input = new Scanner(System.in);
-		
-		System.out.println("""
-				
-				Welcome to the e-BubblePack! Please select on of the following options:
-					1. Update current medication
-					2. Manage today's medications
-					3. Display medications for another day
-					4. All missed medications
-					5. All medications (alphabetical)
-				
-				""");
+		// time based functions to update status of medications will be necessary
+			// reset of all medication statuses on Sunday at midnight
+			// regular and manual checks for missed doses
 	}
 }
