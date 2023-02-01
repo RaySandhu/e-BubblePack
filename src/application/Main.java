@@ -1,10 +1,14 @@
 package application;
 	
+import java.text.SimpleDateFormat;
+import java.time.LocalTime;
+import java.util.Date;
+import java.util.Locale;
+
 import javafx.application.Application;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
-
 
 public class Main extends Application {
 	@Override
@@ -21,6 +25,8 @@ public class Main extends Application {
 	}
 	
 	public static void main(String[] args) {
-		System.out.println("The project is e-BubblePack - test commit");
+		// time based functions to update status of medications will be necessary
+			// reset of all medication statuses on Sunday at midnight
+			// regular and manual checks for missed doses
 	}
 }
