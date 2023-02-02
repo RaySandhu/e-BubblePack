@@ -14,6 +14,8 @@ public class Schedule {
 	private int today = date.getDayOfWeek().getValue();
 	SimpleDateFormat simpleDateFormatArrivals = new SimpleDateFormat("HH:mm", Locale.CANADA); //attemtping to standardize current time to 24hr clock
 	
+												//localTime.parse can be used.
+	
 	private int[] daysDue; // days of the week indexed from 0-6, -1 representing days medication is not due
 	private LocalTime[] timesDue; //will likely convert to 24hr time before developing further
 	
