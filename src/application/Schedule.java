@@ -9,6 +9,7 @@ public class Schedule {
 	private LocalDate currentDate = LocalDate.now();
 	private LocalTime currentTime = LocalTime.now();
 	private int today = currentDate.getDayOfWeek().getValue();	
+												//localTime.parse can be used.
 	private int[] daysDue; // days of the week indexed from 0-6, -1 representing days medication is not due
 	private ArrayList<Integer> timesDue; //will likely convert to 24hr time before developing further
 
