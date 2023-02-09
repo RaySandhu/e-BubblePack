@@ -5,7 +5,7 @@ public class Medication {
 	
 	private String tradeName;
 	private int dosage;	
-	private Schedule schedule;  //!!!
+	private Schedule schedule; 
 	private Boolean isMissed;
 	private Boolean isAdministered;
 
@@ -49,7 +49,7 @@ public class Medication {
 		}
 	}
 	
-	public void missedDose() {
+	public void checkMissedMed() {
 		// if current day = day due, check time
 			//wif current time after time due, isMissed = true
 		// check if current day is greater than previous days and if isAdministered = false, isMissed = true
