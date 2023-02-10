@@ -1,3 +1,10 @@
+
+package application;
+
+import java.time.*;
+import java.time.format.*;
+import java.util.*;
+
 public static String convertToTime(int digits) {
     if (digits < 0 || digits > 2400) {
         return "Invalid input";
