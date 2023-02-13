@@ -1,11 +1,8 @@
-
 package application;
-
-import java.time.*;
-import java.time.format.*;
 import java.util.*;
 
 public static String convertToTime(int digits, boolean showLocalTime) {
+    // This can either take 4 digits as input and convert it into time or show local time.
     if (digits < 0 || digits > 2400) {
         return "Invalid input";
     }
