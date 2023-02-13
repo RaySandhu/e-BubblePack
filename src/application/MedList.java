@@ -2,9 +2,7 @@ package application;
 import java.util.*;
 
 public class MedList {
-	// potential source of truth for complete list of medications.
-		//currently working as an array to store all relevant information, refreshes every time program is run
-		// !!! need to build csv read/write functionality for persistence
+	// !!! need to build csv read/write functionality for persistence
 	private static ArrayList<Medication> medications = new ArrayList<Medication>();
 	private static Scanner medUpdate = new Scanner(System.in);
 
@@ -32,6 +30,7 @@ public class MedList {
 
 	// Update
 
+	// should just take all parameters for the step in the display first and pass them in one go instead of function calling for info
 	public static void editMedication(String medNameToEdit) {
 		int indexToEdit = -1;
 		for (Medication i : medications) {
@@ -59,12 +58,12 @@ public class MedList {
 					medToEdit.editDosage(medUpdate.nextInt());
 				case 3:
 					System.out.println("""
-						Currently medications can only have a consistent schedule across their daily schedules
+						Currently medications can only have a consistent timely schedule across their daily schedules
 						For example, 
-						Medication A that is due 3 times a day on Monday and 2 times a day on Tuesday would need to be entered  separately for each schedule.
+						Medication A that is due 3 times a day on Monday and 2 times a day on Tuesday would need to be entered separately for each schedule.
 
 						Please enter the new daily schedule for %s with Sunday as 0 and Saturday as 6.
-						Example: A Monday-Wednesday-Friday schedule would be input as 135
+						Example: A Monday-Wednesday-Friday schedule would be input as 024
 
 							""");
 					String[] dailySchedule = medUpdate.nextLine().split("");
@@ -80,7 +79,7 @@ public class MedList {
 							""");
 					String[] timelySchedule = medUpdate.nextLine().split(",");
 
-					medToEdit.editSchedule(dailySchedule, timelySchedule); //function to build !!!
+					medToEdit.editSchedule(dailySchedule, timelySchedule); 
 			}
 		} else {
 			System.out.println("Medication not found");

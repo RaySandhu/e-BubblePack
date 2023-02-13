@@ -2,7 +2,6 @@ package application;
 
 public class Medication {
 
-	
 	private String tradeName;
 	private int dosage;	
 	private Schedule schedule; 
@@ -23,10 +22,12 @@ public class Medication {
 		return tradeName;
 	}
 
-	public void getAllScheduleInformation() {
-		System.out.printf("The schedule information for ", tradeName);
-		schedule.parseToStringDailySchedule();
-		schedule.parseToStringTimelySchedule();
+	public String getAllScheduleInformation() {
+		return schedule.parseToStringDailySchedule() + "\n" + schedule.parseToStringTimelySchedule();
+	}
+
+	public Schedule getSchedule() {
+		return schedule;
 	}
 	
 	//Update
@@ -43,10 +44,8 @@ public class Medication {
 		schedule.setTimesDue(timeSchedule);
 	}
 	
-	public void tookMedication() {
-		if(!this.isAdministered) {
-			this.isAdministered = true;
-		}
+	public void toggleMedicationAdministered() {
+		this.isAdministered = !this.isAdministered;
 	}
 	
 	public void checkMissedMed() {

@@ -9,8 +9,8 @@ public class Schedule {
 	private LocalDate currentDate = LocalDate.now();
 	private LocalTime currentTime = LocalTime.now();
 	private int today = currentDate.getDayOfWeek().getValue();	
-	private int[] daysDue; // days of the week indexed from 0-6, -1 representing days medication is not due
-	private ArrayList<Integer> timesDue; //will likely convert to 24hr time before developing further
+	private ArrayList<Integer> daysDue; 
+	private ArrayList<Integer> timesDue; 
 
 	// constructor
 	public Schedule(String[] dailySchedule, String[] timelySchedule) {
@@ -18,38 +18,47 @@ public class Schedule {
 		timesDue = setTimesDue(timelySchedule);
 	}
 	
+	//read
+
+	public static ArrayList<ArrayList<Integer>> getScheduleData(Schedule medSchedule) {
+		ArrayList<ArrayList<Integer>> scheduleData = new ArrayList<>();
+		scheduleData.add(medSchedule.daysDue);
+		scheduleData.add(medSchedule.timesDue);
+
+		return scheduleData;
+	}
+
 	public ArrayList<Integer> setTimesDue(String[] newTimes) {
 		ArrayList<Integer> schedulePerDay = new ArrayList<Integer>();
 		for(String i : newTimes) {
 			schedulePerDay.add(Integer.parseInt(i));
-			System.out.println(Integer.parseInt(i));
 		}
 		return schedulePerDay;
 	}
 
-	public int[] setDaysDue(String[] newDays) {
+	public ArrayList<Integer> setDaysDue(String[] newDays) {
 		
-		int[] startingDailySchedule = {-1,-1,-1,-1,-1,-1,-1}; //works backward from medication not being due any day		
-		for(int i=0; i< newDays.length; i++) {
-			
-			int numericalDayOfWeek = Integer.parseInt(newDays[i]);
-			startingDailySchedule[numericalDayOfWeek] = numericalDayOfWeek;
-		}
-		daysDue = startingDailySchedule;
+		ArrayList<Integer> startingDailySchedule = new ArrayList<>(); //works backward from medication not being due any day	
+		for(int i=0; i<7; i++) {
+			startingDailySchedule.add(-1);
+		}	
 
+		for(int i=0; i< newDays.length; i++) {
+			int numericalDayOfWeek = Integer.parseInt(newDays[i]);
+			startingDailySchedule.set(numericalDayOfWeek, numericalDayOfWeek);
+		}
 		return startingDailySchedule;
 	}
-
-	//utility methods - part of the data display part of the project
 	
-	public ArrayList<String> parseToStringDailySchedule() {
-		ArrayList<String> weeklyScheduleinWords = new ArrayList<String>();
+	public String parseToStringDailySchedule() {
+		String weeklyScheduleinWords = "";
 		for(int i : daysDue) {
 			if(i != -1) {
-				weeklyScheduleinWords.add(DayOfWeek.of( i+1 ).getDisplayName(TextStyle.FULL, Locale.CANADA));
+				weeklyScheduleinWords += (DayOfWeek.of( i+1 ).getDisplayName(TextStyle.FULL, Locale.CANADA));
+				weeklyScheduleinWords += ", ";
 			}
 		}
-		return weeklyScheduleinWords;
+		return weeklyScheduleinWords.substring(0, weeklyScheduleinWords.length()-2);
 	}
 
 	public String parseToStringTimelySchedule() {
@@ -60,19 +69,13 @@ public class Schedule {
 				timelyScheduleinString += ("0" + timeSlot + ", ");	
 			} else timelyScheduleinString += (timeSlot + ", ");
 		}
-		return timelyScheduleinString;
+		return timelyScheduleinString.substring(0, timelyScheduleinString.length()-2);
 	}
 	
 	public int getTodaysDayAsNum() {
-	//		cycles through each week with int values per day - 0-6
 		if(today == 7) {
 			return 0;
 		} else return today;
-	}
-	
-	//getter for usable data
-	public int[] getDaysDue() {
-		return daysDue;
 	}
 }
 
