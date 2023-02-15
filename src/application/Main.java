@@ -26,6 +26,7 @@ public class Main {
 	}
 	
 	public static void ShowLocalTime(String[] args) {
+		// This fuction shows local time as HH:MM
         	Calendar calendar = Calendar.getInstance();
 	        int hours = calendar.get(Calendar.HOUR_OF_DAY);
         	int minutes = calendar.get(Calendar.MINUTE);
