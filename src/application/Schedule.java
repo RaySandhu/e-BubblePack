@@ -75,5 +75,15 @@ public class Schedule {
 	public int[] getDaysDue() {
 		return daysDue;
 	}
+	
+	public static String convertToTime(int digits, boolean showLocalTime) {
+		// This function can take 4 digits as input and convert it into display output for time.
+		if (digits < 0 || digits > 2400) {
+			return "Invalid input";
+		}
+		int hours = digits / 100;
+		int minutes = digits % 100;
+		return String.format("%02d:%02d", hours, minutes);
+	}
 }
 
