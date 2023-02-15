@@ -24,4 +24,11 @@ public class Main {
 			// reset of all medication statuses on Sunday at midnight
 			// regular and manual checks for missed doses
 	}
+	public static void main(String[] args) {
+        	Calendar calendar = Calendar.getInstance();
+	        int hours = calendar.get(Calendar.HOUR_OF_DAY);
+        	int minutes = calendar.get(Calendar.MINUTE);
+	        int currentTime = hours * 100 + minutes;
+        	System.out.println("Current time in integer format: " + currentTime);    
+	}
 }
