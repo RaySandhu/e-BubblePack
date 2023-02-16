@@ -104,14 +104,25 @@ public class Schedule {
 		return timeAsInt;
 	}
 
-	public static String getCurrentTimeAsString(int timeAsInt) {
+	public static String getTimeAsString(int timeAsInt) {
 
+		String hourDisplay;
+		String minutesDisplay;
 		if (timeAsInt < 0 || timeAsInt > 2400) {
 			return "Invalid input";
 		}
 		int hours = timeAsInt / 100;
 		int minutes = timeAsInt % 100;
-		return ("" + hours + ":" + minutes);
+		if (hours < 10) {
+			hourDisplay = "0" + hours;
+		} else hourDisplay = "" + hours;
+
+		if (minutes < 10) {
+			minutesDisplay = "0" + minutes;
+		} else minutesDisplay = "" + minutes;
+		
+
+		return (hourDisplay + ":" + minutesDisplay);
 	}
 
 }

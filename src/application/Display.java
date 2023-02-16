@@ -52,6 +52,10 @@ public class Display {
 
         while (!validInput) {
             try {    
+                System.out.println("""
+
+                        Your selection:
+                        """);
                 userMainMenuInput = mainInputScanner.nextInt();
                 if (userMainMenuInput >= 0 && userMainMenuInput < 7) {
                     validInput = true;
@@ -85,7 +89,11 @@ public class Display {
         System.out.println(numberOfMedsThisDay+1 + ". Return to the main menu");
 
         while (!validInput) {
-            try {    
+            try {
+                System.out.println("""
+
+                        Your selection:
+                        """);
                 userMainMenuInput = mainInputScanner.nextInt();
                 if (userMainMenuInput >= 1 && userMainMenuInput <= numberOfMedsThisDay) {
                     validInput = true;
@@ -104,20 +112,40 @@ public class Display {
     }
 
     public static void medicationInformationDisplay(Medication medToDisplay) {
+        medToDisplay.updateMissedMeds();
+
         System.out.printf("""
            
         Here is all the information about %s:
 
         Dosage to be taken: %s
+        %s
 
-        """, medToDisplay.getTradeName(), medToDisplay.getDosage());
-        medToDisplay.updateMissedMeds();
+        Your previous doses for today are as follows:
+            Scheduled Time          Taken?
+        """, medToDisplay.getTradeName(), medToDisplay.getDosage(), medToDisplay.nextDose());
 
+        ArrayList<Integer> timesDue = medToDisplay.getSchedule().get(1);
+		for(int i=0; i<timesDue.size(); i++) {
+            Boolean adminStatus = medToDisplay.getAdministrationRecord().get(i).get(0);
+            Boolean missedStatus = medToDisplay.getAdministrationRecord().get(i).get(1);
+            String displayStatus;
+
+            if(adminStatus) {
+                displayStatus = "Taken";
+            } else if (missedStatus) {
+                displayStatus = "Missed";
+            } else displayStatus = "Something went wrong";
+
+			if(Schedule.getCurrentTimeAsInt() > timesDue.get(i)) {	
+				System.out.printf("""
+                        %d.        %s              %s
+                        """, i+1, Schedule.getTimeAsString(timesDue.get(i)), displayStatus);
+			}
+            // System.out.println("Full schedule verification");
+            // System.out.println(Schedule.getTimeAsString(timesDue.get(i)));
+
+		}
         //write out dosage, schedule, taken/missed dose, and then manipulation options.
-    }
-
-    public static String nextDose() {
-
-        return "";
     }
 }

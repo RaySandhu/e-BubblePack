@@ -26,12 +26,12 @@ public class Medication {
 		return "" + dosage + dosageUnit;
 	}
 
-	public String getAllScheduleInformation() {
-		return schedule.parseToStringDailySchedule() + "\n" + schedule.parseToStringTimelySchedule();
-	}
-
 	public ArrayList<ArrayList<Integer>> getSchedule() {
 		return schedule.getScheduleData();
+	}
+
+	public ArrayList<ArrayList<Boolean>> getAdministrationRecord() {
+		return schedule.getAdministrationStatus();
 	}
 	
 	//Update
@@ -49,16 +49,27 @@ public class Medication {
 	}
 	
 	public void toggleMedicationAdministered() {
-		
+		// !!!
 	}
 	
 	public void updateMissedMeds() {
 		ArrayList<Integer> timesDue = schedule.getScheduleData().get(1);
 		for(int i=0; i<timesDue.size(); i++) {
-			if(Schedule.getCurrentTimeAsInt() > timesDue.get(i)) {
-				System.out.println(schedule.getAdministrationStatus().get(i).get(1));
+			if(Schedule.getCurrentTimeAsInt() > timesDue.get(i) && !schedule.getAdministrationStatus().get(i).get(0)) {	
+				//checks that the med has not been administered and the current time is later than the dose time.
+				schedule.getAdministrationStatus().get(i).set(1, true);
 			}
 		}
 	}
+
+	public String nextDose() {
+		ArrayList<Integer> timesDue = schedule.getScheduleData().get(1);
+		for(int i : timesDue) {
+			if(Schedule.getCurrentTimeAsInt() < i) {	
+				return "The next dose is due at " + Schedule.getTimeAsString(i);
+			}
+		}
+		return "The next dose is not due today!";
+    }
 	
 }
