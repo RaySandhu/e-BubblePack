@@ -6,22 +6,24 @@ public class Medication {
 
 	private String tradeName;
 	private int dosage;	
+	private String dosageUnit;
 	private Schedule schedule; 
-	private Boolean isMissed;
-	private Boolean isAdministered;
 
 	//constructor
-	public Medication(String name, int dose, String[] daily, String[] timely) {
+	public Medication(String name, int dose, String dosageUnit, String[] daily, String[] timely) {
 		this.tradeName = name;
 		this.dosage = dose;
+		this.dosageUnit = dosageUnit;
 		this.schedule = new Schedule(daily, timely);
-		this.isMissed = false;
-		this.isAdministered = false;
 	  }
 	
 	// Read
 	public String getTradeName() {
 		return tradeName;
+	}
+
+	public String getDosage() {
+		return "" + dosage + dosageUnit;
 	}
 
 	public String getAllScheduleInformation() {
@@ -47,14 +49,16 @@ public class Medication {
 	}
 	
 	public void toggleMedicationAdministered() {
-		this.isAdministered = !this.isAdministered;
+		
 	}
 	
-	public void checkMissedMed() {
-		// if current day = day due, check time
-			//wif current time after time due, isMissed = true
-		// check if current day is greater than previous days and if isAdministered = false, isMissed = true
-		//else dose is not yet missed
+	public void updateMissedMeds() {
+		ArrayList<Integer> timesDue = schedule.getScheduleData().get(1);
+		for(int i=0; i<timesDue.size(); i++) {
+			if(Schedule.getCurrentTimeAsInt() > timesDue.get(i)) {
+				System.out.println(schedule.getAdministrationStatus().get(i).get(1));
+			}
+		}
 	}
 	
 }

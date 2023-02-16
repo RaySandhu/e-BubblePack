@@ -11,10 +11,10 @@ public class MedList {
 	}
 
 	// Create
-	public static void addMedications(String nameOfMed, int dosageOfMed, String dailySchedule, String timelySchedule) {
+	public static void addMedications(String nameOfMed, int dosageOfMed, String dosageUnit, String dailySchedule, String timelySchedule) {
 		String[] usableDailySchedule = dailySchedule.split("");
 		String[] usableTimelySchedule = timelySchedule.split(",");
-		Medication newMed = new Medication(nameOfMed, dosageOfMed, usableDailySchedule, usableTimelySchedule);
+		Medication newMed = new Medication(nameOfMed, dosageOfMed, dosageUnit , usableDailySchedule, usableTimelySchedule);
 		medications.add(newMed);
 	}
 

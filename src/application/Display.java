@@ -5,17 +5,6 @@ import java.time.format.TextStyle;
 import java.util.*;
 
 public class Display {
-    //takes in parameters and data from Medlist and will be running until executed in main
-
-    		// schedule retrieval code
-
-		// for(Medication i: MedList.getMedications()) {
-		// 	ArrayList<Integer> timeData = i.getSchedule().get(1);
-		// 	for(Integer j: timeData) {
-		// 		System.out.println(j);
-		// 	}
-		// 	System.out.println("--------End of time data for " + i.getTradeName());
-		// }
 
     public static Scanner mainInputScanner = new Scanner(System.in);
 
@@ -46,7 +35,7 @@ public class Display {
         System.out.printf("""
             Welcome to the e-BubblePack, your one stop medication tracker!
 
-            The current time is %d
+            The current time is %d %d
 
             Select a option to view medication for the day:
 
@@ -59,14 +48,13 @@ public class Display {
             Press '6' to view Saturday medications
             Press '7' to exit the application 
 
-                """, 10); // !!! put in the correct time variable
+                """, 10, Schedule.getTodaysDayAsNum()); // !!! put in the correct time variable
 
         while (!validInput) {
             try {    
                 userMainMenuInput = mainInputScanner.nextInt();
                 if (userMainMenuInput >= 0 && userMainMenuInput < 7) {
                     validInput = true;
-                    System.out.println("This is working");
                     medicationDisplayScene(userMainMenuInput, dailyMedicationList(userMainMenuInput));
                 } else if(userMainMenuInput == 7) {
                     System.out.println("Closing Application");
@@ -82,8 +70,54 @@ public class Display {
     }
 
     public static void medicationDisplayScene(Integer selectedDay, ArrayList<Medication> medicationsForSelectedDay) {
+
+        Integer medIndex = 1;
+        Boolean validInput = false;
+        Integer userMainMenuInput; 
+        Integer numberOfMedsThisDay = medicationsForSelectedDay.size();
+
+
+        System.out.println("These are the medications that are due today: ");
         for(Medication i : medicationsForSelectedDay) {
-            System.out.println(i.getTradeName());
+            System.out.println(medIndex + ". " +i.getTradeName());
+            medIndex++;
         }
+        System.out.println(numberOfMedsThisDay+1 + ". Return to the main menu");
+
+        while (!validInput) {
+            try {    
+                userMainMenuInput = mainInputScanner.nextInt();
+                if (userMainMenuInput >= 1 && userMainMenuInput <= numberOfMedsThisDay) {
+                    validInput = true;
+                    medicationInformationDisplay(medicationsForSelectedDay.get(userMainMenuInput-1));
+                } else if(userMainMenuInput == numberOfMedsThisDay+1) {
+                    introScene();
+                    return;
+                } else {
+                    System.out.println("Invalid input. Please try again.");
+                }
+            } catch(Exception e) {
+                System.out.println("Invalid input. Please enter a valid integer.");
+                mainInputScanner.nextLine(); 
+            }
+        }
+    }
+
+    public static void medicationInformationDisplay(Medication medToDisplay) {
+        System.out.printf("""
+           
+        Here is all the information about %s:
+
+        Dosage to be taken: %s
+
+        """, medToDisplay.getTradeName(), medToDisplay.getDosage());
+        medToDisplay.updateMissedMeds();
+
+        //write out dosage, schedule, taken/missed dose, and then manipulation options.
+    }
+
+    public static String nextDose() {
+
+        return "";
     }
 }
