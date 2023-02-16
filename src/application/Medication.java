@@ -1,5 +1,7 @@
 package application;
 
+import java.util.ArrayList;
+
 public class Medication {
 
 	private String tradeName;
@@ -26,8 +28,8 @@ public class Medication {
 		return schedule.parseToStringDailySchedule() + "\n" + schedule.parseToStringTimelySchedule();
 	}
 
-	public Schedule getSchedule() {
-		return schedule;
+	public ArrayList<ArrayList<Integer>> getSchedule() {
+		return schedule.getScheduleData();
 	}
 	
 	//Update

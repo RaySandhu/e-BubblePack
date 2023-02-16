@@ -6,9 +6,9 @@ import java.util.*;
 
 public class Schedule {
 	
-	private LocalDate currentDate = LocalDate.now();
-	private LocalTime currentTime = LocalTime.now();
-	private int today = currentDate.getDayOfWeek().getValue();	
+	private static LocalDate currentDate = LocalDate.now();
+	private static LocalTime currentTime = LocalTime.now();
+	private static int today = currentDate.getDayOfWeek().getValue();	
 	private ArrayList<Integer> daysDue; 
 	private ArrayList<Integer> timesDue; 
 
@@ -20,10 +20,10 @@ public class Schedule {
 	
 	//read
 
-	public static ArrayList<ArrayList<Integer>> getScheduleData(Schedule medSchedule) {
+	public ArrayList<ArrayList<Integer>> getScheduleData() {
 		ArrayList<ArrayList<Integer>> scheduleData = new ArrayList<>();
-		scheduleData.add(medSchedule.daysDue);
-		scheduleData.add(medSchedule.timesDue);
+		scheduleData.add(this.daysDue);
+		scheduleData.add(this.timesDue);
 
 		return scheduleData;
 	}
