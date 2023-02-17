@@ -1,21 +1,20 @@
 package application;
 
+import java.util.ArrayList;
+
 public class Medication {
 
-	
 	private String tradeName;
 	private int dosage;	
-	private Schedule schedule;  //!!!
-	private Boolean isMissed;
-	private Boolean isAdministered;
+	private String dosageUnit;
+	private Schedule schedule; 
 
 	//constructor
-	public Medication(String name, int dose, String[] daily, String[] timely) {
+	public Medication(String name, int dose, String dosageUnit, String[] daily, String[] timely) {
 		this.tradeName = name;
 		this.dosage = dose;
+		this.dosageUnit = dosageUnit;
 		this.schedule = new Schedule(daily, timely);
-		this.isMissed = false;
-		this.isAdministered = false;
 	  }
 	
 	// Read
@@ -23,37 +22,58 @@ public class Medication {
 		return tradeName;
 	}
 
-	public void getAllScheduleInformation() {
-		System.out.printf("The schedule information for ", tradeName);
-		schedule.parseToStringDailySchedule();
-		schedule.parseToStringTimelySchedule();
+	public String getDosage() {
+		return "" + dosage + dosageUnit;
+	}
+
+	public ArrayList<ArrayList<Integer>> getSchedule() {
+		return schedule.getScheduleData();
+	}
+
+	public ArrayList<ArrayList<Boolean>> getAdministrationRecord() {
+		return schedule.getAdministrationStatus();
 	}
 	
 	//Update
-	public void editTradeName(String newTradeName) {
-		tradeName = newTradeName;
+	public void editMedicationName(String newName) {
+		tradeName = newName;
 	}
 
-	public void editDosage(int newDosage) {
+	public void editDosage(int newDosage, String newDosageUnit) {
 		dosage = newDosage;
+		dosageUnit = newDosageUnit;
 	}
 
-	public void editSchedule(String[] dailySchedule, String[] timeSchedule) {
-		schedule.setDaysDue(dailySchedule);
-		schedule.setTimesDue(timeSchedule);
+	public void editWeeklySchedule(String[] weeklySchedule) {
+		schedule.editWeeklySchedule(weeklySchedule);
+	}
+
+	public void editDailySchedule(String[] dailySchedule) {
+		schedule.editDailySchedule(dailySchedule);
 	}
 	
-	public void tookMedication() {
-		if(!this.isAdministered) {
-			this.isAdministered = true;
+	public void toggleMedicationAdministered(Integer doseToToggle) {
+		schedule.toggleAdministrationStatus(doseToToggle);
+	}
+	
+	public void updateMissedMeds() {
+		ArrayList<Integer> timesDue = schedule.getScheduleData().get(1);
+		for(int i=0; i<timesDue.size(); i++) {
+			if(Schedule.getCurrentTimeAsInt() > timesDue.get(i)) {	
+				//checks that the med has not been administered and the current time is later than the dose time.
+				schedule.getAdministrationStatus().get(i).set(1, true);
+			} 
 		}
 	}
-	
-	public void missedDose() {
-		// if current day = day due, check time
-			//wif current time after time due, isMissed = true
-		// check if current day is greater than previous days and if isAdministered = false, isMissed = true
-		//else dose is not yet missed
-	}
+
+	public String nextDose() {
+		ArrayList<Integer> timesDue = schedule.getScheduleData().get(1);
+		for(int i : timesDue) {
+			if(Schedule.getCurrentTimeAsInt() < i) {	
+				return "The next dose is due at " + Schedule.getTimeAsString(i);
+			}
+		}
+		return "The next dose is not due today!";
+    }
 	
 }
