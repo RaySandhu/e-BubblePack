@@ -40,6 +40,7 @@ public class Schedule {
 		for(String i : newTimes) {
 			schedulePerDay.add(Integer.parseInt(i));
 		}
+		Collections.sort(schedulePerDay);
 		return schedulePerDay;
 	}
 
@@ -54,6 +55,7 @@ public class Schedule {
 			int numericalDayOfWeek = Integer.parseInt(newDays[i]);
 			startingDailySchedule.set(numericalDayOfWeek, numericalDayOfWeek);
 		}
+		Collections.sort(startingDailySchedule);
 		return startingDailySchedule;
 	}
 
@@ -65,6 +67,15 @@ public class Schedule {
 			administrationStatusPerDose.add(defaultStatus);
 		}
 		return administrationStatusPerDose;
+	}
+
+	public void editDailySchedule(String[] dailySchedule) {
+		timesDue = setTimesDue(dailySchedule);
+		administrationStatusPerDose = setAdministrationStatus();
+	}
+
+	public void editWeeklySchedule(String[] weeklySchedule) {
+		daysDue = setDaysDue(weeklySchedule);
 	}
 	
 	//time based functions

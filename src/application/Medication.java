@@ -44,9 +44,12 @@ public class Medication {
 		dosageUnit = newDosageUnit;
 	}
 
-	public void editSchedule(String[] dailySchedule, String[] timeSchedule) {
-		schedule.setDaysDue(dailySchedule);
-		schedule.setTimesDue(timeSchedule);
+	public void editWeeklySchedule(String[] weeklySchedule) {
+		schedule.editWeeklySchedule(weeklySchedule);
+	}
+
+	public void editDailySchedule(String[] dailySchedule) {
+		schedule.editDailySchedule(dailySchedule);
 	}
 	
 	public void toggleMedicationAdministered() {

@@ -69,7 +69,7 @@ public class Display {
                     System.out.println("Invalid input. Please try again.");
                 }
             } catch(Exception e) {
-                System.out.println("Invalid input. Please enter a valid integer.");
+                System.out.println("Invalid input. Please enter a valid integer. --main menu");
                 mainInputScanner.nextLine(); 
             }
         }
@@ -110,7 +110,7 @@ public class Display {
                     System.out.println("Invalid input. Please try again.");
                 }
             } catch(Exception e) {
-                System.out.println("Invalid input. Please enter a valid integer.");
+                System.out.println("Invalid input. Please enter a valid integer. --med display scene error");
                 mainInputScanner.nextLine(); 
             }
         }
@@ -120,7 +120,6 @@ public class Display {
         System.out.println("Medication Information Display triggered");
 
         Boolean validInput = false;
-        Integer userMainMenuInput; 
         medToDisplay.updateMissedMeds();
 
         System.out.printf("""
@@ -134,8 +133,10 @@ public class Display {
             Scheduled Time          Taken?
         """, medToDisplay.getTradeName(), medToDisplay.getDosage(), medToDisplay.nextDose());
 
-        ArrayList<Integer> timesDue = medToDisplay.getSchedule().get(1);
-		for(int i=0; i<timesDue.size(); i++) {
+        ArrayList<Integer> timesDue = new ArrayList<>();
+        timesDue = medToDisplay.getSchedule().get(1);
+		
+        for(int i=0; i<timesDue.size(); i++) {
             Boolean adminStatus = medToDisplay.getAdministrationRecord().get(i).get(0);
             Boolean missedStatus = medToDisplay.getAdministrationRecord().get(i).get(1);
             String displayStatus;
@@ -155,29 +156,25 @@ public class Display {
                         %d.        %s              Not due yet
                         """, i+1, Schedule.getTimeAsString(timesDue.get(i)));
             }
-
 		}
-        System.out.printf("""
-            Select one of the following actions:
-
-            Enter '1' to edit the medication name
-            Enter '2' to edit the medication dosage
-            Enter '3' to edit which days of the week this medication is due
-            Enter '4' to edit the times this medication is due each day
-            Enter '5' to return to %s's schedule
-            Enter '6' to return to the main menu
-                """, daySelectedString(selectedDay));
-
+        
         while (!validInput) {
             try {
-                System.out.println("""
+                Integer userMainMenuInput; 
+                System.out.printf("""
+                    Select one of the following actions:
+        
+                    Enter '1' to edit the medication name
+                    Enter '2' to edit the medication dosage
+                    Enter '3' to edit which days of the week this medication is due
+                    Enter '4' to edit the times this medication is due each day
+                    Enter '5' to return to %s's schedule
+                    Enter '6' to return to the main menu
+                        """, daySelectedString(selectedDay));
 
-                        Your selection:
-                        """);
                 userMainMenuInput = mainInputScanner.nextInt();
                 mainInputScanner.nextLine(); // consume next line
                 if (userMainMenuInput >= 1 && userMainMenuInput <= 4) {
-                    validInput = true;
                     //handle options !!!
                     switch(userMainMenuInput) {
                         case 1:
@@ -185,6 +182,7 @@ public class Display {
                             String newName = mainInputScanner.nextLine();
                             medToDisplay.editMedicationName(newName);
                             System.out.println("The medication name has been changed to " + medToDisplay.getTradeName());
+                            validInput = true;
                             medicationInformationDisplay(selectedDay, medToDisplay);
                             return;
                         case 2:
@@ -199,8 +197,9 @@ public class Display {
                                     System.out.println("Now enter the units in which you are measuring the dosage...");
                                     newDosageUnit = mainInputScanner.nextLine();
                                     validDosageInput = true;
+                                    validInput = true;
                                 } catch(Exception e) {
-                                    System.out.println("Invalid input. Please enter a valid integer.");
+                                    System.out.println("Invalid input. Please enter a valid integer. --new dosage error");
                                     mainInputScanner.nextLine(); 
                                 }
                             }
@@ -209,26 +208,75 @@ public class Display {
                             medicationInformationDisplay(selectedDay, medToDisplay);
                             return;
                         case 3:
-                            System.out.println("Currently a circular option");
-                            medicationInformationDisplay(selectedDay, medToDisplay);
+                            String[] newWeeklySchedule;
+                            Boolean validDayInput;
+                            validDayInput = false;
+
+                            System.out.println("With Sunday as 0 and Saturday as 6, enter the weekly schedule for this medication in ascending order...");
+                            newWeeklySchedule = mainInputScanner.nextLine().split("");
+
+                            while(!validDayInput){
+                                try {
+                                    for(String m : newWeeklySchedule){
+                                        Integer enteredDay = Integer.parseInt(m);
+                                        if(enteredDay > 6 || enteredDay < 0) {
+                                            throw new Exception("Please enter valid days of the week per the descriptions above");
+                                        }
+                                        validDayInput = true;
+                                    }
+                                } catch(Exception h) {
+                                    System.out.println(h.getMessage());
+                                }
+                            }
+                            System.out.printf("""
+
+                                    The weekly schedule has been updated, you will be returned to the schedule for %s...
+
+                                    """,daySelectedString(selectedDay));
+                            medToDisplay.editWeeklySchedule(newWeeklySchedule);
+                            validInput = true;
+                            medicationDisplayScene(selectedDay, dailyMedicationList(selectedDay));
                             return;
                         case 4:
-                            System.out.println("Currently a circular option");
-                                medicationInformationDisplay(selectedDay, medToDisplay);
-                                return;
+                            Boolean validTimeInput = false;
+                            while(!validTimeInput)
+                                try {
+                                    String stringTimeInput = "";
+                                    System.out.println("""
+                                        Please enter this medication's new daily schedule in 24hr format separated by commas (no spaces)...
+                                        Ex. 0800,1200,1600,0000 = 8am, noon, 4pm and midnight
+                                        """);
+                                    stringTimeInput = mainInputScanner.nextLine();
+                                    for(String k : stringTimeInput.split(",")) {
+                                        if(Integer.parseInt(k) < 0 || Integer.parseInt(k) >=2400) {
+                                            throw new Exception("Enter a valid input according to the instructions and example above");
+                                        }   
+                                    }
+                                    medToDisplay.editDailySchedule(stringTimeInput.split(","));
+                                    validInput = true;
+                                    medicationInformationDisplay(selectedDay, medToDisplay);
+                                    return;
+                                } catch(Exception f) {
+                                    System.out.println(f.getMessage());
+                                }
                     }
                 } else if (userMainMenuInput == 5) {
+                    validInput = true;
                     medicationDisplayScene(selectedDay, dailyMedicationList(selectedDay));
                     return;
                 } else if(userMainMenuInput == 6) {
+                    validInput = true;
                     introScene();
                     return;
                 } else {
                     System.out.println("Invalid input. Please try again.");
                 }
             } catch(Exception e) {
-                System.out.println("Invalid input. Please enter a valid integer.");
-                mainInputScanner.nextLine(); 
+                validInput =false;
+                System.out.println("""
+                    Invalid input.
+                        """);
+                System.out.println(e.getMessage());
             }
         }
     }
