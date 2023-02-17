@@ -4,13 +4,15 @@ import java.time.*;
 import java.util.*;
 
 public class Schedule {
-	
+
+
 	private static LocalDate currentDate = LocalDate.now();
 	private static LocalTime currentTime = LocalTime.now();
 	private static int today = currentDate.getDayOfWeek().getValue();	
 	private ArrayList<Integer> daysDue; 
 	private ArrayList<Integer> timesDue; 
 	private ArrayList<ArrayList<Boolean>> administrationStatusPerDose = new ArrayList<>();	// index 0 = administration status and 1 = missed status
+
 
 	// constructor
 	public Schedule(String[] dailySchedule, String[] timelySchedule) {
@@ -111,6 +113,21 @@ public class Schedule {
 		} else minutesDisplay = "" + minutes;
 		
 		return (hourDisplay + ":" + minutesDisplay);
+	}
+	
+	public static String convertToTime(int digits, boolean showLocalTime) {
+		/**
+		*Converts an input integer into a formatted time string.
+		*@param digits the integer to be converted into time. Must be between 0 and 2400 (inclusive).
+		*@param showLocalTime a boolean value indicating whether to display the local time or not.
+		*@return the formatted time string in the HH:mm format, or an error message if the input is invalid.
+		*/
+		if (digits < 0 || digits > 2400) {
+			return "Invalid input";
+		}
+		int hours = digits / 100;
+		int minutes = digits % 100;
+		return String.format("%02d:%02d", hours, minutes);
 	}
 }
 

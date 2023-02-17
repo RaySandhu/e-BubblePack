@@ -16,4 +16,16 @@ public class Main {
 
 		Display.introScene();
 	}
+	
+	public static void ShowLocalTime(String[] args) {
+		/**
+		*displays the current local time in an integer format
+		*@param args an array of command-line arguments that are not used by this function 
+		*/
+        	Calendar calendar = Calendar.getInstance();
+	        int hours = calendar.get(Calendar.HOUR_OF_DAY);
+        	int minutes = calendar.get(Calendar.MINUTE);
+	        int currentTime = hours * 100 + minutes;
+        	System.out.println("Current time in integer format: " + currentTime);    
+	}
 }
