@@ -98,7 +98,6 @@ public class Display {
                 if (userMainMenuInput >= 1 && userMainMenuInput <= numberOfMedsThisDay) {
                     validInput = true;
                     medicationInformationDisplay(selectedDay ,medicationsForSelectedDay.get(userMainMenuInput-1));
-                    // need empty return?
                 } else if(userMainMenuInput == numberOfMedsThisDay+1) {
                     introScene();
                     return;
@@ -145,12 +144,6 @@ public class Display {
 				System.out.printf("""
                         %d.        %s              %s
                         """, i+1, Schedule.getTimeAsString(timesDue.get(i)), displayStatus);
-			
-            // else {
-            //     System.out.printf("""
-            //             %d.        %s              Not due yet
-            //             """, i+1, Schedule.getTimeAsString(timesDue.get(i)));
-            // }
 		}
         
         while (!validInput) {
@@ -164,13 +157,14 @@ public class Display {
                     Enter '2' to edit the medication dosage
                     Enter '3' to edit which days of the week this medication is due
                     Enter '4' to edit the times this medication is due each day
-                    Enter '5' to return to %s's schedule
-                    Enter '6' to return to the main menu
+                    Enter '5' to delete this medication entirely from your scheduled medications
+                    Enter '6' to return to %s's schedule
+                    Enter '7' to return to the main menu
                         """, daySelectedString(selectedDay));
 
                 userMainMenuInput = mainInputScanner.nextInt();
                 mainInputScanner.nextLine(); // consume next line
-                if (userMainMenuInput >= 0 && userMainMenuInput <= 4) {
+                if (userMainMenuInput >= 0 && userMainMenuInput <= 5) {
                     switch(userMainMenuInput) {
                         case 0:
                             System.out.println("Enter the number of the medication you would like to toggle the 'taken' status for...");
@@ -274,12 +268,37 @@ public class Display {
                                 } catch(Exception f) {
                                     System.out.println(f.getMessage());
                                 }
+                        case 5:
+                            Boolean validConfirmationInput = false;
+                            String confirmationInput = "";
+                            while(!validConfirmationInput) {
+                                try {
+                                    System.out.println("Are you absolutely sure you would like to delete this medication? (Y/N)");
+                                    confirmationInput = mainInputScanner.nextLine().toLowerCase();
+                                    if (!confirmationInput.equals("Y".toLowerCase()) && !confirmationInput.equals("N".toLowerCase())) {
+                                        throw new Exception("Please select either Y to delete or N to return to medication information");
+                                    } else {
+                                        validConfirmationInput = true;
+                                    }
+                                } catch(Exception k) {
+                                    System.out.println(k.getMessage());
+                                }
+                            }
+                            validInput = true;
+                            if(confirmationInput.equals("Y".toLowerCase())) {
+                                MedList.deleteMedicationFromList(medToDisplay);
+                                medicationDisplayScene(selectedDay, dailyMedicationList(selectedDay));
+                            } else {
+                                System.out.println("Did not delete the medication");
+                                medicationInformationDisplay(selectedDay, medToDisplay);
+                            }
+                            return;
                     }
-                } else if (userMainMenuInput == 5) {
+                } else if (userMainMenuInput == 6) {
                     validInput = true;
                     medicationDisplayScene(selectedDay, dailyMedicationList(selectedDay));
                     return;
-                } else if(userMainMenuInput == 6) {
+                } else if(userMainMenuInput == 7) {
                     validInput = true;
                     introScene();
                     return;

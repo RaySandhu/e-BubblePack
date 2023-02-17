@@ -2,9 +2,7 @@ package application;
 import java.util.*;
 
 public class MedList {
-	// !!! need to build csv read/write functionality for persistence
 	private static ArrayList<Medication> medications = new ArrayList<Medication>();
-
 	
 	// Create
 	public static void addMedications(String nameOfMed, int dosageOfMed, String dosageUnit, String dailySchedule, String timelySchedule) {
@@ -27,4 +25,7 @@ public class MedList {
 	}
 
 	// Delete
+	public static void deleteMedicationFromList(Medication medToDelete) {
+		medications.remove(medToDelete);
+	}
 }
