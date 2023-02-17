@@ -26,7 +26,10 @@ public class Main {
 	}
 	
 	public static void ShowLocalTime(String[] args) {
-		// This fuction shows local time as HH:MM
+		/**
+		*displays the current local time in an integer format
+		*@param args an array of command-line arguments that are not used by this function 
+		*/
         	Calendar calendar = Calendar.getInstance();
 	        int hours = calendar.get(Calendar.HOUR_OF_DAY);
         	int minutes = calendar.get(Calendar.MINUTE);
