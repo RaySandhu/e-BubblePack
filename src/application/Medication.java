@@ -52,17 +52,17 @@ public class Medication {
 		schedule.editDailySchedule(dailySchedule);
 	}
 	
-	public void toggleMedicationAdministered() {
-		// !!!
+	public void toggleMedicationAdministered(Integer doseToToggle) {
+		schedule.toggleAdministrationStatus(doseToToggle);
 	}
 	
 	public void updateMissedMeds() {
 		ArrayList<Integer> timesDue = schedule.getScheduleData().get(1);
 		for(int i=0; i<timesDue.size(); i++) {
-			if(Schedule.getCurrentTimeAsInt() > timesDue.get(i) && !schedule.getAdministrationStatus().get(i).get(0)) {	
+			if(Schedule.getCurrentTimeAsInt() > timesDue.get(i)) {	
 				//checks that the med has not been administered and the current time is later than the dose time.
 				schedule.getAdministrationStatus().get(i).set(1, true);
-			}
+			} 
 		}
 	}
 

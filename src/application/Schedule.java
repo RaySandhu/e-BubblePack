@@ -16,7 +16,7 @@ public class Schedule {
 	public Schedule(String[] dailySchedule, String[] timelySchedule) {
 		daysDue = setDaysDue(dailySchedule);
 		timesDue = setTimesDue(timelySchedule);
-		administrationStatusPerDose = setAdministrationStatus();
+		administrationStatusPerDose = initAdministrationStatus();
 	}
 	
 	//read
@@ -40,7 +40,6 @@ public class Schedule {
 		for(String i : newTimes) {
 			schedulePerDay.add(Integer.parseInt(i));
 		}
-		Collections.sort(schedulePerDay);
 		return schedulePerDay;
 	}
 
@@ -55,23 +54,26 @@ public class Schedule {
 			int numericalDayOfWeek = Integer.parseInt(newDays[i]);
 			startingDailySchedule.set(numericalDayOfWeek, numericalDayOfWeek);
 		}
-		Collections.sort(startingDailySchedule);
 		return startingDailySchedule;
 	}
 
-	public ArrayList<ArrayList<Boolean>> setAdministrationStatus() {
-		ArrayList<Boolean> defaultStatus = new ArrayList<>();
-		defaultStatus.add(false);
-		defaultStatus.add(false);
+	public ArrayList<ArrayList<Boolean>> initAdministrationStatus() {
 		for (int i=0; i<timesDue.size(); i++) {
+			ArrayList<Boolean> defaultStatus = new ArrayList<>();
+			defaultStatus.add(false);
+			defaultStatus.add(false);
 			administrationStatusPerDose.add(defaultStatus);
 		}
 		return administrationStatusPerDose;
 	}
 
+	public void toggleAdministrationStatus(Integer doseToToggle) {
+		administrationStatusPerDose.get(doseToToggle).set(0,!administrationStatusPerDose.get(doseToToggle).get(0));
+	}
+
 	public void editDailySchedule(String[] dailySchedule) {
 		timesDue = setTimesDue(dailySchedule);
-		administrationStatusPerDose = setAdministrationStatus();
+		administrationStatusPerDose = initAdministrationStatus();
 	}
 
 	public void editWeeklySchedule(String[] weeklySchedule) {

@@ -9,6 +9,7 @@ public class Display {
     public static Scanner mainInputScanner = new Scanner(System.in);
 
     private static String daySelectedString(Integer daySelectedInt) {
+        if (daySelectedInt == 0) daySelectedInt = 7;
         return DayOfWeek.of(daySelectedInt).getDisplayName(TextStyle.FULL, Locale.CANADA);
     } 
 
@@ -28,15 +29,14 @@ public class Display {
     
 
     public static void introScene() {
-        System.out.println("Intro scene triggered");
-
         Boolean validInput = false;
         Integer userMainMenuInput; 
         
         System.out.printf("""
+
             Welcome to the e-BubblePack, your one stop medication tracker!
 
-            The current time is %d %d
+            The current time is %s
 
             Select an option to view medication for the day:
 
@@ -49,12 +49,11 @@ public class Display {
             Press '6' to view Saturday medications
             Press '7' to exit the application 
 
-                """, 10, Schedule.getTodaysDayAsNum()); // !!! put in the correct time variable
+                """, Schedule.getTimeAsString(Schedule.getCurrentTimeAsInt()));
 
         while (!validInput) {
             try {    
                 System.out.println("""
-
                         Your selection:
                         """);
                 userMainMenuInput = mainInputScanner.nextInt();
@@ -76,8 +75,6 @@ public class Display {
     }
 
     public static void medicationDisplayScene(Integer selectedDay, ArrayList<Medication> medicationsForSelectedDay) {
-        System.out.println("Medication Display Scene triggered");
-
         Integer medIndex = 1;
         Boolean validInput = false;
         Integer userMainMenuInput; 
@@ -94,7 +91,6 @@ public class Display {
         while (!validInput) {
             try {
                 System.out.println("""
-
                         Your selection:
                         """);
                 userMainMenuInput = mainInputScanner.nextInt();
@@ -117,8 +113,6 @@ public class Display {
     }
 
     public static void medicationInformationDisplay(Integer selectedDay , Medication medToDisplay) {
-        System.out.println("Medication Information Display triggered");
-
         Boolean validInput = false;
         medToDisplay.updateMissedMeds();
 
@@ -133,29 +127,30 @@ public class Display {
             Scheduled Time          Taken?
         """, medToDisplay.getTradeName(), medToDisplay.getDosage(), medToDisplay.nextDose());
 
-        ArrayList<Integer> timesDue = new ArrayList<>();
-        timesDue = medToDisplay.getSchedule().get(1);
+        ArrayList<Integer> timesDue = medToDisplay.getSchedule().get(1);
 		
         for(int i=0; i<timesDue.size(); i++) {
             Boolean adminStatus = medToDisplay.getAdministrationRecord().get(i).get(0);
             Boolean missedStatus = medToDisplay.getAdministrationRecord().get(i).get(1);
-            String displayStatus;
+            String displayStatus = "";
 
             if(adminStatus) {
                 displayStatus = "Taken";
             } else if (missedStatus) {
                 displayStatus = "Missed";
-            } else displayStatus = "Something went wrong";
+            } else if(!adminStatus && !missedStatus) {
+                displayStatus = "Not due yet";
+            }
 
-			if(Schedule.getCurrentTimeAsInt() > timesDue.get(i)) {	
 				System.out.printf("""
                         %d.        %s              %s
                         """, i+1, Schedule.getTimeAsString(timesDue.get(i)), displayStatus);
-			} else {
-                System.out.printf("""
-                        %d.        %s              Not due yet
-                        """, i+1, Schedule.getTimeAsString(timesDue.get(i)));
-            }
+			
+            // else {
+            //     System.out.printf("""
+            //             %d.        %s              Not due yet
+            //             """, i+1, Schedule.getTimeAsString(timesDue.get(i)));
+            // }
 		}
         
         while (!validInput) {
@@ -163,7 +158,8 @@ public class Display {
                 Integer userMainMenuInput; 
                 System.out.printf("""
                     Select one of the following actions:
-        
+
+                    Enter '0' to toggle the indicate if a scheduled dose is taken/not taken
                     Enter '1' to edit the medication name
                     Enter '2' to edit the medication dosage
                     Enter '3' to edit which days of the week this medication is due
@@ -174,9 +170,28 @@ public class Display {
 
                 userMainMenuInput = mainInputScanner.nextInt();
                 mainInputScanner.nextLine(); // consume next line
-                if (userMainMenuInput >= 1 && userMainMenuInput <= 4) {
-                    //handle options !!!
+                if (userMainMenuInput >= 0 && userMainMenuInput <= 4) {
                     switch(userMainMenuInput) {
+                        case 0:
+                            System.out.println("Enter the number of the medication you would like to toggle the 'taken' status for...");
+                            Boolean validChosenDose = false;
+                            Integer chosenDose = 0;
+
+                            while(!validChosenDose) {
+                                try {
+                                    chosenDose = mainInputScanner.nextInt();
+                                    mainInputScanner.nextLine(); // consume next line
+                                    if (chosenDose > timesDue.size() || chosenDose <= 0) {
+                                        throw new Exception("Please select one of the doses above as numbered.");
+                                    }
+                                    validChosenDose = true;
+                                } catch (Exception i) {
+                                    i.getMessage();
+                                }
+                            }
+                            medToDisplay.toggleMedicationAdministered(chosenDose-1);
+                            medicationInformationDisplay(selectedDay, medToDisplay);
+                            return;
                         case 1:
                             System.out.println("Please enter the new name for this medication...");
                             String newName = mainInputScanner.nextLine();
@@ -196,28 +211,28 @@ public class Display {
                                     mainInputScanner.nextLine(); // consume next line
                                     System.out.println("Now enter the units in which you are measuring the dosage...");
                                     newDosageUnit = mainInputScanner.nextLine();
-                                    validDosageInput = true;
-                                    validInput = true;
                                 } catch(Exception e) {
                                     System.out.println("Invalid input. Please enter a valid integer. --new dosage error");
                                     mainInputScanner.nextLine(); 
                                 }
                             }
+                            validDosageInput = true;
+                            validInput = true;
                             medToDisplay.editDosage(newDosage, newDosageUnit);
                             System.out.println("The medication dosage has been changed to " + medToDisplay.getDosage());
                             medicationInformationDisplay(selectedDay, medToDisplay);
                             return;
                         case 3:
-                            String[] newWeeklySchedule;
+                            String newWeeklySchedule = "";
                             Boolean validDayInput;
                             validDayInput = false;
 
                             System.out.println("With Sunday as 0 and Saturday as 6, enter the weekly schedule for this medication in ascending order...");
-                            newWeeklySchedule = mainInputScanner.nextLine().split("");
-
+                            
                             while(!validDayInput){
+                                newWeeklySchedule = mainInputScanner.nextLine();
                                 try {
-                                    for(String m : newWeeklySchedule){
+                                    for(String m : newWeeklySchedule.split("")){
                                         Integer enteredDay = Integer.parseInt(m);
                                         if(enteredDay > 6 || enteredDay < 0) {
                                             throw new Exception("Please enter valid days of the week per the descriptions above");
@@ -225,7 +240,7 @@ public class Display {
                                         validDayInput = true;
                                     }
                                 } catch(Exception h) {
-                                    System.out.println(h.getMessage());
+                                    System.out.println("Please enter the days for the schedule as per above. Ex/ '135' = Monday,Wednesday, Friday");
                                 }
                             }
                             System.out.printf("""
@@ -233,7 +248,7 @@ public class Display {
                                     The weekly schedule has been updated, you will be returned to the schedule for %s...
 
                                     """,daySelectedString(selectedDay));
-                            medToDisplay.editWeeklySchedule(newWeeklySchedule);
+                            medToDisplay.editWeeklySchedule(newWeeklySchedule.split(""));
                             validInput = true;
                             medicationDisplayScene(selectedDay, dailyMedicationList(selectedDay));
                             return;
@@ -276,7 +291,7 @@ public class Display {
                 System.out.println("""
                     Invalid input.
                         """);
-                System.out.println(e.getMessage());
+                mainInputScanner.nextLine();
             }
         }
     }
