@@ -1,7 +1,6 @@
 package application;
 
 import java.time.*;
-import java.time.format.*;
 import java.util.*;
 
 public class Schedule {
@@ -11,7 +10,7 @@ public class Schedule {
 	private static int today = currentDate.getDayOfWeek().getValue();	
 	private ArrayList<Integer> daysDue; 
 	private ArrayList<Integer> timesDue; 
-	private ArrayList<ArrayList<Boolean>> administrationStatusPerDose = new ArrayList<>();			// index 0 = administration status and 1 = missed status
+	private ArrayList<ArrayList<Boolean>> administrationStatusPerDose = new ArrayList<>();	// index 0 = administration status and 1 = missed status
 
 	// constructor
 	public Schedule(String[] dailySchedule, String[] timelySchedule) {
@@ -33,7 +32,6 @@ public class Schedule {
 	public ArrayList<ArrayList<Boolean>> getAdministrationStatus() {
 		return administrationStatusPerDose;
 	}
-
 
 	//update
 
@@ -69,28 +67,6 @@ public class Schedule {
 		return administrationStatusPerDose;
 	}
 	
-	public String parseToStringDailySchedule() {
-		String weeklyScheduleinWords = "";
-		for(int i : daysDue) {
-			if(i != -1) {
-				weeklyScheduleinWords += (DayOfWeek.of( i+1 ).getDisplayName(TextStyle.FULL, Locale.CANADA));
-				weeklyScheduleinWords += ", ";
-			}
-		}
-		return weeklyScheduleinWords.substring(0, weeklyScheduleinWords.length()-2);
-	}
-
-	public String parseToStringTimelySchedule() {
-		String timelyScheduleinString = "";
-		for(int i : timesDue) {
-			String timeSlot = String.valueOf(i);
-			if(i<1000) {
-				timelyScheduleinString += ("0" + timeSlot + ", ");	
-			} else timelyScheduleinString += (timeSlot + ", ");
-		}
-		return timelyScheduleinString.substring(0, timelyScheduleinString.length()-2);
-	}
-	
 	//time based functions
 
 	public static int getTodaysDayAsNum() {
@@ -121,9 +97,7 @@ public class Schedule {
 			minutesDisplay = "0" + minutes;
 		} else minutesDisplay = "" + minutes;
 		
-
 		return (hourDisplay + ":" + minutesDisplay);
 	}
-
 }
 

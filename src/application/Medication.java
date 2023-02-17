@@ -35,12 +35,13 @@ public class Medication {
 	}
 	
 	//Update
-	public void editTradeName(String newTradeName) {
-		tradeName = newTradeName;
+	public void editMedicationName(String newName) {
+		tradeName = newName;
 	}
 
-	public void editDosage(int newDosage) {
+	public void editDosage(int newDosage, String newDosageUnit) {
 		dosage = newDosage;
+		dosageUnit = newDosageUnit;
 	}
 
 	public void editSchedule(String[] dailySchedule, String[] timeSchedule) {
