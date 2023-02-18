@@ -5,14 +5,22 @@ import java.time.format.TextStyle;
 import java.util.*;
 
 public class Display {
-
+	
+    /**
+    *A Scanner object for reading input from the console
+    */
     public static Scanner mainInputScanner = new Scanner(System.in);
 
+    /**
+    *Returns a string representation of the day of the week corresponding to the input day number.
+    *@param daySelectedInt an Integer representing the day of the week, indexed as 0-6 representing Sunday through Satursday.
+    *@return a String representing the full name of the day of the week in Canadian English.
+    */
     private static String daySelectedString(Integer daySelectedInt) {
         if (daySelectedInt == 0) daySelectedInt = 7;
         return DayOfWeek.of(daySelectedInt).getDisplayName(TextStyle.FULL, Locale.CANADA);
     } 
-
+	
     public static ArrayList<Medication> dailyMedicationList(Integer dayOfWeek) {
         ArrayList<Medication> medListForSelectedDay = new ArrayList<>();
 
