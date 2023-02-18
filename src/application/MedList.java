@@ -45,5 +45,12 @@ public class MedList {
 		}
 	}
 
-	// Delete
+	/**
+	*Removes the specified Medication object from the catalog.
+	*Assumes that the catalog is stored as a static ArrayList of Medication objects.
+	*@param medToDelete The Medication object to be removed from the catalog.
+	*/
+	public static void deleteMedicationFromList(Medication medToDelete) {
+		medications.remove(medToDelete);
+	}
 }
