@@ -26,7 +26,7 @@ public class Medication {
 	
 	/**
 	*Reads the trade name of the medication.
-	*@return the trade name of the medication.
+	*@return the trade name of the medication in string format.
 	*/
 	public String getTradeName() {
 		return tradeName;
