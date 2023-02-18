@@ -10,6 +10,14 @@ public class MedList {
 	private static ArrayList<Medication> medications = new ArrayList<Medication>();
 
 	// Create
+	/**
+	*Adds a new Medication object to the catalog with the specified parameters.
+	*Assumes that the catalog is stored as a static ArrayList of Medication objects.
+	*@param nameOfMed The trade name of the new medication to be added to the catalog.
+	*@param dosageOfMed The dosage amount of the new medication to be added to the catalog.
+	*@param dosageUnit The unit of dosage of the new medication to be added to the catalog.
+	*@param dailySchedule The daily schedule of the new medication to be added to the catalog, as a string of characters.
+	*/
 	public static void addMedications(String nameOfMed, int dosageOfMed, String dosageUnit, String dailySchedule, String timelySchedule) {
 		String[] usableDailySchedule = dailySchedule.split("");
 		String[] usableTimelySchedule = timelySchedule.split(",");
