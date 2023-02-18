@@ -12,7 +12,7 @@ Download the e-BubblePack.jar file.
 
 To run the application, navigate to the directory where you saved the e-BubblePack.jar file in your terminal or command prompt.
 
-Run the command java -jar e-BubblePack.jar to start the application.
+Run the command ```cmd java -jar e-BubblePack.jar``` to start the application.
 
 ***Usage***
 When you first start the application, you will be presented with the main menu. The current time and date will be displayed, along with a list of options to select from. To select an option, type the corresponding number and press Enter.
