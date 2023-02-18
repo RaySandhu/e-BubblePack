@@ -4,7 +4,7 @@ import java.time.*;
 import java.util.*;
 
 public class Schedule {
-	
+
 	private static LocalDate currentDate = LocalDate.now();
 	private static LocalTime currentTime = LocalTime.now();
 	private static int today = currentDate.getDayOfWeek().getValue();	
