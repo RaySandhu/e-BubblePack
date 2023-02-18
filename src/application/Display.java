@@ -20,7 +20,7 @@ public class Display {
         if (daySelectedInt == 0) daySelectedInt = 7;
         return DayOfWeek.of(daySelectedInt).getDisplayName(TextStyle.FULL, Locale.CANADA);
     } 
-
+	
     public static ArrayList<Medication> dailyMedicationList(Integer dayOfWeek) {
         ArrayList<Medication> medListForSelectedDay = new ArrayList<>();
 
