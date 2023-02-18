@@ -47,7 +47,8 @@ public class Display {
             Press '4' to view Thursday medications
             Press '5' to view Friday medications
             Press '6' to view Saturday medications
-            Press '7' to exit the application 
+            Press '7' to add a new medication to you schedule 
+            Press '8' to exit the application
 
                 """, Schedule.getTimeAsString(Schedule.getCurrentTimeAsInt()));
 
@@ -62,6 +63,12 @@ public class Display {
                     validInput = true;
                     medicationDisplayScene(userMainMenuInput, dailyMedicationList(userMainMenuInput));
                 } else if(userMainMenuInput == 7) {
+                    String newMedName = "";
+                    Integer newMedDosage = 0;
+                    String newMedDosageUnit = "";
+                    String weeklySchedule = "";
+                    String dailySchedule = "";
+                } else if(userMainMenuInput == 8) {
                     System.out.println("Closing Application");
                     return;
                 } else {
@@ -205,12 +212,12 @@ public class Display {
                                     mainInputScanner.nextLine(); // consume next line
                                     System.out.println("Now enter the units in which you are measuring the dosage...");
                                     newDosageUnit = mainInputScanner.nextLine();
+                                    validDosageInput = true;
                                 } catch(Exception e) {
                                     System.out.println("Invalid input. Please enter a valid integer. --new dosage error");
                                     mainInputScanner.nextLine(); 
                                 }
                             }
-                            validDosageInput = true;
                             validInput = true;
                             medToDisplay.editDosage(newDosage, newDosageUnit);
                             System.out.println("The medication dosage has been changed to " + medToDisplay.getDosage());
