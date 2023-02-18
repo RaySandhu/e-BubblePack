@@ -114,14 +114,14 @@ public class Schedule {
 		
 		return (hourDisplay + ":" + minutesDisplay);
 	}
-	
+
+	/**
+	*Converts an input integer into a formatted time string.
+	*@param digits the integer to be converted into time. Must be between 0 and 2400 (inclusive).
+	*@param showLocalTime a boolean value indicating whether to display the local time or not.
+	*@return the formatted time string in the HH:mm format, or an error message if the input is invalid.
+	*/
 	public static String convertToTime(int digits, boolean showLocalTime) {
-		/**
-		*Converts an input integer into a formatted time string.
-		*@param digits the integer to be converted into time. Must be between 0 and 2400 (inclusive).
-		*@param showLocalTime a boolean value indicating whether to display the local time or not.
-		*@return the formatted time string in the HH:mm format, or an error message if the input is invalid.
-		*/
 		if (digits < 0 || digits > 2400) {
 			return "Invalid input";
 		}
