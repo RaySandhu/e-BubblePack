@@ -6,13 +6,26 @@ import java.util.*;
 
 public class Display {
 
+    /**
+    *A Scanner object for reading input from the console
+    */
     public static Scanner mainInputScanner = new Scanner(System.in);
 
+    /**
+    *Returns a string representation of the day of the week corresponding to the input day number.
+    *@param daySelectedInt an Integer representing the day of the week, indexed as 0-6 representing Sunday through Satursday.
+    *@return a String representing the full name of the day of the week in Canadian English.
+    */
     private static String daySelectedString(Integer daySelectedInt) {
         if (daySelectedInt == 0) daySelectedInt = 7;
         return DayOfWeek.of(daySelectedInt).getDisplayName(TextStyle.FULL, Locale.CANADA);
     } 
 
+    /**
+    *Returns a list of Medication objects scheduled for the selected day of the week.
+    *@param dayOfWeek the integer value of the selected day of the week (0 = Sunday, 1 = Monday, etc.)
+    *@return an ArrayList of Medication objects scheduled for the selected day of the week
+    */
     public static ArrayList<Medication> dailyMedicationList(Integer dayOfWeek) {
         ArrayList<Medication> medListForSelectedDay = new ArrayList<>();
 
@@ -27,7 +40,15 @@ public class Display {
     }
 
     
-
+    /**
+    *Displays the introduction scene of the e-BubblePack medication tracker application.
+    *Prompts the user to select an option to view medication for the day or add a new medication.
+    *Displays a menu with options for each day of the week and an option to exit the application.
+    *If the user selects a day of the week option, it will display the medication schedule for that day.
+    *If the user selects the add medication option, it will prompt the user to enter details for a new medication.
+    *If the user selects the exit option, it will close the application.
+    *@throws InputMismatchException if the user enters an invalid input, e.g. a non-integer value
+    */
     public static void introScene() {
         Boolean validInput = false;
         Integer userMainMenuInput; 
@@ -81,6 +102,12 @@ public class Display {
         }
     }
 
+    /**
+    *Displays the list of medications for the selected day, and prompts the user to select a medication
+    *to display detailed information about or to return to the main menu.
+    *@param selectedDay integer value of the selected day (0 to 6)
+    *@param medicationsForSelectedDay list of medications that are due for the selected day
+    */
     public static void medicationDisplayScene(Integer selectedDay, ArrayList<Medication> medicationsForSelectedDay) {
         Integer medIndex = 1;
         Boolean validInput = false;
@@ -118,6 +145,14 @@ public class Display {
         }
     }
 
+    /**
+    *This method displays medication information for a selected day and a selected medication object.
+    *It prompts the user to perform different actions on the medication object such as toggling whether a
+    *scheduled dose is taken/not taken, editing the medication name/dosage/days/times or deleting the
+    *medication from the scheduled medication list entirely.
+    *@param selectedDay An integer representing the selected day
+    *@param medToDisplay The Medication object that needs to be displayed.
+    */
     public static void medicationInformationDisplay(Integer selectedDay , Medication medToDisplay) {
         Boolean validInput = false;
         medToDisplay.updateMissedMeds();
