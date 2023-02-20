@@ -84,11 +84,65 @@ public class Display {
                     validInput = true;
                     medicationDisplayScene(userMainMenuInput, dailyMedicationList(userMainMenuInput));
                 } else if(userMainMenuInput == 7) {
-                    String newMedName = "";
+                    Boolean validDosageInput = false;
+                    Boolean validDayInput = false;
+                    Boolean validTimeInput = false;
+
+                    String newWeeklySchedule = "";
                     Integer newMedDosage = 0;
-                    String newMedDosageUnit = "";
-                    String weeklySchedule = "";
                     String dailySchedule = "";
+
+                    System.out.println("Please enter the name of the new medication...");
+                    String newMedName = mainInputScanner.nextLine();
+                    System.out.println("Please enter the dose strength of the new medication as an integer...");
+                    while(!validDosageInput) {
+                        try {
+                            newMedDosage = Integer.parseInt(mainInputScanner.nextLine());
+                            validDosageInput = true;
+                        } catch(Exception d) {
+                            System.out.println("Invalid input. Please enter an integer value for the strength of the dosage...");
+                        }
+                    }
+                    System.out.println("Now enter the units in which the dosage is measured...");
+                    String newDosageUnit = mainInputScanner.nextLine();
+                    
+                    System.out.println("With Sunday as 0 and Saturday as 6, enter the weekly schedule for this medication in ascending order...");
+                    
+                    while(!validDayInput){
+                        newWeeklySchedule = mainInputScanner.nextLine();
+                        try {
+                            for(String m : newWeeklySchedule.split("")){
+                                Integer enteredDay = Integer.parseInt(m);
+                                if(enteredDay > 6 || enteredDay < 0) {
+                                    throw new Exception("Please enter valid days of the week per the descriptions above");
+                                }
+                                validDayInput = true;
+                            }
+                        } catch(Exception h) {
+                            System.out.println("Please enter the days for the schedule as per above. Ex/ '135' = Monday,Wednesday, Friday");
+                        }
+                    }                    
+                    while(!validTimeInput) {
+                        try {
+                            System.out.println("""
+                                Please enter this medication's new daily schedule in 24hr format separated by commas (no spaces)...
+                                Ex. 0800,1200,1600,0000 = 8am, noon, 4pm and midnight
+                                """);
+                            dailySchedule = mainInputScanner.nextLine();
+                            for(String k : dailySchedule.split(",")) {
+                                if(Integer.parseInt(k) < 0 || Integer.parseInt(k) >=2400) {
+                                    throw new Exception("Enter a valid input according to the instructions and example above" + k);
+                                }   
+                            }
+                            validTimeInput = true;
+                        } catch(Exception f) {
+                            System.out.println(f.getMessage());
+                        }
+                    }
+                    MedList.addMedications(newMedName, newMedDosage, newDosageUnit, newWeeklySchedule,dailySchedule);
+                    System.out.println("The new medication has been added accordingly.");
+                    introScene();
+                    return;
                 } else if(userMainMenuInput == 8) {
                     System.out.println("Closing Application");
                     return;
