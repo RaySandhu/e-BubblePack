@@ -4,6 +4,9 @@ import java.time.DayOfWeek;
 import java.time.format.TextStyle;
 import java.util.*;
 
+/**
+ * Handles all the user input and displays information about medication and schedules accordingly.
+ */
 public class Display {
 
     /**
@@ -80,10 +83,12 @@ public class Display {
                         """);
                 userMainMenuInput = mainInputScanner.nextInt();
                 mainInputScanner.nextLine(); // consume next line
-                if (userMainMenuInput >= 0 && userMainMenuInput < 7) {
+                if (userMainMenuInput >= 0 && userMainMenuInput < 7) {  //error check on user input for days of week
                     validInput = true;
                     medicationDisplayScene(userMainMenuInput, dailyMedicationList(userMainMenuInput));
-                } else if(userMainMenuInput == 7) {
+                } else if(userMainMenuInput == 7) {                     
+                    // handles adding new medications
+                        //contains error handling for each input the user provides necessary to instantate a new medication object
                     Boolean validDosageInput = false;
                     Boolean validDayInput = false;
                     Boolean validTimeInput = false;
@@ -168,7 +173,7 @@ public class Display {
         Integer userMainMenuInput; 
         Integer numberOfMedsThisDay = medicationsForSelectedDay.size();
 
-
+        //generate medications per the schedule of that day with appropriate indexing for user options
         System.out.println("These are the medications that are due today: ");
         for(Medication i : medicationsForSelectedDay) {
             System.out.println(medIndex + ". " +i.getTradeName());
@@ -184,6 +189,7 @@ public class Display {
                 userMainMenuInput = mainInputScanner.nextInt();
                 mainInputScanner.nextLine(); // consume next line
                 if (userMainMenuInput >= 1 && userMainMenuInput <= numberOfMedsThisDay) {
+                    // handles valid user input with more medication information
                     validInput = true;
                     medicationInformationDisplay(selectedDay ,medicationsForSelectedDay.get(userMainMenuInput-1));
                 } else if(userMainMenuInput == numberOfMedsThisDay+1) {
@@ -211,6 +217,7 @@ public class Display {
         Boolean validInput = false;
         medToDisplay.updateMissedMeds();
 
+        // generate list of doses scheduled on the selected day and based on current time if they are taken, missed, or not due yet
         System.out.printf("""
            
         Here is all the information about %s:
@@ -263,6 +270,7 @@ public class Display {
                 if (userMainMenuInput >= 0 && userMainMenuInput <= 5) {
                     switch(userMainMenuInput) {
                         case 0:
+                        // allows user to indicate if a dose was taken or not
                             System.out.println("Enter the number of the medication you would like to toggle the 'taken' status for...");
                             Boolean validChosenDose = false;
                             Integer chosenDose = 0;
@@ -283,6 +291,7 @@ public class Display {
                             medicationInformationDisplay(selectedDay, medToDisplay);
                             return;
                         case 1:
+                        //handle new medication name
                             System.out.println("Please enter the new name for this medication...");
                             String newName = mainInputScanner.nextLine();
                             medToDisplay.editMedicationName(newName);
@@ -291,6 +300,7 @@ public class Display {
                             medicationInformationDisplay(selectedDay, medToDisplay);
                             return;
                         case 2:
+                        //handle new medication dosage
                             Boolean validDosageInput = false;
                             Integer newDosage = 0;
                             String newDosageUnit = "Something went really wrong, edit again";
@@ -313,11 +323,12 @@ public class Display {
                             medicationInformationDisplay(selectedDay, medToDisplay);
                             return;
                         case 3:
+                        // Per specific instructions, the user can input the weekly schedule for the medication
                             String newWeeklySchedule = "";
                             Boolean validDayInput;
                             validDayInput = false;
 
-                            System.out.println("With Sunday as 0 and Saturday as 6, enter the weekly schedule for this medication in ascending order...");
+                            System.out.println("With Sunday as 0 and Saturday as 6, enter the weekly schedule for this medication in ascending order (Ex. '135' = Monday,Wednesday, Friday)...");
                             
                             while(!validDayInput){
                                 newWeeklySchedule = mainInputScanner.nextLine();
@@ -343,6 +354,7 @@ public class Display {
                             medicationDisplayScene(selectedDay, dailyMedicationList(selectedDay));
                             return;
                         case 4:
+                        // Per specific instructions, the user can input the daily schedule for the medication
                             Boolean validTimeInput = false;
                             while(!validTimeInput)
                                 try {
@@ -365,6 +377,7 @@ public class Display {
                                     System.out.println(f.getMessage());
                                 }
                         case 5:
+                        // the option to delete the medication from the schedule
                             Boolean validConfirmationInput = false;
                             String confirmationInput = "";
                             while(!validConfirmationInput) {
@@ -391,6 +404,7 @@ public class Display {
                             return;
                     }
                 } else if (userMainMenuInput == 6) {
+                    //handling the options to maneuver around the scenes of the app.
                     validInput = true;
                     medicationDisplayScene(selectedDay, dailyMedicationList(selectedDay));
                     return;

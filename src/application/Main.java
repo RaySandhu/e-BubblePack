@@ -3,7 +3,7 @@ public class Main {
 
 	public static void main(String[] args) {
 
-		// test medications on program run
+		// mock medications on program run
 		MedList.addMedications("Tylenol3 - mock", 500,"g", "024", "0800,1200,1600,2000");
 		MedList.addMedications("Pantoprazole - mock", 200,"mg", "0123456", "0600,1000");
 		MedList.addMedications("Ibuprofen - mock", 5,"ml", "5", "1800");
