@@ -3,6 +3,9 @@ package application;
 import java.time.*;
 import java.util.*;
 
+/**
+ * Handles all the data for weekly and daily medication schedules per medication
+ */
 public class Schedule {
 	
 	private static LocalDate currentDate = LocalDate.now();

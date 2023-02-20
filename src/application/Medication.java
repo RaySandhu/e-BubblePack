@@ -2,6 +2,9 @@ package application;
 
 import java.util.ArrayList;
 
+/**
+*  The fundamental blueprint of all the data for each medication stored
+*/
 public class Medication {
 
 	private String tradeName;

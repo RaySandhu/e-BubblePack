@@ -1,6 +1,10 @@
 package application;
 import java.util.*;
 
+/**
+ * Handles the current method of storage for all medication data in an arraylist with methods for 
+ * manipulating the same list per user needs
+ */
 public class MedList {
 	// !!! need to build csv read/write functionality for persistence
 	/**
