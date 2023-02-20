@@ -147,6 +147,11 @@ public class Schedule {
 		}
 		int hours = timeAsInt / 100;
 		int minutes = timeAsInt % 100;
+
+		if(minutes >= 60) {
+			hours+=1;
+			minutes-=60;
+		}
 		if (hours < 10) {
 			hourDisplay = "0" + hours;
 		} else hourDisplay = "" + hours;
