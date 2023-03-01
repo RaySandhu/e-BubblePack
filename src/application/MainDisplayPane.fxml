@@ -7,7 +7,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<VBox prefHeight="585.0" prefWidth="810.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<VBox prefHeight="585.0" prefWidth="810.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.MainDisplayPaneController">
    <children>
       <HBox alignment="TOP_CENTER" VBox.vgrow="ALWAYS">
          <VBox.margin>
@@ -27,7 +27,10 @@
                         <Font size="18.0" />
                      </font>
                   </Label>
-                  <Label alignment="TOP_LEFT" layoutX="184.0" layoutY="15.0" text="Time" textAlignment="CENTER" />
+                  <Label fx:id="currentTime" alignment="TOP_LEFT" layoutX="184.0" layoutY="15.0" textAlignment="CENTER">
+                     <font>
+                        <Font size="22.0" />
+                     </font></Label>
                </children>
                <HBox.margin>
                   <Insets left="10.0" />
