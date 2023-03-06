@@ -128,58 +128,59 @@
 						<Insets bottom="20.0" left="20.0" />
 					</padding>
 				</VBox>
-				<FlowPane prefHeight="800.0" prefWidth="753.0" GridPane.columnIndex="1">
-               <children>
-                  <Button fx:id="medDisplayButton" alignment="CENTER" contentDisplay="CENTER" graphicTextGap="0.0" mnemonicParsing="false" prefHeight="75.0" prefWidth="700.0" VBox.vgrow="ALWAYS">
-                     <font>
-                        <Font size="18.0" />
-                     </font>
-                     <graphic>
-                        <HBox alignment="CENTER_LEFT" prefHeight="75.0" prefWidth="800.0">
-                           <children>
-                              <Label fx:id="medNameDisplay" prefWidth="100.0" text="Medication 1" wrapText="true">
-                                 <font>
-                                    <Font size="18.0" />
-                                 </font>
-                                 <HBox.margin>
-                                    <Insets left="15.0" />
-                                 </HBox.margin>
-                              </Label>
-                              <Label fx:id="medDosageDisplay" layoutX="10.0" layoutY="28.0" prefWidth="100.0" text="Dosage">
-                                 <font>
-                                    <Font size="18.0" />
-                                 </font>
-                                 <HBox.margin>
-                                    <Insets left="10.0" />
-                                 </HBox.margin>
-                              </Label>
-                              <Pane prefHeight="200.0" prefWidth="250.0" />
-                              <Label fx:id="medDoseTimeDisplay" layoutX="10.0" layoutY="28.0" prefWidth="100.0" text="Time due">
-                                 <font>
-                                    <Font size="18.0" />
-                                 </font>
-                                 <HBox.margin>
-                                    <Insets right="10.0" />
-                                 </HBox.margin>
-                              </Label>
-                              <MenuButton mnemonicParsing="false" prefWidth="0.0" textAlignment="CENTER" HBox.hgrow="NEVER">
-                                <items>
-                                  <MenuItem mnemonicParsing="false" text="Action 1" />
-                                  <MenuItem mnemonicParsing="false" text="Action 2" />
-                                </items>
-                              </MenuButton>
-                           </children>
-                        </HBox>
-                     </graphic>
-                     <FlowPane.margin>
-                        <Insets right="20.0" />
-                     </FlowPane.margin>
-                  </Button>
-               </children>
+            <ScrollPane fitToWidth="true" prefHeight="200.0" prefWidth="600.0" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS">
+               <content>
+                  <VBox>
+                     <children>
+                        <Button fx:id="medDisplayButton" alignment="CENTER" contentDisplay="CENTER" graphicTextGap="0.0" mnemonicParsing="false" prefHeight="75.0" prefWidth="700.0">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                           <graphic>
+                              <HBox alignment="CENTER_LEFT" prefHeight="75.0" prefWidth="800.0">
+                                 <children>
+                                    <Label fx:id="medNameDisplay" prefWidth="150.0" text="Medication 1" wrapText="true">
+                                       <font>
+                                          <Font size="18.0" />
+                                       </font>
+                                       <HBox.margin>
+                                          <Insets left="15.0" />
+                                       </HBox.margin>
+                                    </Label>
+                                    <Label fx:id="medDosageDisplay" layoutX="10.0" layoutY="28.0" prefWidth="100.0" text="Dosage">
+                                       <font>
+                                          <Font size="18.0" />
+                                       </font>
+                                       <HBox.margin>
+                                          <Insets left="10.0" />
+                                       </HBox.margin>
+                                    </Label>
+                                    <Pane prefHeight="200.0" prefWidth="200.0" />
+                                    <Label fx:id="medDoseTimeDisplay" layoutX="10.0" layoutY="28.0" prefWidth="100.0" text="Time due">
+                                       <font>
+                                          <Font size="18.0" />
+                                       </font>
+                                       <HBox.margin>
+                                          <Insets right="10.0" />
+                                       </HBox.margin>
+                                    </Label>
+                                    <MenuButton mnemonicParsing="false" prefWidth="0.0" textAlignment="CENTER" HBox.hgrow="NEVER">
+                                       <items>
+                                          <MenuItem mnemonicParsing="false" text="Action 1" />
+                                          <MenuItem mnemonicParsing="false" text="Action 2" />
+                                       </items>
+                                    </MenuButton>
+                                 </children>
+                              </HBox>
+                           </graphic>
+                        </Button>
+                     </children>
+                  </VBox>
+               </content>
                <GridPane.margin>
-                  <Insets left="20.0" />
+                  <Insets bottom="20.0" />
                </GridPane.margin>
-            </FlowPane>
+            </ScrollPane>
 			</children>
 			<VBox.margin>
 				<Insets top="20.0" />
