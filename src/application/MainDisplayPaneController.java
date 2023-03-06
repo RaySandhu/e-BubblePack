@@ -9,8 +9,10 @@ import java.util.ResourceBundle;
 
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.layout.VBox;
 
 public class MainDisplayPaneController {
 
@@ -29,13 +31,49 @@ public class MainDisplayPaneController {
 
     @FXML
     private Label medDoseTimeDisplay;
+    
+    @FXML
+    private VBox dailyMedsDisplay;
+    
+    public void getSelectedDay(ActionEvent e) {
+    	String selectedDayValue = ((Button)e.getSource()).getText();
+    	System.out.println("Day select = " + selectedDayValue);
+    	switch(selectedDayValue) {
+    	case "Sunday":
+    		renderMedList(0);
+    		break;
+    	case "Monday":
+    		renderMedList(1);
+    		break;
+    	case "Tuesday":
+    		renderMedList(2);
+    		break;
+    	case "Wednesday":
+    		renderMedList(3);
+    		break;
+    	case "Thursday":
+    		renderMedList(4);
+    		break;
+    	case "Friday":
+    		renderMedList(5);
+    		break;
+    	case "Saturday":
+    		renderMedList(6);
+    		break;
+    	}
+    	
+    }
+    
+    public void renderMedList(int selectedDay) {
+    	System.out.print(selectedDay);
+    }
 
 	@FXML
 	void initialize() {
 		//using a time-based animation to display the current time
 		Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(1), event -> {
 			LocalTime time = LocalTime.now();
-			int militaryTime = time.getHour() > 12 ? time.getHour() -12 : time.getHour();
+//			int militaryTime = time.getHour() > 12 ? time.getHour() -12 : time.getHour();
 			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("hhmm");
 			String formattedTime = time.format(formatter);
 			currentTime.setText(formattedTime);
