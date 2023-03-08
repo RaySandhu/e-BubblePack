@@ -40,7 +40,7 @@ public class Medication {
 	*@return The dosage of the medication as a string in the format of "dosage dosageUnit".
 	*/
 	public String getDosage() {
-		return "" + dosage + dosageUnit;
+		return "" + dosage + " "+ dosageUnit;
 	}
 
 	/**

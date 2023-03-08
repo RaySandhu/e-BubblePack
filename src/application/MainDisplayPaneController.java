@@ -29,7 +29,7 @@ public class MainDisplayPaneController {
     @FXML
     private Label medNameDisplay;
 
-    private Button medDisplayButton(String medName, String dosage, int singleDoseTime) {
+    private Button medDisplayButton(String medName, String dosage, String singleDoseTime) {
     	Button medDisplayButton = new Button();
     	medDisplayButton.setPrefSize(700, 75);
     	medDisplayButton.setFont(new Font(18));
@@ -62,9 +62,9 @@ public class MainDisplayPaneController {
     	menuButton.setTextAlignment(TextAlignment.CENTER);
     	menuButton.setPrefWidth(0);
 
-    	MenuItem action1 = new MenuItem("Action 1");
-    	MenuItem action2 = new MenuItem("Action 2");
-    	menuButton.getItems().addAll(action1, action2);
+    	MenuItem edit = new MenuItem("Edit this medication");
+    	MenuItem delete = new MenuItem("Delete this medication");
+    	menuButton.getItems().addAll(edit, delete);
 
     	hbox.getChildren().addAll(medNameDisplay, medDosageDisplay, spacer, medDoseTimeDisplay, menuButton);
 
@@ -113,30 +113,47 @@ public class MainDisplayPaneController {
     }
     
     public void renderMedList(int selectedDay) {
-    	System.out.print(selectedDay);
+
     	ArrayList<Medication> listToRender = Display.dailyMedicationList(selectedDay);
-		dailyMedsDisplay.getChildren().clear();
-    	for (Medication i : listToRender) {
-    		System.out.println(i.getTradeName());
-    		i.updateMissedMeds();
+    	ArrayList<Integer> timeTracker = new ArrayList<Integer>();
+    	timeTracker.add(2400);
+
+    	dailyMedsDisplay.getChildren().clear();
+
+		for (Medication i : listToRender) {
+
+			i.updateMissedMeds();
     		ArrayList<Integer> timesDue = i.getSchedule().get(1);
 
     		for(int j=0; j<timesDue.size(); j++) {
     			Boolean adminStatus = i.getAdministrationRecord().get(j).get(0);
     			Boolean missedStatus = i.getAdministrationRecord().get(j).get(1);
     			String displayStatus = "";
-
-    			if(adminStatus) {
-    				displayStatus = "Taken";
-    			} else if (missedStatus) {
-    				displayStatus = "Missed";
-    			} else if(!adminStatus && !missedStatus) {
-    				displayStatus = "Not due yet";
+    			int indexCounter = 0;
+    			
+//    			linear sort on timesDue for the entire day
+    			for (int t : timeTracker) {
+    				if(t > timesDue.get(j)) {
+						Button outputButton = medDisplayButton(i.getTradeName(),i.getDosage(), Schedule.getTimeAsString(timesDue.get(j)));
+						
+						if(adminStatus) {
+							displayStatus = "Taken";
+							outputButton.setStyle("-fx-background-color: rgba(0, 255, 0, 0.25);");
+						} else if (missedStatus) {
+							displayStatus = "Missed";
+							outputButton.setStyle("-fx-background-color: rgba(255, 0, 0, 0.5);");
+						} else if(!adminStatus && !missedStatus) {
+							displayStatus = "Not due yet";
+						}
+						timeTracker.add(indexCounter, timesDue.get(j));
+						dailyMedsDisplay.getChildren().add(indexCounter, outputButton);
+						break;
+    				} else {
+    					indexCounter++;
+    				}
     			}
- 
-        		dailyMedsDisplay.getChildren().add(medDisplayButton(i.getTradeName(),i.getDosage(), timesDue.get(j)));
     		}
-    	}
+		}
     }
 
 	@FXML
@@ -145,7 +162,7 @@ public class MainDisplayPaneController {
 		Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(1), event -> {
 			LocalTime time = LocalTime.now();
 //			int militaryTime = time.getHour() > 12 ? time.getHour() -12 : time.getHour();
-			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("hhmm");
+			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("hh:mm");
 			String formattedTime = time.format(formatter);
 			currentTime.setText(formattedTime);
 		}));
