@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox prefHeight="300.0" prefWidth="450.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.AlterMedicationController">
+   <children>
+      <Label fx:id="formHeadingLabel" contentDisplay="CENTER" lineSpacing="5.0" prefHeight="50.0" prefWidth="450.0" text="Add Medication Form (test, will change for edit Medication)" textAlignment="CENTER" textOverrun="ELLIPSIS">
+         <font>
+            <Font size="15.0" />
+         </font></Label>
+      <HBox prefHeight="30.0" prefWidth="400.0">
+         <children>
+            <Label prefHeight="23.0" prefWidth="250.0" text="Name of Mediaction">
+               <HBox.margin>
+                  <Insets top="5.0" />
+               </HBox.margin></Label>
+            <TextField fx:id="nameOfMedTextField" prefHeight="10.0" prefWidth="149.0">
+               <HBox.margin>
+                  <Insets top="5.0" />
+               </HBox.margin></TextField>
+         </children>
+      </HBox>
+      <HBox prefHeight="30.0" prefWidth="400.0">
+         <children>
+            <Label prefHeight="23.0" prefWidth="250.0" text="Dosage of Medication">
+               <HBox.margin>
+                  <Insets top="5.0" />
+               </HBox.margin>
+            </Label>
+            <TextField fx:id="dosageOfMedTextField" prefHeight="10.0" prefWidth="149.0">
+               <HBox.margin>
+                  <Insets top="5.0" />
+               </HBox.margin>
+            </TextField>
+         </children>
+      </HBox>
+      <HBox prefHeight="30.0" prefWidth="400.0">
+         <children>
+            <Label prefHeight="23.0" prefWidth="250.0" text="Dosage unit">
+               <HBox.margin>
+                  <Insets top="5.0" />
+               </HBox.margin>
+            </Label>
+            <ChoiceBox fx:id="dosageUnitChoiceBox" prefWidth="150.0">
+               <HBox.margin>
+                  <Insets top="5.0" />
+               </HBox.margin>
+            </ChoiceBox>
+         </children>
+      </HBox>
+      <HBox prefHeight="30.0" prefWidth="400.0">
+         <children>
+            <Label prefHeight="23.0" prefWidth="250.0" text="Days Due (0-6 for Sunday to Satursday)">
+               <HBox.margin>
+                  <Insets top="5.0" />
+               </HBox.margin>
+            </Label>
+            <TextField fx:id="dailyScheduleTextField" prefHeight="10.0" prefWidth="149.0">
+               <HBox.margin>
+                  <Insets top="5.0" />
+               </HBox.margin>
+            </TextField>
+         </children>
+      </HBox>
+      <HBox prefHeight="30.0" prefWidth="400.0">
+         <children>
+            <Label prefHeight="23.0" prefWidth="250.0" text="Time(s) Due (in 24hr format)">
+               <HBox.margin>
+                  <Insets top="5.0" />
+               </HBox.margin>
+            </Label>
+            <TextField fx:id="timelyScheduleTextField" prefHeight="10.0" prefWidth="149.0">
+               <HBox.margin>
+                  <Insets top="5.0" />
+               </HBox.margin>
+            </TextField>
+         </children>
+      </HBox>
+      <Button alignment="CENTER" mnemonicParsing="false" text="Submit">
+         <VBox.margin>
+            <Insets top="5.0" />
+         </VBox.margin></Button>
+   </children>
+</VBox>
