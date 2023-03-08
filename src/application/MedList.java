@@ -12,6 +12,7 @@ public class MedList {
 	 *This list is initialized as empty and can be modified through the methods of the class.
 	 */
 	private static ArrayList<Medication> medications = new ArrayList<Medication>();
+	private static int idCounter = 0;
 
 	// Create
 	/**
@@ -23,9 +24,10 @@ public class MedList {
 	 *@param dailySchedule The daily schedule of the new medication to be added to the catalog, as a string of characters.
 	 */
 	public static void addMedications(String nameOfMed, int dosageOfMed, String dosageUnit, String dailySchedule, String timelySchedule) {
+		idCounter++;
 		String[] usableDailySchedule = dailySchedule.split("");
 		String[] usableTimelySchedule = timelySchedule.split(",");
-		Medication newMed = new Medication(nameOfMed, dosageOfMed, dosageUnit , usableDailySchedule, usableTimelySchedule);
+		Medication newMed = new Medication(idCounter, nameOfMed, dosageOfMed, dosageUnit , usableDailySchedule, usableTimelySchedule);
 		medications.add(newMed);
 	}
 
@@ -36,6 +38,17 @@ public class MedList {
 	 */
 	public static ArrayList<Medication> getMedications() {
 		return medications;
+	}
+	
+	public static Medication retrieveMedById(int searchId) {
+		Medication targetMed = null;
+		for (Medication m : medications) {
+			if (m.getId() == searchId) {
+				targetMed = m;
+			}
+		}
+		return targetMed;
+		
 	}
 
 	/**

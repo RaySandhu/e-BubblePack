@@ -28,15 +28,47 @@ public class MainDisplayPaneController {
 	
     @FXML
     private Label medNameDisplay;
+    
+    @FXML
+    private Label medDosageDisplay;
 
-    private Button medDisplayButton(String medName, String dosage, String singleDoseTime) {
+    @FXML
+    private Label medDoseTimeDisplay;
+    
+    @FXML
+    private VBox dailyMedsDisplay;
+    
+    private Button medDisplayButtonGenerator(int keyId, String medName, String dosage, int singleDoseTime) {
     	Button medDisplayButton = new Button();
     	medDisplayButton.setPrefSize(700, 75);
     	medDisplayButton.setFont(new Font(18));
-
     	HBox hbox = new HBox();
     	hbox.setAlignment(Pos.CENTER_LEFT);
     	hbox.setPrefSize(800, 75);
+    	
+    	medDisplayButton.setOnMouseClicked(event -> {
+    		Medication clickedMed = MedList.retrieveMedById(keyId);
+    		
+    		int doseIndex = clickedMed.getSchedule().get(1).indexOf(singleDoseTime);
+    		clickedMed.toggleMedicationAdministered(doseIndex);
+    		
+    		//color toggle per administration status
+    		if (clickedMed.checkAdminStatusPerDose(doseIndex) == "Taken") {
+				medDisplayButton.setStyle("-fx-background-color: rgba(0, 255, 0, 0.25);");
+		        medDisplayButton.setOnMouseEntered(e -> medDisplayButton.setStyle("-fx-background-color: rgba(0, 255, 0, 0.15);"));
+		        medDisplayButton.setOnMouseExited(e -> medDisplayButton.setStyle("-fx-background-color: rgba(0, 255, 0, 0.25);"));
+    		} else if (clickedMed.checkAdminStatusPerDose(doseIndex) == "Missed") {
+				medDisplayButton.setStyle("-fx-background-color: rgba(255, 0, 0, 0.25);");
+		        medDisplayButton.setOnMouseEntered(e -> medDisplayButton.setStyle("-fx-background-color: rgba(255, 0, 0, 0.15);"));
+		        medDisplayButton.setOnMouseExited(e -> medDisplayButton.setStyle("-fx-background-color: rgba(255, 0, 0, 0.25);"));
+    		} else if (clickedMed.checkAdminStatusPerDose(doseIndex)=="Not due yet") {
+    			medDisplayButton.setStyle("-fx-background-color: transparent;-fx-border-color: black; -fx-border-width: 0.5px;");
+		        medDisplayButton.setOnMouseEntered(e -> medDisplayButton.setStyle("-fx-background-color: rgba(192, 192, 192, 0.5)\r\n"
+		        		+ "; -fx-border-color: grey;-fx-border-width: 1px"));
+		        medDisplayButton.setOnMouseExited(e -> medDisplayButton.setStyle("-fx-background-color: rgba(192, 192, 192, 1)\r\n"
+		        		+ "; -fx-border-color: black;-fx-border-width: 0.5px"));
+    		}
+    	});
 
     	Label medNameDisplay = new Label(medName);
     	medNameDisplay.setPrefWidth(150);
@@ -52,7 +84,7 @@ public class MainDisplayPaneController {
     	Pane spacer = new Pane();
     	spacer.setPrefSize(200, 75);
 
-    	Label medDoseTimeDisplay = new Label("" + singleDoseTime);
+    	Label medDoseTimeDisplay = new Label(Schedule.getTimeAsString(singleDoseTime));
     	medDoseTimeDisplay.setPrefWidth(100);
     	medDoseTimeDisplay.setFont(new Font(18));
     	HBox.setMargin(medDoseTimeDisplay, new Insets(0, 10, 0, 0));
@@ -72,16 +104,6 @@ public class MainDisplayPaneController {
     	return medDisplayButton;
 
     };
-
-    @FXML
-    private Label medDosageDisplay;
-
-    @FXML
-    private Label medDoseTimeDisplay;
-    
-    @FXML
-    private VBox dailyMedsDisplay;
-    
     
     public void getSelectedDay(ActionEvent e) {
     	String selectedDayValue = ((Button)e.getSource()).getText();
@@ -113,7 +135,7 @@ public class MainDisplayPaneController {
     }
     
     public void renderMedList(int selectedDay) {
-
+    	
     	ArrayList<Medication> listToRender = Display.dailyMedicationList(selectedDay);
     	ArrayList<Integer> timeTracker = new ArrayList<Integer>();
     	timeTracker.add(2400);
@@ -126,25 +148,26 @@ public class MainDisplayPaneController {
     		ArrayList<Integer> timesDue = i.getSchedule().get(1);
 
     		for(int j=0; j<timesDue.size(); j++) {
-    			Boolean adminStatus = i.getAdministrationRecord().get(j).get(0);
-    			Boolean missedStatus = i.getAdministrationRecord().get(j).get(1);
-    			String displayStatus = "";
+    			i.checkAdminStatusPerDose(j);
     			int indexCounter = 0;
     			
 //    			linear sort on timesDue for the entire day
     			for (int t : timeTracker) {
     				if(t > timesDue.get(j)) {
-						Button outputButton = medDisplayButton(i.getTradeName(),i.getDosage(), Schedule.getTimeAsString(timesDue.get(j)));
+						Button outputButton = medDisplayButtonGenerator(i.getId(), i.getTradeName(),i.getDosage(), timesDue.get(j));
 						
-						if(adminStatus) {
-							displayStatus = "Taken";
+						//color setting per administration status
+						if (i.checkAdminStatusPerDose(j) == "Taken") {
 							outputButton.setStyle("-fx-background-color: rgba(0, 255, 0, 0.25);");
-						} else if (missedStatus) {
-							displayStatus = "Missed";
-							outputButton.setStyle("-fx-background-color: rgba(255, 0, 0, 0.5);");
-						} else if(!adminStatus && !missedStatus) {
-							displayStatus = "Not due yet";
-						}
+					        outputButton.setOnMouseEntered(e -> outputButton.setStyle("-fx-background-color: rgba(0, 255, 0, 0.15);"));
+					        outputButton.setOnMouseExited(e -> outputButton.setStyle("-fx-background-color: rgba(0, 255, 0, 0.25);"));
+			    		} else if (i.checkAdminStatusPerDose(j) == "Missed") {
+							outputButton.setStyle("-fx-background-color: rgba(255, 0, 0, 0.25);");
+							outputButton.setOnMouseEntered(e -> outputButton.setStyle("-fx-background-color: rgba(255, 0, 0, 0.15);"));
+							outputButton.setOnMouseExited(e -> outputButton.setStyle("-fx-background-color: rgba(255, 0, 0, 0.25);"));
+			    		} else if (i.checkAdminStatusPerDose(j)=="Not due yet") {
+			    			System.out.println("Not due yet");
+			    		}
 						timeTracker.add(indexCounter, timesDue.get(j));
 						dailyMedsDisplay.getChildren().add(indexCounter, outputButton);
 						break;

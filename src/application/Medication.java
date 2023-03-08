@@ -7,6 +7,7 @@ import java.util.ArrayList;
 */
 public class Medication {
 
+	private int keyId;
 	private String tradeName;
 	private int dosage;	
 	private String dosageUnit;
@@ -20,7 +21,8 @@ public class Medication {
 	*@param daily an array of times the medication should be taken each day
 	*@param timely an array of days the medication should be taken each week
 	*/
-	public Medication(String name, int dose, String dosageUnit, String[] daily, String[] timely) {
+	public Medication(int keyId, String name, int dose, String dosageUnit, String[] daily, String[] timely) {
+		this.keyId = keyId;
 		this.tradeName = name;
 		this.dosage = dose;
 		this.dosageUnit = dosageUnit;
@@ -42,6 +44,10 @@ public class Medication {
 	public String getDosage() {
 		return "" + dosage + " "+ dosageUnit;
 	}
+	
+	public int getId() {
+		return keyId;
+	}
 
 	/**
 	 * Returns a two-dimensional ArrayList containing the medication schedule data.
@@ -49,6 +55,22 @@ public class Medication {
 	 */
 	public ArrayList<ArrayList<Integer>> getSchedule() {
 		return schedule.getScheduleData();
+	}
+	
+	public String checkAdminStatusPerDose(int doseIndex) {
+		String displayStatus = "";
+		Boolean adminStatus = schedule.getAdministrationStatus().get(doseIndex).get(0);
+		Boolean missedStatus = schedule.getAdministrationStatus().get(doseIndex).get(1);
+		
+		if(adminStatus) {
+			displayStatus = "Taken";
+		} else if (missedStatus) {
+			displayStatus = "Missed";
+		} else if(!adminStatus && !missedStatus) {
+			displayStatus = "Not due yet";
+		}
+		
+		return displayStatus;
 	}
 
 	/**
