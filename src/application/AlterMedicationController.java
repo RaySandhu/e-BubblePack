@@ -66,6 +66,7 @@ public class AlterMedicationController {
 	        }
 	    }
 	    if (dosageUnitChoiceBox.getSelectionModel().isEmpty()) {
+		dosageUnitChoiceBox.getItems().addAll("mg", "g", "ml", "oz", "tsp");
 	        errorMessage += "Dosage unit is required\n";
 	    }
 	    if (dailyScheduleTextField.getText() == null || dailyScheduleTextField.getText().isEmpty()) {
