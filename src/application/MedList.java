@@ -40,6 +40,11 @@ public class MedList {
 		return medications;
 	}
 	
+	/**
+	 * A basic linear search lookup of the medication in medlist by its keyId field
+	 * @param searchId the id that is being looked for through the medlist
+	 * @return the entire medication that is associated with the unique keyId
+	 */
 	public static Medication retrieveMedById(int searchId) {
 		Medication targetMed = null;
 		for (Medication m : medications) {
