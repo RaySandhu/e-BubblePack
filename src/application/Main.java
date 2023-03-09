@@ -13,6 +13,7 @@ public class Main extends Application {
 	@Override
 	public void start(Stage primaryStage) {
 		
+		// mock data
 		MedList.addMedications("Tylenol3 - mock", 500,"g", "024", "0800,1200,1600,2000");
 		MedList.addMedications("Pantoprazole - mock", 200,"mg", "0123456", "0600,1000");
 		MedList.addMedications("Ibuprofen - mock", 5,"ml", "5", "1800");
