@@ -45,6 +45,10 @@ public class Medication {
 		return "" + dosage + " "+ dosageUnit;
 	}
 	
+	/**
+	 * getter for each medication's unique identifier
+	 * @return the integer that is the medication's unique identifier.
+	 */
 	public int getId() {
 		return keyId;
 	}
@@ -57,6 +61,11 @@ public class Medication {
 		return schedule.getScheduleData();
 	}
 	
+	/**
+	 * Simplifies a messy lookup process for whether a specific dose has been administered, missed, or is not due yet.
+	 * @param doseIndex directly asks for which dose number of the day is being checked and relies on the dose time being verified previously
+	 * @return the strings are specifically indicative of the administration status for each dose.
+	 */
 	public String checkAdminStatusPerDose(int doseIndex) {
 		String displayStatus = "";
 		Boolean adminStatus = schedule.getAdministrationStatus().get(doseIndex).get(0);

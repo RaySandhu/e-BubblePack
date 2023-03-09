@@ -7,9 +7,12 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<VBox prefHeight="600.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.MainDisplayPaneController">
+<VBox prefHeight="600.0" prefWidth="1200.0"
+	xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
+	fx:controller="application.MainDisplayPaneController">
 	<children>
-		<HBox alignment="TOP_CENTER" maxHeight="100.0" prefHeight="161.0" prefWidth="810.0" VBox.vgrow="ALWAYS">
+		<HBox alignment="TOP_CENTER" maxHeight="100.0" prefHeight="161.0"
+			prefWidth="810.0" VBox.vgrow="ALWAYS">
 			<VBox.margin>
 				<Insets top="20.0" />
 			</VBox.margin>
@@ -20,7 +23,8 @@
 				<HBox>
 					<children>
 
-						<Label fx:id="currentTime" alignment="TOP_LEFT" layoutX="184.0" layoutY="15.0" textAlignment="CENTER">
+						<Label fx:id="currentTime" alignment="TOP_LEFT"
+							layoutX="184.0" layoutY="15.0" textAlignment="CENTER">
 							<font>
 								<Font size="22.0" />
 							</font>
@@ -31,7 +35,8 @@
 					</HBox.margin>
 				</HBox>
 				<Pane prefWidth="150.0" HBox.hgrow="ALWAYS" />
-				<Label alignment="TOP_CENTER" text="E-BubblePack" textAlignment="CENTER">
+				<Label alignment="TOP_CENTER" text="E-BubblePack"
+					textAlignment="CENTER">
 					<HBox.margin>
 						<Insets />
 					</HBox.margin>
@@ -39,8 +44,10 @@
 						<Font size="24.0" />
 					</font>
 				</Label>
-				<Pane layoutX="264.0" layoutY="15.0" prefWidth="150.0" HBox.hgrow="ALWAYS" />
-				<Button alignment="CENTER_RIGHT" contentDisplay="RIGHT" mnemonicParsing="false" text="Add New Medication">
+				<Pane layoutX="264.0" layoutY="15.0" prefWidth="150.0"
+					HBox.hgrow="ALWAYS" />
+				<Button alignment="CENTER_RIGHT" contentDisplay="RIGHT"
+					mnemonicParsing="false" text="Add New Medication">
 					<font>
 						<Font size="14.0" />
 					</font>
@@ -52,16 +59,22 @@
 		</HBox>
 		<GridPane alignment="CENTER">
 			<columnConstraints>
-				<ColumnConstraints hgrow="SOMETIMES" maxWidth="361.0" minWidth="10.0" prefWidth="299.0" />
-				<ColumnConstraints hgrow="SOMETIMES" maxWidth="641.0" minWidth="10.0" prefWidth="501.0" />
+				<ColumnConstraints hgrow="SOMETIMES"
+					maxWidth="361.0" minWidth="10.0" prefWidth="299.0" />
+				<ColumnConstraints hgrow="SOMETIMES"
+					maxWidth="641.0" minWidth="10.0" prefWidth="501.0" />
 			</columnConstraints>
 			<rowConstraints>
 				<RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
 			</rowConstraints>
 			<children>
-				<VBox GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS" HBox.hgrow="ALWAYS">
+				<VBox GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS"
+					GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS"
+					HBox.hgrow="ALWAYS">
 					<children>
-						<Button contentDisplay="CENTER" mnemonicParsing="false" onAction="#getSelectedDay" prefHeight="30.0" prefWidth="300.0" text="Sunday" textAlignment="CENTER" VBox.vgrow="ALWAYS">
+						<Button contentDisplay="CENTER" mnemonicParsing="false"
+							onAction="#getSelectedDay" prefHeight="30.0" prefWidth="300.0"
+							text="Sunday" textAlignment="CENTER" VBox.vgrow="ALWAYS">
 							<font>
 								<Font size="28.0" />
 							</font>
@@ -69,26 +82,12 @@
 								<Insets />
 							</VBox.margin>
 						</Button>
-						<Pane layoutX="10.0" layoutY="256.0" minHeight="5.0" prefHeight="200.0" VBox.vgrow="ALWAYS" />
-						<Button contentDisplay="CENTER" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#getSelectedDay" prefHeight="30.0" prefWidth="300.0" text="Monday" textAlignment="CENTER">
-							<font>
-								<Font size="28.0" />
-							</font>
-							<VBox.margin>
-								<Insets />
-							</VBox.margin>
-						</Button>
-						<Pane minHeight="5.0" prefHeight="200.0" prefWidth="200.0" />
-						<Button contentDisplay="CENTER" layoutX="10.0" layoutY="220.0" mnemonicParsing="false" onAction="#getSelectedDay" prefHeight="30.0" prefWidth="300.0" text="Tuesday" textAlignment="CENTER">
-							<font>
-								<Font size="28.0" />
-							</font>
-							<VBox.margin>
-								<Insets />
-							</VBox.margin>
-						</Button>
-						<Pane layoutX="10.0" layoutY="450.0" minHeight="5.0" prefHeight="200.0" prefWidth="200.0" />
-						<Button contentDisplay="CENTER" layoutX="10.0" layoutY="280.0" mnemonicParsing="false" onAction="#getSelectedDay" prefHeight="30.0" prefWidth="300.0" text="Wednesday" textAlignment="CENTER">
+						<Pane layoutX="10.0" layoutY="256.0" minHeight="5.0"
+							prefHeight="200.0" VBox.vgrow="ALWAYS" />
+						<Button contentDisplay="CENTER" layoutX="10.0"
+							layoutY="10.0" mnemonicParsing="false" onAction="#getSelectedDay"
+							prefHeight="30.0" prefWidth="300.0" text="Monday"
+							textAlignment="CENTER">
 							<font>
 								<Font size="28.0" />
 							</font>
@@ -97,7 +96,10 @@
 							</VBox.margin>
 						</Button>
 						<Pane minHeight="5.0" prefHeight="200.0" prefWidth="200.0" />
-						<Button contentDisplay="CENTER" layoutX="10.0" layoutY="340.0" mnemonicParsing="false" onAction="#getSelectedDay" prefHeight="30.0" prefWidth="300.0" text="Thursday" textAlignment="CENTER">
+						<Button contentDisplay="CENTER" layoutX="10.0"
+							layoutY="220.0" mnemonicParsing="false"
+							onAction="#getSelectedDay" prefHeight="30.0" prefWidth="300.0"
+							text="Tuesday" textAlignment="CENTER">
 							<font>
 								<Font size="28.0" />
 							</font>
@@ -105,8 +107,12 @@
 								<Insets />
 							</VBox.margin>
 						</Button>
-						<Pane layoutX="10.0" layoutY="382.0" minHeight="5.0" prefHeight="200.0" prefWidth="200.0" />
-						<Button contentDisplay="CENTER" layoutX="10.0" layoutY="250.0" mnemonicParsing="false" onAction="#getSelectedDay" prefHeight="30.0" prefWidth="300.0" text="Friday" textAlignment="CENTER">
+						<Pane layoutX="10.0" layoutY="450.0" minHeight="5.0"
+							prefHeight="200.0" prefWidth="200.0" />
+						<Button contentDisplay="CENTER" layoutX="10.0"
+							layoutY="280.0" mnemonicParsing="false"
+							onAction="#getSelectedDay" prefHeight="30.0" prefWidth="300.0"
+							text="Wednesday" textAlignment="CENTER">
 							<font>
 								<Font size="28.0" />
 							</font>
@@ -114,8 +120,37 @@
 								<Insets />
 							</VBox.margin>
 						</Button>
-						<Pane layoutX="10.0" layoutY="130.0" minHeight="5.0" prefHeight="200.0" prefWidth="200.0" />
-						<Button contentDisplay="CENTER" layoutX="10.0" layoutY="310.0" mnemonicParsing="false" onAction="#getSelectedDay" prefHeight="30.0" prefWidth="300.0" text="Saturday" textAlignment="CENTER">
+						<Pane minHeight="5.0" prefHeight="200.0" prefWidth="200.0" />
+						<Button contentDisplay="CENTER" layoutX="10.0"
+							layoutY="340.0" mnemonicParsing="false"
+							onAction="#getSelectedDay" prefHeight="30.0" prefWidth="300.0"
+							text="Thursday" textAlignment="CENTER">
+							<font>
+								<Font size="28.0" />
+							</font>
+							<VBox.margin>
+								<Insets />
+							</VBox.margin>
+						</Button>
+						<Pane layoutX="10.0" layoutY="382.0" minHeight="5.0"
+							prefHeight="200.0" prefWidth="200.0" />
+						<Button contentDisplay="CENTER" layoutX="10.0"
+							layoutY="250.0" mnemonicParsing="false"
+							onAction="#getSelectedDay" prefHeight="30.0" prefWidth="300.0"
+							text="Friday" textAlignment="CENTER">
+							<font>
+								<Font size="28.0" />
+							</font>
+							<VBox.margin>
+								<Insets />
+							</VBox.margin>
+						</Button>
+						<Pane layoutX="10.0" layoutY="130.0" minHeight="5.0"
+							prefHeight="200.0" prefWidth="200.0" />
+						<Button contentDisplay="CENTER" layoutX="10.0"
+							layoutY="310.0" mnemonicParsing="false"
+							onAction="#getSelectedDay" prefHeight="30.0" prefWidth="300.0"
+							text="Saturday" textAlignment="CENTER">
 							<font>
 								<Font size="28.0" />
 							</font>
@@ -128,59 +163,67 @@
 						<Insets bottom="20.0" left="20.0" />
 					</padding>
 				</VBox>
-            <ScrollPane fitToWidth="true" prefHeight="200.0" prefWidth="600.0" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS">
-               <content>
-                  <VBox fx:id="dailyMedsDisplay">
-                     <children>
-                        <Button fx:id="medDisplayButton" alignment="CENTER" contentDisplay="CENTER" graphicTextGap="0.0" mnemonicParsing="false" prefHeight="75.0" prefWidth="700.0">
-                           <font>
-                              <Font size="18.0" />
-                           </font>
-                           <graphic>
-                              <HBox alignment="CENTER_LEFT" prefHeight="75.0" prefWidth="800.0">
-                                 <children>
-                                    <Label fx:id="medNameDisplay" prefWidth="150.0" text="Medication 1" wrapText="true">
-                                       <font>
-                                          <Font size="18.0" />
-                                       </font>
-                                       <HBox.margin>
-                                          <Insets left="15.0" />
-                                       </HBox.margin>
-                                    </Label>
-                                    <Label fx:id="medDosageDisplay" layoutX="10.0" layoutY="28.0" prefWidth="100.0" text="Dosage">
-                                       <font>
-                                          <Font size="18.0" />
-                                       </font>
-                                       <HBox.margin>
-                                          <Insets left="10.0" />
-                                       </HBox.margin>
-                                    </Label>
-                                    <Pane prefHeight="200.0" prefWidth="200.0" />
-                                    <Label fx:id="medDoseTimeDisplay" layoutX="10.0" layoutY="28.0" prefWidth="100.0" text="Time due">
-                                       <font>
-                                          <Font size="18.0" />
-                                       </font>
-                                       <HBox.margin>
-                                          <Insets right="10.0" />
-                                       </HBox.margin>
-                                    </Label>
-                                    <MenuButton mnemonicParsing="false" prefWidth="0.0" textAlignment="CENTER" HBox.hgrow="NEVER">
-                                       <items>
-                                          <MenuItem mnemonicParsing="false" text="Action 1" />
-                                          <MenuItem mnemonicParsing="false" text="Action 2" />
-                                       </items>
-                                    </MenuButton>
-                                 </children>
-                              </HBox>
-                           </graphic>
-                        </Button>
-                     </children>
-                  </VBox>
-               </content>
-               <GridPane.margin>
-                  <Insets bottom="20.0" />
-               </GridPane.margin>
-            </ScrollPane>
+				<ScrollPane fitToWidth="true" prefHeight="200.0"
+					prefWidth="600.0" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS">
+					<content>
+						<VBox fx:id="dailyMedsDisplay">
+							<children>
+								<Button fx:id="medDisplayButton" alignment="CENTER"
+									contentDisplay="CENTER" graphicTextGap="0.0"
+									mnemonicParsing="false" prefHeight="75.0" prefWidth="700.0">
+									<font>
+										<Font size="18.0" />
+									</font>
+									<graphic>
+										<HBox alignment="CENTER_LEFT" prefHeight="75.0"
+											prefWidth="800.0">
+											<children>
+												<Label fx:id="medNameDisplay" prefWidth="150.0"
+													text="Medication 1" wrapText="true">
+													<font>
+														<Font size="18.0" />
+													</font>
+													<HBox.margin>
+														<Insets left="15.0" />
+													</HBox.margin>
+												</Label>
+												<Label fx:id="medDosageDisplay" layoutX="10.0"
+													layoutY="28.0" prefWidth="100.0" text="Dosage">
+													<font>
+														<Font size="18.0" />
+													</font>
+													<HBox.margin>
+														<Insets left="10.0" />
+													</HBox.margin>
+												</Label>
+												<Pane prefHeight="200.0" prefWidth="200.0" />
+												<Label fx:id="medDoseTimeDisplay" layoutX="10.0"
+													layoutY="28.0" prefWidth="100.0" text="Time due">
+													<font>
+														<Font size="18.0" />
+													</font>
+													<HBox.margin>
+														<Insets right="10.0" />
+													</HBox.margin>
+												</Label>
+												<MenuButton mnemonicParsing="false"
+													prefWidth="0.0" textAlignment="CENTER" HBox.hgrow="NEVER">
+													<items>
+														<MenuItem mnemonicParsing="false" text="Action 1" />
+														<MenuItem mnemonicParsing="false" text="Action 2" />
+													</items>
+												</MenuButton>
+											</children>
+										</HBox>
+									</graphic>
+								</Button>
+							</children>
+						</VBox>
+					</content>
+					<GridPane.margin>
+						<Insets bottom="20.0" />
+					</GridPane.margin>
+				</ScrollPane>
 			</children>
 			<VBox.margin>
 				<Insets top="20.0" />
