@@ -9,7 +9,7 @@ public class Medication {
 
 	private int keyId;
 	private String tradeName;
-	private int dosage;	
+	private float dosage;	
 	private String dosageUnit;
 	private Schedule schedule; 
 
@@ -21,7 +21,7 @@ public class Medication {
 	*@param daily an array of times the medication should be taken each day
 	*@param timely an array of days the medication should be taken each week
 	*/
-	public Medication(int keyId, String name, int dose, String dosageUnit, String[] daily, String[] timely) {
+	public Medication(int keyId, String name, float dose, String dosageUnit, String[] daily, String[] timely) {
 		this.keyId = keyId;
 		this.tradeName = name;
 		this.dosage = dose;

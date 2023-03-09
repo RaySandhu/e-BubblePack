@@ -80,25 +80,43 @@
 				</ChoiceBox>
 			</children>
 		</HBox>
-		<HBox prefHeight="30.0" prefWidth="400.0">
+		<HBox prefHeight="200.0" prefWidth="400.0">
 			<children>
-				<Label prefHeight="23.0" prefWidth="250.0" text="Time(s) due on each day">
-					<HBox.margin>
-						<Insets bottom="10.0" left="10.0" />
-					</HBox.margin>
-					<font>
-						<Font size="16.0" />
-					</font>
-				</Label>
-				<HBox prefHeight="100.0" prefWidth="200.0">
-					<HBox.margin>
-						<Insets right="25" top="25.0" />
-					</HBox.margin>
-					<children>
-						<Spinner initialValue="00" max="23" min="0" />
-						<Spinner initialValue="00" max="59" min="0" />
-					</children>
-				</HBox>
+            <VBox>
+               <children>
+      				<Label prefHeight="23.0" prefWidth="250.0" text="Time(s) due on each day">
+      					<HBox.margin>
+      						<Insets bottom="10.0" left="10.0" />
+      					</HBox.margin>
+      					<font>
+      						<Font size="16.0" />
+      					</font>
+      				</Label>
+                  <ScrollPane prefHeight="600.0" prefWidth="200.0">
+                     <content>
+                        <VBox fx:id="choseTimesDisplay" prefHeight="50.0" prefWidth="250.0">
+                           <children>
+                                
+                           </children>
+                        </VBox>
+                     </content>
+                  </ScrollPane>
+               </children>
+            </VBox>
+            <VBox>
+               <children>
+      				<HBox prefHeight="100.0" prefWidth="200.0">
+      					<HBox.margin>
+      						<Insets right="25" top="25.0" />
+      					</HBox.margin>
+      					<children>
+      						<Spinner fx:id="hourSpinnerValue" initialValue="00" max="23" min="0" />
+      						<Spinner fx:id="minuteSpinnerValue" initialValue="00" max="59" min="0" />
+      					</children>
+      				</HBox>
+                  <Button alignment="BOTTOM_RIGHT" mnemonicParsing="false" onAction="#generateChosenTimeDisplay" text="Add time" textAlignment="CENTER" />
+               </children>
+            </VBox>
 			</children>
 		</HBox>
 		<VBox>
@@ -116,7 +134,7 @@
 				</Label>
 				<HBox alignment="CENTER" prefHeight="50.0" prefWidth="250.0">
 					<children>
-						<RadioButton contentDisplay="CENTER" mnemonicParsing="false" text="Mon" textAlignment="CENTER">
+						<RadioButton contentDisplay="CENTER" mnemonicParsing="false" onAction="#generateDaySelectionAsString" text="Mon" textAlignment="CENTER">
 							<font>
 								<Font size="14.0" />
 							</font>
@@ -124,7 +142,7 @@
 								<Insets left="5.0" right="5.0" />
 							</HBox.margin>
 						</RadioButton>
-						<RadioButton contentDisplay="CENTER" layoutX="15.0" layoutY="10.0" mnemonicParsing="false" text="Tues" textAlignment="CENTER">
+						<RadioButton contentDisplay="CENTER" layoutX="15.0" layoutY="10.0" mnemonicParsing="false" onAction="#generateDaySelectionAsString" text="Tues" textAlignment="CENTER">
 							<font>
 								<Font size="14.0" />
 							</font>
@@ -132,7 +150,7 @@
 								<Insets left="5.0" right="5.0" />
 							</HBox.margin>
 						</RadioButton>
-						<RadioButton contentDisplay="CENTER" layoutX="91.0" layoutY="10.0" mnemonicParsing="false" text="Wed" textAlignment="CENTER">
+						<RadioButton contentDisplay="CENTER" layoutX="91.0" layoutY="10.0" mnemonicParsing="false" onAction="#generateDaySelectionAsString" text="Wed" textAlignment="CENTER">
 							<font>
 								<Font size="14.0" />
 							</font>
@@ -140,7 +158,7 @@
 								<Insets left="5.0" right="5.0" />
 							</HBox.margin>
 						</RadioButton>
-						<RadioButton contentDisplay="CENTER" layoutX="162.0" layoutY="10.0" mnemonicParsing="false" text="Thurs" textAlignment="CENTER">
+						<RadioButton contentDisplay="CENTER" layoutX="162.0" layoutY="10.0" mnemonicParsing="false" onAction="#generateDaySelectionAsString" text="Thurs" textAlignment="CENTER">
 							<font>
 								<Font size="14.0" />
 							</font>
@@ -148,7 +166,7 @@
 								<Insets left="5.0" right="5.0" />
 							</HBox.margin>
 						</RadioButton>
-						<RadioButton contentDisplay="CENTER" layoutX="233.0" layoutY="10.0" mnemonicParsing="false" text="Fri" textAlignment="CENTER">
+						<RadioButton contentDisplay="CENTER" layoutX="233.0" layoutY="10.0" mnemonicParsing="false" onAction="#generateDaySelectionAsString" text="Fri" textAlignment="CENTER">
 							<font>
 								<Font size="14.0" />
 							</font>
@@ -160,7 +178,7 @@
 				</HBox>
 				<HBox alignment="TOP_CENTER" layoutX="10.0" layoutY="35.0" prefHeight="50.0" prefWidth="200.0">
 					<children>
-						<RadioButton contentDisplay="CENTER" layoutX="91.0" layoutY="10.0" mnemonicParsing="false" text="Sun" textAlignment="CENTER">
+						<RadioButton contentDisplay="CENTER" layoutX="91.0" layoutY="10.0" mnemonicParsing="false" onAction="#generateDaySelectionAsString" text="Sun" textAlignment="CENTER">
 							<font>
 								<Font size="14.0" />
 							</font>
@@ -168,7 +186,7 @@
 								<Insets left="5.0" right="5.0" />
 							</HBox.margin>
 						</RadioButton>
-						<RadioButton contentDisplay="CENTER" layoutX="233.0" layoutY="10.0" mnemonicParsing="false" text="Sat" textAlignment="CENTER">
+						<RadioButton contentDisplay="CENTER" layoutX="233.0" layoutY="10.0" mnemonicParsing="false" onAction="#generateDaySelectionAsString" text="Sat" textAlignment="CENTER">
 							<font>
 								<Font size="14.0" />
 							</font>

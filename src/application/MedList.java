@@ -23,7 +23,7 @@ public class MedList {
 	 *@param dosageUnit The unit of dosage of the new medication to be added to the catalog.
 	 *@param dailySchedule The daily schedule of the new medication to be added to the catalog, as a string of characters.
 	 */
-	public static void addMedications(String nameOfMed, int dosageOfMed, String dosageUnit, String dailySchedule, String timelySchedule) {
+	public static void addMedications(String nameOfMed, float dosageOfMed, String dosageUnit, String dailySchedule, String timelySchedule) {
 		idCounter++;
 		String[] usableDailySchedule = dailySchedule.split("");
 		String[] usableTimelySchedule = timelySchedule.split(",");
