@@ -1,5 +1,6 @@
 package application;
 
+import java.io.IOException;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 
@@ -11,12 +12,17 @@ import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import javafx.scene.text.Font;
 import javafx.scene.text.TextAlignment;
+import javafx.stage.Stage;
 
 public class MainDisplayPaneController {
 
@@ -26,6 +32,9 @@ public class MainDisplayPaneController {
 
 	@FXML
 	private Label medNameDisplay;
+	
+	@FXML
+	private Button addMedButton;
 
 	@FXML
 	private Label medDosageDisplay;
@@ -196,6 +205,15 @@ public class MainDisplayPaneController {
 				}
 			}
 		}
+	}
+	
+	@FXML
+	public void addMedView(ActionEvent e) throws IOException {
+		Parent root = FXMLLoader.load(getClass().getResource("Scene1.fxml"));
+		Stage addMedWindow = (Stage)((Node)e.getSource()).getScene().getWindow() ;
+		Scene addMedView = new Scene(root);
+		addMedWindow.setScene(addMedView) ;
+		addMedWindow.show();
 	}
 
 	@FXML
