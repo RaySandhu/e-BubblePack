@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.collections.FXCollections?>
 
-<VBox alignment="CENTER" prefHeight="525.0" prefWidth="450.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.HandleMedInfoController">
+<VBox alignment="CENTER" prefHeight="700.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.HandleMedInfoController">
 	<children>
 		<Label fx:id="formHeadingLabel" lineSpacing="5.0" prefHeight="100.0" prefWidth="450.0" text="Please enter information for the medication you would like to add" textAlignment="CENTER" textOverrun="ELLIPSIS" wrapText="true" VBox.vgrow="ALWAYS">
 			<font>
@@ -21,7 +21,7 @@
 		</Label>
 		<HBox prefHeight="30.0" prefWidth="400.0">
 			<children>
-				<Label prefHeight="23.0" prefWidth="250.0" text="Name of Medication">
+				<Label fx:id="medNameLabel" prefHeight="23.0" prefWidth="250.0" text="Name of Medication">
 					<HBox.margin>
 						<Insets bottom="10.0" left="10.0" />
 					</HBox.margin>
@@ -38,7 +38,7 @@
 		</HBox>
 		<HBox prefHeight="30.0" prefWidth="400.0">
 			<children>
-				<Label prefHeight="23.0" prefWidth="250.0" text="Dosage of Medication">
+				<Label fx:id="dosageLabel" prefHeight="23.0" prefWidth="250.0" text="Dosage of Medication">
 					<HBox.margin>
 						<Insets bottom="10.0" left="10.0" />
 					</HBox.margin>
@@ -55,7 +55,7 @@
 		</HBox>
 		<HBox prefHeight="30.0" prefWidth="400.0">
 			<children>
-				<Label prefHeight="23.0" prefWidth="250.0" text="Dosage unit">
+				<Label fx:id="dosageUnitLabel" prefHeight="23.0" prefWidth="250.0" text="Dosage unit">
 					<HBox.margin>
 						<Insets bottom="10.0" left="10.0" />
 					</HBox.margin>
@@ -84,7 +84,7 @@
 			<children>
             <VBox>
                <children>
-      				<Label prefHeight="23.0" prefWidth="250.0" text="Time(s) due on each day">
+      				<Label fx:id="timesDueLabel" prefHeight="23.0" prefWidth="250.0" text="Time(s) due on each day">
       					<HBox.margin>
       						<Insets bottom="10.0" left="10.0" />
       					</HBox.margin>
@@ -121,7 +121,7 @@
 		</HBox>
 		<VBox>
 			<children>
-				<Label alignment="CENTER" contentDisplay="CENTER" prefHeight="23.0" text="Days to take medication" textAlignment="CENTER">
+				<Label fx:id="daysDueLabel" alignment="CENTER" contentDisplay="CENTER" prefHeight="23.0" text="Days to take medication" textAlignment="CENTER">
 					<HBox.margin>
 						<Insets bottom="10.0" left="10.0" />
 					</HBox.margin>
@@ -198,11 +198,23 @@
 				</HBox>
 			</children>
 		</VBox>
-		<Button alignment="CENTER" mnemonicParsing="false" onAction="#toggleMainView" prefHeight="50.0" prefWidth="200.0" text="Submit">
-			<VBox.margin>
-				<Insets top="5.0" />
-			</VBox.margin>
-		</Button>
+      <HBox>
+         <children>
+      		<Button alignment="CENTER" mnemonicParsing="false" onAction="#checkValidInput" prefHeight="50.0" prefWidth="200.0" text="Check before Submission">
+      			<VBox.margin>
+      				<Insets top="5.0" />
+      			</VBox.margin>
+               <HBox.margin>
+                  <Insets right="10.0" />
+               </HBox.margin>
+      		</Button>
+            <Button fx:id="finalSubmitButton" alignment="CENTER" disable="true" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#toggleMainView" prefHeight="50.0" prefWidth="200.0" text="Submit">
+               <HBox.margin>
+                  <Insets left="10.0" />
+               </HBox.margin>
+            </Button>
+         </children>
+      </HBox>
 	</children>
 	<opaqueInsets>
 		<Insets left="20.0" />

@@ -18,6 +18,20 @@ import javafx.stage.Stage;
 public class HandleMedInfoController {
 	
 	@FXML
+	private Label medNameLabel;
+	
+	@FXML
+	private Label dosageLabel;
+	
+	@FXML
+	private Label dosageUnitLabel;
+	
+	@FXML
+	private Label timesDueLabel;
+	@FXML
+	private Label daysDueLabel;
+	
+	@FXML
 	private TextField nameOfMedTextField;
 
 	@FXML
@@ -38,6 +52,9 @@ public class HandleMedInfoController {
 	@FXML
 	private Spinner<Integer> hourSpinnerValue;
 	
+	@FXML 
+	private Button finalSubmitButton;
+	
 	@FXML
 	private Spinner<Integer> minuteSpinnerValue;
 	
@@ -46,41 +63,77 @@ public class HandleMedInfoController {
 	private ArrayList<Integer> weeklyScheduleInput = new ArrayList<Integer>();
 	private String weeklySchedInputString = "";
 	
+	private float dosageValue = 0;
+	
+	private String finalDailyScheduleInput = "";
+	
+	private String nameOfMed = "";
+	
+	private String dosageUnit = "";
+	
 	@FXML
 	public void toggleMainView(ActionEvent e) throws IOException {
-		submitMedInfo();
-		Parent root = FXMLLoader.load(getClass().getResource("MainDisplayPane.fxml"));
-		Stage addMedWindow = (Stage)((Node)e.getSource()).getScene().getWindow() ;
-		Scene addMedView = new Scene(root);
-		addMedWindow.setScene(addMedView) ;
-		addMedWindow.show();
+		if(submitMedInfo()) {
+			Parent root = FXMLLoader.load(getClass().getResource("MainDisplayPane.fxml"));
+			Stage addMedWindow = (Stage)((Node)e.getSource()).getScene().getWindow() ;
+			Scene addMedView = new Scene(root);
+			addMedWindow.setScene(addMedView) ;
+			addMedWindow.show();
+		} else System.out.println("Medication not added");
 	}
 	
 	@FXML
 	public void generateDaySelectionAsString(ActionEvent e) {
 		String dayAddedToSchedule = ((RadioButton) e.getSource()).getText();
-		switch (dayAddedToSchedule) {
+		
+		if (((RadioButton) e.getSource()).isSelected()) {
+			switch (dayAddedToSchedule) {
 			case("Sun"):
 				weeklyScheduleInput.add(0);
-				break;
+			break;
 			case("Mon"):
 				weeklyScheduleInput.add(1);
-				break;
+			break;
 			case("Tues"):
 				weeklyScheduleInput.add(2);
-				break;
+			break;
 			case("Wed"):
 				weeklyScheduleInput.add(3);
-				break;
+			break;
 			case("Thurs"):
 				weeklyScheduleInput.add(4);
-				break;
+			break;
 			case("Fri"):
 				weeklyScheduleInput.add(5);
-				break;
+			break;
 			case("Sat"):
 				weeklyScheduleInput.add(6);
-				break;
+			break;
+			}
+		} else {
+			switch (dayAddedToSchedule) {
+			case("Sun"):
+				weeklyScheduleInput.removeIf(n -> n==0);
+			break;
+			case("Mon"):
+				weeklyScheduleInput.removeIf(n -> n==1);
+			break;
+			case("Tues"):
+				weeklyScheduleInput.removeIf(n -> n==2);
+			break;
+			case("Wed"):
+				weeklyScheduleInput.removeIf(n -> n==3);
+			break;
+			case("Thurs"):
+				weeklyScheduleInput.removeIf(n -> n==4);
+			break;
+			case("Fri"):
+				weeklyScheduleInput.removeIf(n -> n==5);
+			break;
+			case("Sat"):
+				weeklyScheduleInput.removeIf(n -> n==6);
+			break;
+			}
 		}
 		
 		Collections.sort(weeklyScheduleInput);
@@ -89,6 +142,7 @@ public class HandleMedInfoController {
 		for (Integer s : weeklyScheduleInput) {
 			weeklySchedInputString += s;
 		}
+		System.out.println(weeklySchedInputString);
 	}
 	
 	public void generateChosenTimeDisplay() {
@@ -125,9 +179,8 @@ public class HandleMedInfoController {
 		choseTimesDisplay.getChildren().add(timeChoice);
 	}
 	
-	public void submitMedInfo() {
-		float dosageValue = 0;
-		String finalDailyScheduleInput = "";
+	public Boolean checkValidInput() {
+		
 		StringBuilder sb = new StringBuilder();
 		
 		ArrayList<Integer> manipulatingDailyScheduleInput = new ArrayList<>();
@@ -137,13 +190,13 @@ public class HandleMedInfoController {
 		Collections.sort(manipulatingDailyScheduleInput);
 		
 		//adding relevant data
-		String nameOfMed = nameOfMedTextField.getText();
+		nameOfMed = nameOfMedTextField.getText();
 		try {
 			dosageValue = Float.parseFloat(dosageOfMedTextField.getText());
 		} catch (Exception e) {
 			System.out.println("Handle incorrect input for float");
 		}
-		String dosageUnit = dosageUnitChoiceBox.getValue();
+		dosageUnit = dosageUnitChoiceBox.getValue();
 		
 		for (int i = 0; i < manipulatingDailyScheduleInput.size(); i++) {
 		    sb.append(manipulatingDailyScheduleInput.get(i));
@@ -151,11 +204,54 @@ public class HandleMedInfoController {
 		        sb.append(",");
 		    }
 		}
-
         finalDailyScheduleInput = sb.toString();
-        System.out.println(finalDailyScheduleInput);
-		
-		MedList.addMedications(nameOfMed, dosageValue, dosageUnit, weeklySchedInputString, finalDailyScheduleInput);
+        
+        if(!nameOfMed.equals("")) {
+        	medNameLabel.setText("Name of Medication");
+        }
+        if(dosageValue != 0) {
+        	dosageLabel.setText("Dosage of Medication");
+        }
+        if(dosageUnit != null) {
+        	dosageUnitLabel.setText("Dosage Unit");
+        }
+        if(!weeklySchedInputString.equals("")) {
+        	daysDueLabel.setText("Days to take medication");
+        }
+        if(!finalDailyScheduleInput.equals("")) {
+        	timesDueLabel.setText("Time(s) due on each day");
+        }
+        
+        if(!nameOfMed.equals("") && dosageValue != 0 && (!dosageUnit.equals("") || dosageUnit != null) && !weeklySchedInputString.equals("") && !finalDailyScheduleInput.equals("")) {
+        	finalSubmitButton.setDisable(false);
+        	return true;
+        } else {
+        	finalSubmitButton.setDisable(true);
+        	if(nameOfMed.equals("")) {
+        		medNameLabel.setText("Name of Medication"+" **");
+        	}
+        	if(dosageValue == 0) {
+        		dosageLabel.setText("Dosage of Medication"+" **");
+        	}
+        	if(!dosageUnit.equals("") && dosageUnit != null) {
+        		dosageUnitLabel.setText("Dosage Unit"+" **");
+        	}
+        	if(weeklySchedInputString.equals("")) {
+        		daysDueLabel.setText("Days to take medication"+" **");
+        	}
+        	if(finalDailyScheduleInput.equals("")) {
+        		timesDueLabel.setText("Time(s) due on each day"+" **");
+        	}
+        	return false;
+        }
+        
+	}
+	
+	public Boolean submitMedInfo() {
+		if (checkValidInput()) {
+			MedList.addMedications(nameOfMed, dosageValue, dosageUnit, weeklySchedInputString, finalDailyScheduleInput);
+			return true;
+		} else return false;
 	}
 
 }
