@@ -209,7 +209,7 @@ public class MainDisplayPaneController {
 	
 	@FXML
 	public void addMedView(ActionEvent e) throws IOException {
-		Parent root = FXMLLoader.load(getClass().getResource("Scene1.fxml"));
+		Parent root = FXMLLoader.load(getClass().getResource("HandleMedInfo.fxml"));
 		Stage addMedWindow = (Stage)((Node)e.getSource()).getScene().getWindow() ;
 		Scene addMedView = new Scene(root);
 		addMedWindow.setScene(addMedView) ;

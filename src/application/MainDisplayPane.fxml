@@ -40,7 +40,7 @@
 					</font>
 				</Label>
 				<Pane layoutX="264.0" layoutY="15.0" prefWidth="150.0" HBox.hgrow="ALWAYS" />
-				<Button fx:id="addMedButton" alignment="CENTER_RIGHT" contentDisplay="RIGHT" mnemonicParsing="false" text="Add New Medication">
+				<Button fx:id="addMedButton" alignment="CENTER_RIGHT" contentDisplay="RIGHT" mnemonicParsing="false" onAction="#addMedView" text="Add New Medication">
 					<font>
 						<Font size="14.0" />
 					</font>
@@ -92,36 +92,24 @@
 							<font>
 								<Font size="28.0" />
 							</font>
-							<VBox.margin>
-								<Insets />
-							</VBox.margin>
 						</Button>
 						<Pane minHeight="5.0" prefHeight="200.0" prefWidth="200.0" />
 						<Button contentDisplay="CENTER" layoutX="10.0" layoutY="340.0" mnemonicParsing="false" onAction="#getSelectedDay" prefHeight="30.0" prefWidth="300.0" text="Thursday" textAlignment="CENTER">
 							<font>
 								<Font size="28.0" />
 							</font>
-							<VBox.margin>
-								<Insets />
-							</VBox.margin>
 						</Button>
 						<Pane layoutX="10.0" layoutY="382.0" minHeight="5.0" prefHeight="200.0" prefWidth="200.0" />
 						<Button contentDisplay="CENTER" layoutX="10.0" layoutY="250.0" mnemonicParsing="false" onAction="#getSelectedDay" prefHeight="30.0" prefWidth="300.0" text="Friday" textAlignment="CENTER">
 							<font>
 								<Font size="28.0" />
 							</font>
-							<VBox.margin>
-								<Insets />
-							</VBox.margin>
 						</Button>
 						<Pane layoutX="10.0" layoutY="130.0" minHeight="5.0" prefHeight="200.0" prefWidth="200.0" />
 						<Button contentDisplay="CENTER" layoutX="10.0" layoutY="310.0" mnemonicParsing="false" onAction="#getSelectedDay" prefHeight="30.0" prefWidth="300.0" text="Saturday" textAlignment="CENTER">
 							<font>
 								<Font size="28.0" />
 							</font>
-							<VBox.margin>
-								<Insets />
-							</VBox.margin>
 						</Button>
 					</children>
 					<padding>
@@ -130,51 +118,17 @@
 				</VBox>
 				<ScrollPane fitToWidth="true" prefHeight="200.0" prefWidth="600.0" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS">
 					<content>
-						<VBox fx:id="dailyMedsDisplay">
-							<children>
-								<Button fx:id="medDisplayButton" alignment="CENTER" contentDisplay="CENTER" graphicTextGap="0.0" mnemonicParsing="false" prefHeight="75.0" prefWidth="700.0">
-									<font>
-										<Font size="18.0" />
-									</font>
-									<graphic>
-										<HBox alignment="CENTER_LEFT" prefHeight="75.0" prefWidth="800.0">
-											<children>
-												<Label fx:id="medNameDisplay" prefWidth="150.0" text="Medication 1" wrapText="true">
-													<font>
-														<Font size="18.0" />
-													</font>
-													<HBox.margin>
-														<Insets left="15.0" />
-													</HBox.margin>
-												</Label>
-												<Label fx:id="medDosageDisplay" layoutX="10.0" layoutY="28.0" prefWidth="100.0" text="Dosage">
-													<font>
-														<Font size="18.0" />
-													</font>
-													<HBox.margin>
-														<Insets left="10.0" />
-													</HBox.margin>
-												</Label>
-												<Pane prefHeight="200.0" prefWidth="200.0" />
-												<Label fx:id="medDoseTimeDisplay" layoutX="10.0" layoutY="28.0" prefWidth="100.0" text="Time due">
-													<font>
-														<Font size="18.0" />
-													</font>
-													<HBox.margin>
-														<Insets right="10.0" />
-													</HBox.margin>
-												</Label>
-												<MenuButton mnemonicParsing="false" prefWidth="0.0" textAlignment="CENTER" HBox.hgrow="NEVER">
-													<items>
-														<MenuItem mnemonicParsing="false" text="Action 1" />
-														<MenuItem mnemonicParsing="false" text="Action 2" />
-													</items>
-												</MenuButton>
-											</children>
-										</HBox>
-									</graphic>
-								</Button>
-							</children>
+						<VBox fx:id="dailyMedsDisplay" alignment="CENTER">
+                     <children>
+                        <Label alignment="CENTER" text="Select a day to view your medications!" textAlignment="CENTER">
+                           <font>
+                              <Font size="36.0" />
+                           </font>
+                           <VBox.margin>
+                              <Insets top="180.0" />
+                           </VBox.margin>
+                        </Label>
+                     </children>
 						</VBox>
 					</content>
 					<GridPane.margin>
