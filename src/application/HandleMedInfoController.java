@@ -165,9 +165,7 @@ public class HandleMedInfoController {
 		timeChoice.setPrefSize(245, 25);
 		timeChoice.setOnMouseClicked(e -> {
 			int timesIndex = 0;
-        	for(String s : dailyScheduleInput) {
-//    			System.out.println(s + " equals " + hourDisplay + minutesDisplay + (s.equals(hourDisplay + minutesDisplay)));
-    			
+        	for(String s : dailyScheduleInput) {    			
         		if(s.equals(hourDisplay + minutesDisplay)){
         			System.out.println("Deleted");
         			choseTimesDisplay.getChildren().remove(timesIndex);
@@ -246,6 +244,13 @@ public class HandleMedInfoController {
         }
         
 	}
+	
+//	public void editMedTrigger(String medName, float dosageVal, String dosageUnit, String weeklySched, String dailySched) {
+//		//currently cannot auto-populate the daily and weekly schedule to the edit window
+//		this.nameOfMedTextField.setText(medName);
+//		this.dosageOfMedTextField.setText("" + dosageVal);
+//		this.dosageUnitChoiceBox.setValue(dosageUnit);
+//	}
 	
 	public Boolean submitMedInfo() {
 		if (checkValidInput()) {

@@ -135,6 +135,11 @@ public class Medication {
 		schedule.toggleAdministrationStatus(doseToToggle);
 	}
 	
+	public void deleteMedDose(int doseIndex) {
+		schedule.getScheduleData().get(1).remove(doseIndex);
+		schedule.getAdministrationStatus().remove(doseIndex);
+	}
+	
 	/**
 	 * Updates the administration status for any missed medication doses. 
 	 * If the current time is past the scheduled time for a dose and the dose has not already been administered, 
