@@ -46,7 +46,7 @@ public class MainDisplayPaneController {
 
 	@FXML
 	private VBox dailyMedsDisplay;
-	
+
 	private int daySelected;
 
 	/**
@@ -60,14 +60,14 @@ public class MainDisplayPaneController {
 	 * @return the complete styled button that will populate the scrollpane in the main scene
 	 */
 	private Button medDisplayButtonGenerator(int buttonIndex, int keyId, String medName, String dosage, int singleDoseTime) {
-		
+
 		Button medDisplayButton = new Button();
 		medDisplayButton.setPrefSize(700, 75);
 		medDisplayButton.setFont(new Font(18));
 		HBox hbox = new HBox();
 		hbox.setAlignment(Pos.CENTER_LEFT);
 		hbox.setPrefSize(800, 75);
-		
+
 		BooleanProperty deleteStatus = new SimpleBooleanProperty(false);
 
 		medDisplayButton.setOnMouseClicked(event -> {
@@ -117,14 +117,14 @@ public class MainDisplayPaneController {
 		menuButton.setText("");
 		menuButton.setTextAlignment(TextAlignment.CENTER);
 		menuButton.setPrefWidth(0);
-		
+
 		//triggers listener to handle deletion of dose (not medication)
 		MenuItem delete = new MenuItem("Delete this dose of medication (affects all days of med schedule!)");
 		menuButton.getItems().addAll(delete);
 		delete.setOnAction(e -> {
 			deleteStatus.set(true);
 		});
-		
+
 		//initially added to attempt responsive deleting of displayButton
 		deleteStatus.addListener((observable, oldValue, newValue) -> {
 			Medication clickedMed = MedList.retrieveMedById(keyId);
@@ -136,7 +136,7 @@ public class MainDisplayPaneController {
 		});
 
 		hbox.getChildren().addAll(medNameDisplay, medDosageDisplay, spacer, medDoseTimeDisplay, menuButton);
-		
+
 		medDisplayButton.setGraphic(hbox);
 		return medDisplayButton;
 
@@ -182,7 +182,7 @@ public class MainDisplayPaneController {
 	 * @param selectedDay the day of the week to display medications for indexed from 0-6 for Sunday through Saturday.
 	 */
 	public void renderMedList(int selectedDay) {
-		
+
 		daySelected = selectedDay;
 		ArrayList<Medication> listToRender = Display.dailyMedicationList(selectedDay);
 		ArrayList<Integer> timeTracker = new ArrayList<Integer>();
@@ -191,14 +191,21 @@ public class MainDisplayPaneController {
 		dailyMedsDisplay.getChildren().clear();
 
 		for (Medication i : listToRender) {
-
-			i.updateMissedMeds();
 			ArrayList<Integer> timesDue = i.getSchedule().get(1);
+
 
 			//iterate through each dose of each medication to render a button to display
 			for(int j=0; j<timesDue.size(); j++) {
-				i.checkAdminStatusPerDose(j);
 				int indexCounter = 0;
+				
+				i.getAdministrationRecord().get(j).set(1, false);
+
+				if(selectedDay < Schedule.getTodaysDayAsNum()) {
+					//checks that the med has not been administered and the current time is later than the dose time.
+					i.getAdministrationRecord().get(j).set(1, true);
+				} else if (selectedDay == Schedule.getTodaysDayAsNum()) {
+					i.updateMissedMeds();
+				}
 
 				// linear sort on timesDue for the entire day to then organize the medlist for the day chronologically 
 				for (int t : timeTracker) {
