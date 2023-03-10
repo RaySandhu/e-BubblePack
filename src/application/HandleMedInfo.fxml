@@ -1,0 +1,225 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.collections.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.collections.FXCollections?>
+
+<VBox alignment="CENTER" prefHeight="700.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.HandleMedInfoController">
+	<children>
+		<Label fx:id="formHeadingLabel" lineSpacing="5.0" prefHeight="100.0" prefWidth="450.0" text="Please enter information for the medication you would like to add" textAlignment="CENTER" textOverrun="ELLIPSIS" wrapText="true" VBox.vgrow="ALWAYS">
+			<font>
+				<Font size="24.0" />
+			</font>
+			<VBox.margin>
+				<Insets bottom="20.0" right="15.0" top="-20.0" />
+			</VBox.margin>
+		</Label>
+		<HBox prefHeight="30.0" prefWidth="400.0">
+			<children>
+				<Label fx:id="medNameLabel" prefHeight="23.0" prefWidth="250.0" text="Name of Medication">
+					<HBox.margin>
+						<Insets bottom="10.0" left="10.0" />
+					</HBox.margin>
+					<font>
+						<Font size="16.0" />
+					</font>
+				</Label>
+				<TextField fx:id="nameOfMedTextField" prefHeight="10.0" prefWidth="149.0">
+					<HBox.margin>
+						<Insets top="25.0" />
+					</HBox.margin>
+				</TextField>
+			</children>
+		</HBox>
+		<HBox prefHeight="30.0" prefWidth="400.0">
+			<children>
+				<Label fx:id="dosageLabel" prefHeight="23.0" prefWidth="250.0" text="Dosage of Medication">
+					<HBox.margin>
+						<Insets bottom="10.0" left="10.0" />
+					</HBox.margin>
+					<font>
+						<Font size="16.0" />
+					</font>
+				</Label>
+				<TextField fx:id="dosageOfMedTextField" prefHeight="10.0" prefWidth="149.0">
+					<HBox.margin>
+						<Insets top="25.0" />
+					</HBox.margin>
+				</TextField>
+			</children>
+		</HBox>
+		<HBox prefHeight="30.0" prefWidth="400.0">
+			<children>
+				<Label fx:id="dosageUnitLabel" prefHeight="23.0" prefWidth="250.0" text="Dosage unit">
+					<HBox.margin>
+						<Insets bottom="10.0" left="10.0" />
+					</HBox.margin>
+					<font>
+						<Font size="16.0" />
+					</font>
+				</Label>
+				<ChoiceBox fx:id="dosageUnitChoiceBox" prefWidth="150.0">
+					<HBox.margin>
+						<Insets top="25.0" />
+					</HBox.margin>
+					<items>
+						<FXCollections fx:factory="observableArrayList">
+							<String fx:value="mg" />
+							<String fx:value="g" />
+							<String fx:value="tsp" />
+							<String fx:value="tbsp" />
+							<String fx:value="fl. oz" />
+							<String fx:value="pills" />
+						</FXCollections>
+					</items>
+				</ChoiceBox>
+			</children>
+		</HBox>
+		<HBox prefHeight="200.0" prefWidth="400.0">
+			<children>
+            <VBox>
+               <children>
+      				<Label fx:id="timesDueLabel" prefHeight="23.0" prefWidth="250.0" text="Time(s) due on each day">
+      					<HBox.margin>
+      						<Insets bottom="10.0" left="10.0" />
+      					</HBox.margin>
+      					<font>
+      						<Font size="16.0" />
+      					</font>
+      				</Label>
+                  <ScrollPane prefHeight="600.0" prefWidth="200.0">
+                     <content>
+                        <VBox fx:id="choseTimesDisplay" prefHeight="50.0" prefWidth="250.0">
+                           <children>
+                                
+                           </children>
+                        </VBox>
+                     </content>
+                  </ScrollPane>
+               </children>
+            </VBox>
+            <VBox>
+               <children>
+      				<HBox prefHeight="100.0" prefWidth="200.0">
+      					<HBox.margin>
+      						<Insets right="25" top="25.0" />
+      					</HBox.margin>
+      					<children>
+      						<Spinner fx:id="hourSpinnerValue" initialValue="00" max="23" min="0" />
+      						<Spinner fx:id="minuteSpinnerValue" initialValue="00" max="59" min="0" />
+      					</children>
+      				</HBox>
+                  <Button alignment="BOTTOM_RIGHT" mnemonicParsing="false" onAction="#generateChosenTimeDisplay" text="Add time" textAlignment="CENTER" />
+               </children>
+            </VBox>
+			</children>
+		</HBox>
+		<VBox>
+			<children>
+				<Label fx:id="daysDueLabel" alignment="CENTER" contentDisplay="CENTER" prefHeight="23.0" text="Days to take medication" textAlignment="CENTER">
+					<HBox.margin>
+						<Insets bottom="10.0" left="10.0" />
+					</HBox.margin>
+					<font>
+						<Font size="18.0" />
+					</font>
+					<VBox.margin>
+						<Insets left="120.0" right="25.0" top="10.0" />
+					</VBox.margin>
+				</Label>
+				<HBox alignment="CENTER" prefHeight="50.0" prefWidth="250.0">
+					<children>
+						<RadioButton contentDisplay="CENTER" mnemonicParsing="false" onAction="#generateDaySelectionAsString" text="Mon" textAlignment="CENTER">
+							<font>
+								<Font size="14.0" />
+							</font>
+							<HBox.margin>
+								<Insets left="5.0" right="5.0" />
+							</HBox.margin>
+						</RadioButton>
+						<RadioButton contentDisplay="CENTER" layoutX="15.0" layoutY="10.0" mnemonicParsing="false" onAction="#generateDaySelectionAsString" text="Tues" textAlignment="CENTER">
+							<font>
+								<Font size="14.0" />
+							</font>
+							<HBox.margin>
+								<Insets left="5.0" right="5.0" />
+							</HBox.margin>
+						</RadioButton>
+						<RadioButton contentDisplay="CENTER" layoutX="91.0" layoutY="10.0" mnemonicParsing="false" onAction="#generateDaySelectionAsString" text="Wed" textAlignment="CENTER">
+							<font>
+								<Font size="14.0" />
+							</font>
+							<HBox.margin>
+								<Insets left="5.0" right="5.0" />
+							</HBox.margin>
+						</RadioButton>
+						<RadioButton contentDisplay="CENTER" layoutX="162.0" layoutY="10.0" mnemonicParsing="false" onAction="#generateDaySelectionAsString" text="Thurs" textAlignment="CENTER">
+							<font>
+								<Font size="14.0" />
+							</font>
+							<HBox.margin>
+								<Insets left="5.0" right="5.0" />
+							</HBox.margin>
+						</RadioButton>
+						<RadioButton contentDisplay="CENTER" layoutX="233.0" layoutY="10.0" mnemonicParsing="false" onAction="#generateDaySelectionAsString" text="Fri" textAlignment="CENTER">
+							<font>
+								<Font size="14.0" />
+							</font>
+							<HBox.margin>
+								<Insets left="5.0" right="20.0" />
+							</HBox.margin>
+						</RadioButton>
+					</children>
+				</HBox>
+				<HBox alignment="TOP_CENTER" layoutX="10.0" layoutY="35.0" prefHeight="50.0" prefWidth="200.0">
+					<children>
+						<RadioButton contentDisplay="CENTER" layoutX="91.0" layoutY="10.0" mnemonicParsing="false" onAction="#generateDaySelectionAsString" text="Sun" textAlignment="CENTER">
+							<font>
+								<Font size="14.0" />
+							</font>
+							<HBox.margin>
+								<Insets left="5.0" right="5.0" />
+							</HBox.margin>
+						</RadioButton>
+						<RadioButton contentDisplay="CENTER" layoutX="233.0" layoutY="10.0" mnemonicParsing="false" onAction="#generateDaySelectionAsString" text="Sat" textAlignment="CENTER">
+							<font>
+								<Font size="14.0" />
+							</font>
+							<HBox.margin>
+								<Insets left="5.0" right="20.0" />
+							</HBox.margin>
+						</RadioButton>
+					</children>
+				</HBox>
+			</children>
+		</VBox>
+      <HBox>
+         <children>
+      		<Button alignment="CENTER" mnemonicParsing="false" onAction="#checkValidInput" prefHeight="50.0" prefWidth="200.0" text="Check before Submission">
+      			<VBox.margin>
+      				<Insets top="5.0" />
+      			</VBox.margin>
+               <HBox.margin>
+                  <Insets right="10.0" />
+               </HBox.margin>
+      		</Button>
+            <Button fx:id="finalSubmitButton" alignment="CENTER" disable="true" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#toggleMainView" prefHeight="50.0" prefWidth="200.0" text="Submit">
+               <HBox.margin>
+                  <Insets left="10.0" />
+               </HBox.margin>
+            </Button>
+         </children>
+      </HBox>
+	</children>
+	<opaqueInsets>
+		<Insets left="20.0" />
+	</opaqueInsets>
+	<padding>
+		<Insets left="20.0" />
+	</padding>
+</VBox>

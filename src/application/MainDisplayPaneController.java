@@ -1,5 +1,6 @@
 package application;
 
+import java.io.IOException;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 
@@ -9,14 +10,21 @@ import java.util.ArrayList;
 
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import javafx.scene.text.Font;
 import javafx.scene.text.TextAlignment;
+import javafx.stage.Stage;
 
 public class MainDisplayPaneController {
 
@@ -28,6 +36,9 @@ public class MainDisplayPaneController {
 	private Label medNameDisplay;
 
 	@FXML
+	private Button addMedButton;
+
+	@FXML
 	private Label medDosageDisplay;
 
 	@FXML
@@ -35,6 +46,8 @@ public class MainDisplayPaneController {
 
 	@FXML
 	private VBox dailyMedsDisplay;
+
+	private int daySelected;
 
 	/**
 	 * Generates a styled button displaying all the parameters to the users for necessary information.
@@ -46,13 +59,16 @@ public class MainDisplayPaneController {
 	 * @param singleDoseTime the exact time of this particular dose of medication to be displayed.
 	 * @return the complete styled button that will populate the scrollpane in the main scene
 	 */
-	private Button medDisplayButtonGenerator(int keyId, String medName, String dosage, int singleDoseTime) {
+	private Button medDisplayButtonGenerator(int buttonIndex, int keyId, String medName, String dosage, int singleDoseTime) {
+
 		Button medDisplayButton = new Button();
 		medDisplayButton.setPrefSize(700, 75);
 		medDisplayButton.setFont(new Font(18));
 		HBox hbox = new HBox();
 		hbox.setAlignment(Pos.CENTER_LEFT);
 		hbox.setPrefSize(800, 75);
+
+		BooleanProperty deleteStatus = new SimpleBooleanProperty(false);
 
 		medDisplayButton.setOnMouseClicked(event -> {
 			Medication clickedMed = MedList.retrieveMedById(keyId);
@@ -102,9 +118,22 @@ public class MainDisplayPaneController {
 		menuButton.setTextAlignment(TextAlignment.CENTER);
 		menuButton.setPrefWidth(0);
 
-		MenuItem edit = new MenuItem("Edit this medication");
-		MenuItem delete = new MenuItem("Delete this medication");
-		menuButton.getItems().addAll(edit, delete);
+		//triggers listener to handle deletion of dose (not medication)
+		MenuItem delete = new MenuItem("Delete this dose of medication (affects all days of med schedule!)");
+		menuButton.getItems().addAll(delete);
+		delete.setOnAction(e -> {
+			deleteStatus.set(true);
+		});
+
+		//initially added to attempt responsive deleting of displayButton
+		deleteStatus.addListener((observable, oldValue, newValue) -> {
+			Medication clickedMed = MedList.retrieveMedById(keyId);
+			int doseIndex = clickedMed.getSchedule().get(1).indexOf(singleDoseTime);
+
+			clickedMed.deleteMedDose(doseIndex);
+			medDisplayButton.setDisable(true);
+			medNameDisplay.setText(medNameDisplay.getText() + " (Deleted)");
+		});
 
 		hbox.getChildren().addAll(medNameDisplay, medDosageDisplay, spacer, medDoseTimeDisplay, menuButton);
 
@@ -154,6 +183,7 @@ public class MainDisplayPaneController {
 	 */
 	public void renderMedList(int selectedDay) {
 
+		daySelected = selectedDay;
 		ArrayList<Medication> listToRender = Display.dailyMedicationList(selectedDay);
 		ArrayList<Integer> timeTracker = new ArrayList<Integer>();
 		timeTracker.add(2400);	// only used as an outlier value to trigger the for loops for chronological sorting
@@ -161,19 +191,26 @@ public class MainDisplayPaneController {
 		dailyMedsDisplay.getChildren().clear();
 
 		for (Medication i : listToRender) {
-
-			i.updateMissedMeds();
 			ArrayList<Integer> timesDue = i.getSchedule().get(1);
+
 
 			//iterate through each dose of each medication to render a button to display
 			for(int j=0; j<timesDue.size(); j++) {
-				i.checkAdminStatusPerDose(j);
 				int indexCounter = 0;
+				
+				i.getAdministrationRecord().get(j).set(1, false);
 
-				//    			linear sort on timesDue for the entire day to then organize the medlist for the day chronologically 
+				if(selectedDay < Schedule.getTodaysDayAsNum()) {
+					//checks that the med has not been administered and the current time is later than the dose time.
+					i.getAdministrationRecord().get(j).set(1, true);
+				} else if (selectedDay == Schedule.getTodaysDayAsNum()) {
+					i.updateMissedMeds();
+				}
+
+				// linear sort on timesDue for the entire day to then organize the medlist for the day chronologically 
 				for (int t : timeTracker) {
 					if(t > timesDue.get(j)) {
-						Button outputButton = medDisplayButtonGenerator(i.getId(), i.getTradeName(),i.getDosage(), timesDue.get(j));
+						Button outputButton = medDisplayButtonGenerator(indexCounter, i.getId(), i.getTradeName(),i.getDosage(), timesDue.get(j));
 
 						//color setting per administration status
 						if (i.checkAdminStatusPerDose(j) == "Taken") {
@@ -197,6 +234,16 @@ public class MainDisplayPaneController {
 			}
 		}
 	}
+
+	@FXML
+	public void addMedView(ActionEvent e) throws IOException {
+		Parent root = FXMLLoader.load(getClass().getResource("HandleMedInfo.fxml"));
+		Stage addMedWindow = (Stage)((Node)e.getSource()).getScene().getWindow() ;
+		Scene addMedView = new Scene(root);
+		addMedWindow.setScene(addMedView) ;
+		addMedWindow.show();
+	}
+
 
 	@FXML
 	/**
