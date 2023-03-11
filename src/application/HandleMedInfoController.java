@@ -15,6 +15,9 @@ import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
+/**
+ * explicitly for handling the appropriate intake and transfer of data from the user to the medList storing medication information
+ */
 public class HandleMedInfoController {
 	
 	@FXML
@@ -72,6 +75,12 @@ public class HandleMedInfoController {
 	private String dosageUnit = "";
 	
 	@FXML
+	/**
+	 * triggers the first main scene which displays medication information for the patient dependent on a boolean 
+	 * from appropriate medication submission
+	 * @param e represents the event that triggers this method
+	 * @throws IOException captures if the method is called by an event which is targetting null
+	 */
 	public void toggleMainView(ActionEvent e) throws IOException {
 		if(submitMedInfo()) {
 			Parent root = FXMLLoader.load(getClass().getResource("MainDisplayPane.fxml"));
@@ -83,6 +92,11 @@ public class HandleMedInfoController {
 	}
 	
 	@FXML
+	/**
+	 * switch statement to convert the input from radiobuttons representing days of the week 
+	 * to strings in the format that is uniform throughout the application
+	 * @param e represents the event that triggers this method
+	 */
 	public void generateDaySelectionAsString(ActionEvent e) {
 		String dayAddedToSchedule = ((RadioButton) e.getSource()).getText();
 		
@@ -145,6 +159,10 @@ public class HandleMedInfoController {
 		System.out.println(weeklySchedInputString);
 	}
 	
+	/**
+	 * using spinners to lock user input to integers within the 24hr time clock, this creates a deletable button
+	 * which displays every dose time choice that user wishes to finalize for the new medication that is created
+	 */
 	public void generateChosenTimeDisplay() {
 		int hoursToAdd = hourSpinnerValue.getValue();
 		int minutesToAdd = minuteSpinnerValue.getValue();
@@ -177,6 +195,12 @@ public class HandleMedInfoController {
 		choseTimesDisplay.getChildren().add(timeChoice);
 	}
 	
+	/**
+	 * Prevents invalid input from the user in any fields and mandate every field to have a value by leaving the final submit button
+	 * disabled if checks not met. This method also runs again on the submit button as a final check that no values were changed to 
+	 * invalid.
+	 * @return
+	 */
 	public Boolean checkValidInput() {
 		
 		StringBuilder sb = new StringBuilder();
@@ -204,6 +228,7 @@ public class HandleMedInfoController {
 		}
         finalDailyScheduleInput = sb.toString();
         
+		//error message displays
         if(!nameOfMed.equals("")) {
         	medNameLabel.setText("Name of Medication");
         }
@@ -245,13 +270,11 @@ public class HandleMedInfoController {
         
 	}
 	
-//	public void editMedTrigger(String medName, float dosageVal, String dosageUnit, String weeklySched, String dailySched) {
-//		//currently cannot auto-populate the daily and weekly schedule to the edit window
-//		this.nameOfMedTextField.setText(medName);
-//		this.dosageOfMedTextField.setText("" + dosageVal);
-//		this.dosageUnitChoiceBox.setValue(dosageUnit);
-//	}
-	
+	/**
+	 * runs a final check for valid inputs and add the medication information to medList appropriately. If input was changed to invalid,
+	 * the button will disable and the scene change to main display will not occur.
+	 * @return indicates if the scene display will change to the main scene.
+	 */
 	public Boolean submitMedInfo() {
 		if (checkValidInput()) {
 			MedList.addMedications(nameOfMed, dosageValue, dosageUnit, weeklySchedInputString, finalDailyScheduleInput);

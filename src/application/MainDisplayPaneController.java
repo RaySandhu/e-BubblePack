@@ -26,6 +26,12 @@ import javafx.scene.text.Font;
 import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 
+/**
+ * Handles all input and navigation from the user on the main display scene including:
+ * indicating taken or missed medications, 
+ * switching between days to view medication schedules and
+ * opening the window for adding new medications, 
+ */
 public class MainDisplayPaneController {
 
 
@@ -236,6 +242,11 @@ public class MainDisplayPaneController {
 	}
 
 	@FXML
+	/**
+	 * switching to the window which allows for the input of new medication information by the user
+	 * @param e represents the event that triggers this method
+	 * @throws IOException captures if the method is called by an event which is targetting null
+	 */
 	public void addMedView(ActionEvent e) throws IOException {
 		Parent root = FXMLLoader.load(getClass().getResource("HandleMedInfo.fxml"));
 		Stage addMedWindow = (Stage)((Node)e.getSource()).getScene().getWindow() ;

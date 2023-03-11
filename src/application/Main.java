@@ -11,6 +11,10 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.*;
 public class Main extends Application {
 	@Override
+	/**
+	 * Initialize the primary scene of the application which some mock data added in
+	 * @param primaryStage the primary window that will be displayed set with the resources to load from an FXML file.
+	 */
 	public void start(Stage primaryStage) {
 		
 		// mock data
