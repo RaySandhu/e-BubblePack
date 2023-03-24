@@ -1,6 +1,7 @@
 package application;
 
 import java.io.IOException;
+import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 
@@ -25,6 +26,7 @@ import javafx.scene.layout.*;
 import javafx.scene.text.Font;
 import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
+import java.time.DayOfWeek;
 
 /**
  * Handles all input and navigation from the user on the main display scene including:
@@ -154,6 +156,58 @@ public class MainDisplayPaneController {
 	 * @param e the event listener for the click on the day of the week button
 	 */
 	public void getSelectedDay(ActionEvent e) {
+	    LocalDate today = LocalDate.now();
+	    DayOfWeek dayOfWeek = today.getDayOfWeek();
+	    int daySelected = dayOfWeek.getValue() - 1;
+	    String selectedDayValue = daySelected >= 0 && daySelected <= 6 ? getDayOfWeek(daySelected) : ((Button)e.getSource()).getText();
+	    System.out.println("Day select = " + selectedDayValue);
+	    switch(selectedDayValue) {
+	        case "Sunday":
+	            renderMedList(0);
+	            break;
+	        case "Monday":
+	            renderMedList(1);
+	            break;
+	        case "Tuesday":
+	            renderMedList(2);
+	            break;
+	        case "Wednesday":
+	            renderMedList(3);
+	            break;
+	        case "Thursday":
+	            renderMedList(4);
+	            break;
+	        case "Friday":
+	            renderMedList(5);
+	            break;
+	        case "Saturday":
+	            renderMedList(6);
+	            break;
+	    }
+	}
+
+	private String getDayOfWeek(int day) {
+	    switch(day) {
+	        case 0:
+	            return "Sunday";
+	        case 1:
+	            return "Monday";
+	        case 2:
+	            return "Tuesday";
+	        case 3:
+	            return "Wednesday";
+	        case 4:
+	            return "Thursday";
+	        case 5:
+	            return "Friday";
+	        case 6:
+	            return "Saturday";
+	        default:
+	            return "";
+	    }
+	}
+
+	/*public void getSelectedDay(ActionEvent e) {
 		String selectedDayValue = ((Button)e.getSource()).getText();
 		System.out.println("Day select = " + selectedDayValue);
 		switch(selectedDayValue) {
@@ -180,7 +234,7 @@ public class MainDisplayPaneController {
 			break;
 		}
 
-	}
+	}*/
 
 	/**
 	 * iterates through the medlist to correctly call the medications that are due on the selected day by the user. 
@@ -261,15 +315,21 @@ public class MainDisplayPaneController {
 	 * Initializes the controller class. This method is automatically called
 	 * after the FXML file has been loaded.
 	 */
-	void initialize() {
+	public void initialize() {
 		//using a time-based animation to display the current time
 		Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(1), event -> {
 			LocalTime time = LocalTime.now();
-			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("hh:mm a");
-			String formattedTime = time.format(formatter);
-			currentTime.setText(formattedTime);
-		}));
+			DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("hh:mm a");
+			DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("MMM dd, yyyy");
+			String formattedTime = time.format(timeFormatter);
+			LocalDate date = LocalDate.now();
+			String formattedDate = date.format(dateFormatter);
+			currentTime.setText(formattedTime + "   " + formattedDate);
+			LocalDate today = LocalDate.now();
+	        DayOfWeek dayOfWeek = today.getDayOfWeek();
+	        int daySelected = dayOfWeek.getValue() - 1;
+	    }));
 		timeline.setCycleCount(Timeline.INDEFINITE);
 		timeline.play();
-	}
+	}	
 }
