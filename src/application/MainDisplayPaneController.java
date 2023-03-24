@@ -158,10 +158,6 @@ public class MainDisplayPaneController {
 	public void getSelectedDay(ActionEvent e) {
 		String selectedDayValue = ((Button)e.getSource()).getText();
 		System.out.println("Day select = " + selectedDayValue);
-		LocalDate today = LocalDate.now();
-	    DayOfWeek dayOfWeek = today.getDayOfWeek();
-	    int daySelected = dayOfWeek.getValue() - 1;
-	    renderMedList(daySelected);
 		switch(selectedDayValue) {
 		case "Sunday":
 			renderMedList(0);
@@ -305,11 +301,9 @@ public class MainDisplayPaneController {
 			LocalDate date = LocalDate.now();
 			String formattedDate = date.format(dateFormatter);
 			currentTime.setText(formattedTime + "   " + formattedDate);
-			LocalDate today = LocalDate.now();
-	        DayOfWeek dayOfWeek = today.getDayOfWeek();
-	        int daySelected = dayOfWeek.getValue() - 1;
 	    }));
 		timeline.setCycleCount(Timeline.INDEFINITE);
 		timeline.play();
+		renderMedList(Schedule.getTodaysDayAsNum());
 	}	
 }
