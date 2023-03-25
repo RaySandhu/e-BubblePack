@@ -54,6 +54,32 @@ public class MainDisplayPaneController {
 
 	@FXML
 	private VBox dailyMedsDisplay;
+	
+	@FXML
+	private DatePicker datePicker;
+
+	@FXML
+    private Button sundayButton;
+
+    @FXML
+    private Button mondayButton;
+
+    @FXML
+    private Button tuesdayButton;
+
+    @FXML
+    private Button wednesdayButton;
+    
+    @FXML
+    private Button thursdayButton;
+    
+    @FXML
+    private Button fridayButton;
+    
+    @FXML
+    private Button saturdayButton;
+
+	private Button selectedButton;
 
 	private int daySelected;
 
@@ -181,7 +207,6 @@ public class MainDisplayPaneController {
 			renderMedList(6);
 			break;
 		}
-
 	}
 	/*public void getSelectedDay(ActionEvent e) {
 		String selectedDayValue = ((Button)e.getSource()).getText();
@@ -284,6 +309,27 @@ public class MainDisplayPaneController {
 		addMedWindow.setScene(addMedView) ;
 		addMedWindow.show();
 	}
+	private void handleDayButton(Button clickedButton) {
+	    // check if the clicked button is the same as the selected button
+	    if (selectedButton != null && clickedButton == selectedButton) {
+	        return; // do nothing
+	    }
+	    
+	    // revert the style of the previously selected button (if any)
+	    if (selectedButton != null) {
+	        selectedButton.setStyle("-fx-background-color: #e3e3e3;");
+	        selectedButton.setOnMouseEntered(null);
+	        selectedButton.setOnMouseExited(null);
+	    }
+
+	    // set the background color of the clicked button to the highlight color
+	    clickedButton.setStyle("-fx-background-color: #8e9191;");
+	    clickedButton.setOnMouseEntered(e -> clickedButton.setStyle("-fx-background-color: #c8cccc;"));
+	    clickedButton.setOnMouseExited(e -> clickedButton.setStyle("-fx-background-color: #8e9191;"));
+
+	    // set the clicked button as the selected button
+	    selectedButton = clickedButton;
+	}
 
 
 	@FXML
@@ -304,6 +350,39 @@ public class MainDisplayPaneController {
 	    }));
 		timeline.setCycleCount(Timeline.INDEFINITE);
 		timeline.play();
-		renderMedList(Schedule.getTodaysDayAsNum());
+		int todayAsNum = Schedule.getTodaysDayAsNum();
+	    renderMedList(todayAsNum);
+		// set the event handler for the day buttons
+	    switch (todayAsNum) {
+	        case 0:
+	            handleDayButton(sundayButton);
+	            break;
+	        case 1:
+	            handleDayButton(mondayButton);
+	            break;
+	        case 2:
+	            handleDayButton(tuesdayButton);
+	            break;
+	        case 3:
+	            handleDayButton(wednesdayButton);
+	            break;
+	        case 4:
+	            handleDayButton(thursdayButton);
+	            break;
+	        case 5:
+	            handleDayButton(fridayButton);
+	            break;
+	        case 6:
+	            handleDayButton(saturdayButton);
+	            break;
+	    }
+		// set the event handler for the day buttons
+		sundayButton.setOnAction(event -> handleDayButton(sundayButton));
+	    mondayButton.setOnAction(event -> handleDayButton(mondayButton));
+	    tuesdayButton.setOnAction(event -> handleDayButton(tuesdayButton));
+	    wednesdayButton.setOnAction(event -> handleDayButton(wednesdayButton));
+	    thursdayButton.setOnAction(event -> handleDayButton(thursdayButton));
+	    fridayButton.setOnAction(event -> handleDayButton(fridayButton));
+	    saturdayButton.setOnAction(event -> handleDayButton(saturdayButton));
 	}	
 }

@@ -61,7 +61,7 @@
 			<children>
 				<VBox GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS" HBox.hgrow="ALWAYS">
 					<children>
-						<Button contentDisplay="CENTER" mnemonicParsing="false" onAction="#getSelectedDay" prefHeight="30.0" prefWidth="300.0" text="Sunday" textAlignment="CENTER" VBox.vgrow="ALWAYS">
+						<Button fx:id="sundayButton" contentDisplay="CENTER" mnemonicParsing="false" onAction="#getSelectedDay" prefHeight="30.0" prefWidth="300.0" text="Sunday" textAlignment="CENTER" VBox.vgrow="ALWAYS">
 							<font>
 								<Font size="28.0" />
 							</font>
@@ -70,7 +70,7 @@
 							</VBox.margin>
 						</Button>
 						<Pane layoutX="10.0" layoutY="256.0" minHeight="5.0" prefHeight="200.0" VBox.vgrow="ALWAYS" />
-						<Button contentDisplay="CENTER" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#getSelectedDay" prefHeight="30.0" prefWidth="300.0" text="Monday" textAlignment="CENTER">
+						<Button fx:id="mondayButton" contentDisplay="CENTER" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#getSelectedDay" prefHeight="30.0" prefWidth="300.0" text="Monday" textAlignment="CENTER">
 							<font>
 								<Font size="28.0" />
 							</font>
@@ -79,7 +79,7 @@
 							</VBox.margin>
 						</Button>
 						<Pane minHeight="5.0" prefHeight="200.0" prefWidth="200.0" />
-						<Button contentDisplay="CENTER" layoutX="10.0" layoutY="220.0" mnemonicParsing="false" onAction="#getSelectedDay" prefHeight="30.0" prefWidth="300.0" text="Tuesday" textAlignment="CENTER">
+						<Button fx:id="tuesdayButton" contentDisplay="CENTER" layoutX="10.0" layoutY="220.0" mnemonicParsing="false" onAction="#getSelectedDay" prefHeight="30.0" prefWidth="300.0" text="Tuesday" textAlignment="CENTER">
 							<font>
 								<Font size="28.0" />
 							</font>
@@ -88,25 +88,25 @@
 							</VBox.margin>
 						</Button>
 						<Pane layoutX="10.0" layoutY="450.0" minHeight="5.0" prefHeight="200.0" prefWidth="200.0" />
-						<Button contentDisplay="CENTER" layoutX="10.0" layoutY="280.0" mnemonicParsing="false" onAction="#getSelectedDay" prefHeight="30.0" prefWidth="300.0" text="Wednesday" textAlignment="CENTER">
+						<Button fx:id="wednesdayButton" contentDisplay="CENTER" layoutX="10.0" layoutY="280.0" mnemonicParsing="false" onAction="#getSelectedDay" prefHeight="30.0" prefWidth="300.0" text="Wednesday" textAlignment="CENTER">
 							<font>
 								<Font size="28.0" />
 							</font>
 						</Button>
 						<Pane minHeight="5.0" prefHeight="200.0" prefWidth="200.0" />
-						<Button contentDisplay="CENTER" layoutX="10.0" layoutY="340.0" mnemonicParsing="false" onAction="#getSelectedDay" prefHeight="30.0" prefWidth="300.0" text="Thursday" textAlignment="CENTER">
+						<Button fx:id="thursdayButton" contentDisplay="CENTER" layoutX="10.0" layoutY="340.0" mnemonicParsing="false" onAction="#getSelectedDay" prefHeight="30.0" prefWidth="300.0" text="Thursday" textAlignment="CENTER">
 							<font>
 								<Font size="28.0" />
 							</font>
 						</Button>
 						<Pane layoutX="10.0" layoutY="382.0" minHeight="5.0" prefHeight="200.0" prefWidth="200.0" />
-						<Button contentDisplay="CENTER" layoutX="10.0" layoutY="250.0" mnemonicParsing="false" onAction="#getSelectedDay" prefHeight="30.0" prefWidth="300.0" text="Friday" textAlignment="CENTER">
+						<Button fx:id="fridayButton" contentDisplay="CENTER" layoutX="10.0" layoutY="250.0" mnemonicParsing="false" onAction="#getSelectedDay" prefHeight="30.0" prefWidth="300.0" text="Friday" textAlignment="CENTER">
 							<font>
 								<Font size="28.0" />
 							</font>
 						</Button>
 						<Pane layoutX="10.0" layoutY="130.0" minHeight="5.0" prefHeight="200.0" prefWidth="200.0" />
-						<Button contentDisplay="CENTER" layoutX="10.0" layoutY="310.0" mnemonicParsing="false" onAction="#getSelectedDay" prefHeight="30.0" prefWidth="300.0" text="Saturday" textAlignment="CENTER">
+						<Button fx:id="saturdayButton" contentDisplay="CENTER" layoutX="10.0" layoutY="310.0" mnemonicParsing="false" onAction="#getSelectedDay" prefHeight="30.0" prefWidth="300.0" text="Saturday" textAlignment="CENTER">
 							<font>
 								<Font size="28.0" />
 							</font>
