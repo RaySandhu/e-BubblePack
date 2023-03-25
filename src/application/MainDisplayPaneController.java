@@ -351,7 +351,7 @@ public class MainDisplayPaneController {
 		timeline.setCycleCount(Timeline.INDEFINITE);
 		timeline.play();
 		int todayAsNum = Schedule.getTodaysDayAsNum();
-	    renderMedList(todayAsNum);
+	        renderMedList(todayAsNum);
 		// set the event handler for the day buttons
 	    switch (todayAsNum) {
 	        case 0:
@@ -377,7 +377,7 @@ public class MainDisplayPaneController {
 	            break;
 	    }
 		// set the event handler for the day buttons
-		sundayButton.setOnAction(event -> handleDayButton(sundayButton));
+	    sundayButton.setOnAction(event -> handleDayButton(sundayButton));
 	    mondayButton.setOnAction(event -> handleDayButton(mondayButton));
 	    tuesdayButton.setOnAction(event -> handleDayButton(tuesdayButton));
 	    wednesdayButton.setOnAction(event -> handleDayButton(wednesdayButton));
