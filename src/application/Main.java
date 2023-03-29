@@ -4,7 +4,7 @@ import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.FileReader;
 import java.io.FileWriter;
-import java.util.Arrays;
+import java.util.ArrayList;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -24,23 +24,23 @@ public class Main extends Application {
             String line;
             while ((line = br.readLine()) != null) {
                 String[] parts = line.split(",");
-                MedList.addMedications(parts[0], Integer.parseInt(parts[1]), parts[2], parts[3], parts[4]);
+                Medication medication = new Medication(Integer.parseInt(parts[0]), parts[1], Float.parseFloat(parts[2]),
+                		parts[3], parts[4].split(""), parts[5].split(","));
+                MedList.addMedications(medication);
             }
             br.close();
-
-            // Add new medication
-            MedList.addMedications("Ketamine - mock", 25,"g", "145", "0600,1000,1400,2400");
-
+            
             // Write medications to CSV file
             BufferedWriter bw = new BufferedWriter(new FileWriter(CSV_FILE_PATH));
-            for (Medication med : MedList.getMedications()) {
-                bw.write(String.join(",", Arrays.asList(
-                        med.getName(),
-                        String.valueOf(med.getDose()),
-                        med.getUnit(),
-                        med.getBarcode(),
-                        med.getSchedule()
-                )));
+            for (Medication medication : MedList.getMedications()) {
+                StringBuilder sb = new StringBuilder();
+                sb.append(medication.getId()).append(",")
+                  .append(medication.getTradeName()).append(",")
+                  .append(medication.getDosage()).append(",")
+                  .append(medication.getDosageUnit()).append(",")
+                  .append(String.join(";", medication.getSchedule()[0])).append(",")
+                  .append(String.join(";", medication.getSchedule()[1]));
+                bw.write(sb.toString());
                 bw.newLine();
             }
             bw.close();
@@ -56,5 +56,4 @@ public class Main extends Application {
             e.printStackTrace();
         }
     }
-
 }

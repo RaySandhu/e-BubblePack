@@ -45,6 +45,7 @@ public class Medication {
 		return "" + dosage + " "+ dosageUnit;
 	}
 	
+	
 	/**
 	 * getter for each medication's unique identifier
 	 * @return the integer that is the medication's unique identifier.
@@ -168,5 +169,10 @@ public class Medication {
 		}
 		return "The next dose is not due today!";
     }
+
+	public Object getDosageUnit() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 	
 }
