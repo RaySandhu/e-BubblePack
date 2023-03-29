@@ -1,9 +1,9 @@
-name,dosage,unit,identifier,schedule
-Tylenol3 - mock,500,g,024,0800,1200,1600,2000
-Pantoprazole - mock,200,mg,0123456,0600,1000
-Ibuprofen - mock,5,ml,5,1800
-Dexamethasone - mock,400,g,246,0901,1312,2023,2355
-Maxeran - mock,200,g,0135,0610,1050,
-Zofran - mock,700,mg,1356,1900,2222,2323,2400
-Propofol - mock,1000,g,235,0000,1000,1400,1800
-Ketamine - mock,25,g,145,0600,1000,1400,2400
+Medication, Dose, Unit, Code, Times
+Tylenol3 - mock, 500, g, 024, 0800,1200,1600,2000
+Pantoprazole - mock, 200, mg, 0123456, 0600,1000
+Ibuprofen - mock, 5, ml, 5, 1800
+Dexamethasone - mock, 400, g, 246, 0901,1312,2023,2355
+Maxeran - mock, 200, g, 0135, 0610,1050,
+Zofran - mock, 700, mg, 1356, 1900,2222,2323,2400
+Propofol - mock, 1000, g, 235, 0000,1000,1400,1800
+Ketamine - mock, 25, g, 145, 0600,1000,1400,2400
