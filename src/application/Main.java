@@ -1,41 +1,60 @@
 package application;
 
-import java.io.FileInputStream;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.util.Arrays;
 
 import javafx.application.Application;
-import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.stage.Stage;
 import javafx.scene.Scene;
-import javafx.scene.control.Label;
-import javafx.scene.layout.*;
-public class Main extends Application {
-	@Override
-	/**
-	 * Initialize the primary scene of the application which some mock data added in
-	 * @param primaryStage the primary window that will be displayed set with the resources to load from an FXML file.
-	 */
-	public void start(Stage primaryStage) {
-		
-		// mock data
-		MedList.addMedications("Tylenol3 - mock", 500,"g", "024", "0800,1200,1600,2000");
-		MedList.addMedications("Pantoprazole - mock", 200,"mg", "0123456", "0600,1000");
-		MedList.addMedications("Ibuprofen - mock", 5,"ml", "5", "1800");
-		MedList.addMedications("Dexamethasone - mock", 400, "g", "246", "0901,1312,2023,2355");
-		MedList.addMedications("Maxeran - mock", 200, "g", "0135", "0610,1050,");
-		MedList.addMedications("Zofran - mock", 700, "mg", "1356", "1900,2222,2323,2400");
-		MedList.addMedications("Propofol - mock", 1000, "g", "235", "0000,1000,1400,1800");
-		MedList.addMedications("Ketamine - mock", 25,"g", "145", "0600,1000,1400,2400");
-		try {
-			FXMLLoader loader = new FXMLLoader();
+import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 
-			VBox root = loader.load(new FileInputStream("src/application/MainDisplayPane.fxml"));
-			Scene scene = new Scene(root,1200,600);
-			primaryStage.setScene(scene); 
-			primaryStage.show();
-			primaryStage.setTitle("E-BubblePack");
-		} catch(Exception e) {
-			e.printStackTrace();
-		}
-	}
+public class Main extends Application {
+
+    private static final String CSV_FILE_PATH = "medications.csv";
+
+    @Override
+    public void start(Stage primaryStage) {
+        try {
+            // Read medications from CSV file
+            BufferedReader br = new BufferedReader(new FileReader(CSV_FILE_PATH));
+            String line;
+            while ((line = br.readLine()) != null) {
+                String[] parts = line.split(",");
+                MedList.addMedications(parts[0], Integer.parseInt(parts[1]), parts[2], parts[3], parts[4]);
+            }
+            br.close();
+
+            // Add new medication
+            MedList.addMedications("Ketamine - mock", 25,"g", "145", "0600,1000,1400,2400");
+
+            // Write medications to CSV file
+            BufferedWriter bw = new BufferedWriter(new FileWriter(CSV_FILE_PATH));
+            for (Medication med : MedList.getMedications()) {
+                bw.write(String.join(",", Arrays.asList(
+                        med.getName(),
+                        String.valueOf(med.getDose()),
+                        med.getUnit(),
+                        med.getBarcode(),
+                        med.getSchedule()
+                )));
+                bw.newLine();
+            }
+            bw.close();
+
+            // Load FXML file
+            FXMLLoader loader = new FXMLLoader();
+            VBox root = loader.load(getClass().getResourceAsStream("MainDisplayPane.fxml"));
+            Scene scene = new Scene(root, 1200, 600);
+            primaryStage.setScene(scene);
+            primaryStage.show();
+            primaryStage.setTitle("E-BubblePack");
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
+    }
+
 }
