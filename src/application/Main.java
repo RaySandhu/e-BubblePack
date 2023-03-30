@@ -4,12 +4,16 @@ import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.FileReader;
 import java.io.FileWriter;
+import java.io.FileInputStream;
 import java.util.ArrayList;
 
+
 import javafx.application.Application;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
+import javafx.scene.control.Label;
 import javafx.stage.Stage;
 
 public class Main extends Application {
