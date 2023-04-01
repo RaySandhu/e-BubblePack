@@ -1,12 +1,15 @@
 package application;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import java.time.format.TextStyle;
 
 import javafx.util.Duration;
 
 import java.util.ArrayList;
+import java.util.Locale;
 
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -264,10 +267,10 @@ public class MainDisplayPaneController {
 	void initialize() {
 		//using a time-based animation to display the current time
 		Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(1), event -> {
-			LocalTime time = LocalTime.now();
+			LocalDateTime time = LocalDateTime.now();
 			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("hh:mm a");
 			String formattedTime = time.format(formatter);
-			currentTime.setText(formattedTime);
+			currentTime.setText(formattedTime + " " + time.getMonth().getDisplayName(TextStyle.FULL, Locale.CANADA) + time.getDayOfMonth()+ ", " + time.getYear());
 		}));
 		timeline.setCycleCount(Timeline.INDEFINITE);
 		timeline.play();
