@@ -55,6 +55,9 @@ public class MainDisplayPaneController {
 
 	@FXML
 	private VBox dailyMedsDisplay;
+	
+	@FXML
+	private VBox dayButtons;
 
 	private int daySelected;
 
@@ -158,6 +161,14 @@ public class MainDisplayPaneController {
 	 */
 	public void getSelectedDay(ActionEvent e) {
 		String selectedDayValue = ((Button)e.getSource()).getText();
+		for (Node node : dayButtons.getChildren()) {
+		    if (node instanceof Button) {
+		        Button button = (Button) node;
+		        System.out.println(button.getText());
+		        button.setStyle("-fx-background-color: transparent;");
+		    }
+		}
+		((Button)e.getSource()).setStyle("-fx-background-color: rgba(0, 0, 255, 0.15);");;
 		System.out.println("Day select = " + selectedDayValue);
 		switch(selectedDayValue) {
 		case "Sunday":
@@ -265,6 +276,14 @@ public class MainDisplayPaneController {
 	 * after the FXML file has been loaded.
 	 */
 	void initialize() {
+		for (Node node : dayButtons.getChildren()) {
+		    if (node instanceof Button) {
+		        Button button = (Button) node;
+		        System.out.println(button.getText());
+		        button.setStyle("-fx-background-color: transparent;");
+		    }
+		}
+		
 		//using a time-based animation to display the current time
 		Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(1), event -> {
 			LocalDateTime time = LocalDateTime.now();
@@ -272,6 +291,7 @@ public class MainDisplayPaneController {
 			String formattedTime = time.format(formatter);
 			currentTime.setText(formattedTime + " " + time.getMonth().getDisplayName(TextStyle.FULL, Locale.CANADA) + time.getDayOfMonth()+ ", " + time.getYear());
 		}));
+		renderMedList(Schedule.getTodaysDayAsNum());
 		timeline.setCycleCount(Timeline.INDEFINITE);
 		timeline.play();
 	}
