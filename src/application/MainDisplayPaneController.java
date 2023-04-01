@@ -131,8 +131,29 @@ public class MainDisplayPaneController {
 		menuButton.setPrefWidth(0);
 
 		//triggers listener to handle deletion of dose (not medication)
-		MenuItem delete = new MenuItem("Delete this dose of medication (affects all days of med schedule!)");
-		menuButton.getItems().addAll(delete);
+		MenuItem delete = new MenuItem("Delete this dose of medication");
+		MenuItem edit = new MenuItem("Edit this medication");
+
+		menuButton.getItems().addAll(edit, delete);
+		
+		edit.setOnAction(e -> {
+			try {
+				FXMLLoader loader = new FXMLLoader();
+				loader.setLocation(getClass().getResource("HandleMedInfo.fxml"));
+				Parent root = loader.load();
+				HandleMedInfoController editMedController = loader.getController();
+				editMedController.editMedicationSetters(medName);
+				
+				Stage editMedWindow =  new Stage() ;
+				editMedWindow.setTitle("Edit Medication");
+				Scene editMedView = new Scene(root);
+				editMedWindow.setScene(editMedView) ;
+				editMedWindow.show();
+			} catch (IOException e1) {
+				System.out.println(e1.getMessage());
+			}
+		});
+		
 		delete.setOnAction(e -> {
 			deleteStatus.set(true);
 		});

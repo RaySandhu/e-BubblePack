@@ -195,6 +195,10 @@ public class HandleMedInfoController {
 		choseTimesDisplay.getChildren().add(timeChoice);
 	}
 	
+	public void editMedicationSetters(String medName) {
+		nameOfMedTextField.setText(medName);
+	}
+	
 	/**
 	 * Prevents invalid input from the user in any fields and mandate every field to have a value by leaving the final submit button
 	 * disabled if checks not met. This method also runs again on the submit button as a final check that no values were changed to 
@@ -256,7 +260,7 @@ public class HandleMedInfoController {
         	if(dosageValue == 0) {
         		dosageLabel.setText("Dosage of Medication"+" **");
         	}
-        	if(!dosageUnit.equals("") && dosageUnit != null) {
+        	if(dosageUnit != null && !dosageUnit.equals("")) {
         		dosageUnitLabel.setText("Dosage Unit"+" **");
         	}
         	if(weeklySchedInputString.equals("")) {
@@ -280,6 +284,10 @@ public class HandleMedInfoController {
 			MedList.addMedications(nameOfMed, dosageValue, dosageUnit, weeklySchedInputString, finalDailyScheduleInput);
 			return true;
 		} else return false;
+	}
+	
+	public void editMedSetter(String medName) {
+		nameOfMedTextField.setText(medName);
 	}
 
 }
