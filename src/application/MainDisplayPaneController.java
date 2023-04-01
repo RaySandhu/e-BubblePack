@@ -137,12 +137,14 @@ public class MainDisplayPaneController {
 		menuButton.getItems().addAll(edit, delete);
 		
 		edit.setOnAction(e -> {
+			Medication toBeEdited = MedList.retrieveMedById(keyId);
 			try {
 				FXMLLoader loader = new FXMLLoader();
 				loader.setLocation(getClass().getResource("HandleMedInfo.fxml"));
 				Parent root = loader.load();
 				HandleMedInfoController editMedController = loader.getController();
-				editMedController.editMedicationSetters(medName);
+				System.out.println(dosage.split(" ")[1]);
+				editMedController.editMedSetter(medName, Float.parseFloat(dosage.split(" ")[0]), dosage.split(" ")[1], toBeEdited.getSchedule());
 				
 				Stage editMedWindow =  new Stage() ;
 				editMedWindow.setTitle("Edit Medication");

@@ -132,9 +132,9 @@
 						<Insets left="120.0" right="25.0" top="10.0" />
 					</VBox.margin>
 				</Label>
-				<HBox alignment="CENTER" prefHeight="50.0" prefWidth="250.0">
+				<HBox fx:id="weekDaySelect" alignment="CENTER" prefHeight="50.0" prefWidth="250.0">
 					<children>
-						<RadioButton contentDisplay="CENTER" mnemonicParsing="false" onAction="#generateDaySelectionAsString" text="Mon" textAlignment="CENTER">
+						<RadioButton fx:id="monSelect" contentDisplay="CENTER" mnemonicParsing="false" onAction="#generateDaySelectionAsString" text="Mon" textAlignment="CENTER">
 							<font>
 								<Font size="14.0" />
 							</font>
@@ -142,7 +142,7 @@
 								<Insets left="5.0" right="5.0" />
 							</HBox.margin>
 						</RadioButton>
-						<RadioButton contentDisplay="CENTER" layoutX="15.0" layoutY="10.0" mnemonicParsing="false" onAction="#generateDaySelectionAsString" text="Tues" textAlignment="CENTER">
+						<RadioButton fx:id="tuesSelect" contentDisplay="CENTER" layoutX="15.0" layoutY="10.0" mnemonicParsing="false" onAction="#generateDaySelectionAsString" text="Tues" textAlignment="CENTER">
 							<font>
 								<Font size="14.0" />
 							</font>
@@ -150,7 +150,7 @@
 								<Insets left="5.0" right="5.0" />
 							</HBox.margin>
 						</RadioButton>
-						<RadioButton contentDisplay="CENTER" layoutX="91.0" layoutY="10.0" mnemonicParsing="false" onAction="#generateDaySelectionAsString" text="Wed" textAlignment="CENTER">
+						<RadioButton fx:id="wedSelect" contentDisplay="CENTER" layoutX="91.0" layoutY="10.0" mnemonicParsing="false" onAction="#generateDaySelectionAsString" text="Wed" textAlignment="CENTER">
 							<font>
 								<Font size="14.0" />
 							</font>
@@ -158,7 +158,7 @@
 								<Insets left="5.0" right="5.0" />
 							</HBox.margin>
 						</RadioButton>
-						<RadioButton contentDisplay="CENTER" layoutX="162.0" layoutY="10.0" mnemonicParsing="false" onAction="#generateDaySelectionAsString" text="Thurs" textAlignment="CENTER">
+						<RadioButton fx:id="thursSelect" contentDisplay="CENTER" layoutX="162.0" layoutY="10.0" mnemonicParsing="false" onAction="#generateDaySelectionAsString" text="Thurs" textAlignment="CENTER">
 							<font>
 								<Font size="14.0" />
 							</font>
@@ -166,7 +166,7 @@
 								<Insets left="5.0" right="5.0" />
 							</HBox.margin>
 						</RadioButton>
-						<RadioButton contentDisplay="CENTER" layoutX="233.0" layoutY="10.0" mnemonicParsing="false" onAction="#generateDaySelectionAsString" text="Fri" textAlignment="CENTER">
+						<RadioButton fx:id="friSelect" contentDisplay="CENTER" layoutX="233.0" layoutY="10.0" mnemonicParsing="false" onAction="#generateDaySelectionAsString" text="Fri" textAlignment="CENTER">
 							<font>
 								<Font size="14.0" />
 							</font>
@@ -178,7 +178,7 @@
 				</HBox>
 				<HBox alignment="TOP_CENTER" layoutX="10.0" layoutY="35.0" prefHeight="50.0" prefWidth="200.0">
 					<children>
-						<RadioButton contentDisplay="CENTER" layoutX="91.0" layoutY="10.0" mnemonicParsing="false" onAction="#generateDaySelectionAsString" text="Sun" textAlignment="CENTER">
+						<RadioButton fx:id="sunSelect" contentDisplay="CENTER" layoutX="91.0" layoutY="10.0" mnemonicParsing="false" onAction="#generateDaySelectionAsString" text="Sun" textAlignment="CENTER">
 							<font>
 								<Font size="14.0" />
 							</font>
@@ -186,7 +186,7 @@
 								<Insets left="5.0" right="5.0" />
 							</HBox.margin>
 						</RadioButton>
-						<RadioButton contentDisplay="CENTER" layoutX="233.0" layoutY="10.0" mnemonicParsing="false" onAction="#generateDaySelectionAsString" text="Sat" textAlignment="CENTER">
+						<RadioButton fx:id="satSelect" contentDisplay="CENTER" layoutX="233.0" layoutY="10.0" mnemonicParsing="false" onAction="#generateDaySelectionAsString" text="Sat" textAlignment="CENTER">
 							<font>
 								<Font size="14.0" />
 							</font>
@@ -198,7 +198,7 @@
 				</HBox>
 			</children>
 		</VBox>
-      <HBox>
+      <HBox fx:id="weekendSelect">
          <children>
       		<Button alignment="CENTER" mnemonicParsing="false" onAction="#checkValidInput" prefHeight="50.0" prefWidth="200.0" text="Check before Submission">
       			<VBox.margin>

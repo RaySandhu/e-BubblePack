@@ -12,6 +12,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
@@ -61,6 +62,14 @@ public class HandleMedInfoController {
 	@FXML
 	private Spinner<Integer> minuteSpinnerValue;
 	
+	@FXML
+	private HBox weekendSelect;
+
+	@FXML
+	private HBox weekDaySelect;
+	
+	@FXML private RadioButton sunSelect, satSelect, monSelect, tuesSelect, wedSelect, thursSelect, friSelect;
+		
 	private ArrayList<String> dailyScheduleInput = new ArrayList<String>();
 	
 	private ArrayList<Integer> weeklyScheduleInput = new ArrayList<Integer>();
@@ -195,10 +204,6 @@ public class HandleMedInfoController {
 		choseTimesDisplay.getChildren().add(timeChoice);
 	}
 	
-	public void editMedicationSetters(String medName) {
-		nameOfMedTextField.setText(medName);
-	}
-	
 	/**
 	 * Prevents invalid input from the user in any fields and mandate every field to have a value by leaving the final submit button
 	 * disabled if checks not met. This method also runs again on the submit button as a final check that no values were changed to 
@@ -285,9 +290,32 @@ public class HandleMedInfoController {
 			return true;
 		} else return false;
 	}
-	
-	public void editMedSetter(String medName) {
+
+	public void editMedSetter(String medName, float dosage, String dosageUnit, ArrayList<ArrayList<Integer>> sched) {
+		ArrayList<RadioButton> rbId = new ArrayList<RadioButton>();
+		rbId.add(sunSelect);
+		rbId.add(monSelect);
+		rbId.add(tuesSelect);
+		rbId.add(wedSelect);
+		rbId.add(thursSelect);
+		rbId.add(friSelect);
+		rbId.add(satSelect);
 		nameOfMedTextField.setText(medName);
+		dosageOfMedTextField.setText("" + dosage);
+		dosageUnitChoiceBox.setValue(dosageUnit);
+		for (int i = 0; i<=6; i++) {
+			if(sched.get(0).get(i) != -1) {
+				rbId.get(i).setSelected(true);
+			}
+		}
+		for (int time : sched.get(1)) {
+			// hourSpinnerValue minuteSpinnerValue
+			hourSpinnerValue.getValueFactory().setValue(time/100);
+			minuteSpinnerValue.getValueFactory().setValue(time%100);
+			generateChosenTimeDisplay();
+		}
+		hourSpinnerValue.getValueFactory().setValue(0);
+		minuteSpinnerValue.getValueFactory().setValue(0);
 	}
 
 }
