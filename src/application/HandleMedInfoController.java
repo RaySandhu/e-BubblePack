@@ -160,7 +160,6 @@ public class HandleMedInfoController {
 		}
 		
 		Collections.sort(weeklyScheduleInput);
-		weeklySchedInputString = "";
 		
 		for (Integer s : weeklyScheduleInput) {
 			weeklySchedInputString += s;
@@ -265,7 +264,7 @@ public class HandleMedInfoController {
         	if(dosageValue == 0) {
         		dosageLabel.setText("Dosage of Medication"+" **");
         	}
-        	if(dosageUnit != null && !dosageUnit.equals("")) {
+        	if(dosageUnit == null || dosageUnit.equals("")) {
         		dosageUnitLabel.setText("Dosage Unit"+" **");
         	}
         	if(weeklySchedInputString.equals("")) {
@@ -287,6 +286,7 @@ public class HandleMedInfoController {
 	public Boolean submitMedInfo() {
 		if (checkValidInput()) {
 			MedList.addMedications(nameOfMed, dosageValue, dosageUnit, weeklySchedInputString, finalDailyScheduleInput);
+			System.out.print("Med Created");
 			return true;
 		} else return false;
 	}
@@ -306,7 +306,9 @@ public class HandleMedInfoController {
 		for (int i = 0; i<=6; i++) {
 			if(sched.get(0).get(i) != -1) {
 				rbId.get(i).setSelected(true);
+				weeklySchedInputString += i;
 			}
+			
 		}
 		for (int time : sched.get(1)) {
 			// hourSpinnerValue minuteSpinnerValue
