@@ -190,7 +190,7 @@ public class HandleMedInfoController {
 		dailyScheduleInput.add(hourDisplay + minutesDisplay);
 		
 		Button timeChoice = new Button(hourDisplay + ":" + minutesDisplay);
-		timeChoice.setPrefSize(245, 25);
+		timeChoice.setPrefSize(173, 25);
 		timeChoice.setOnMouseClicked(e -> {
 			int timesIndex = 0;
         	for(String s : dailyScheduleInput) {    			

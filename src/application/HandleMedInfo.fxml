@@ -105,6 +105,14 @@
             </VBox>
             <VBox>
                <children>
+                  <Label text="Enter the time in hours (left) and minutes (right) when the medication is due: " wrapText="true">
+                     <font>
+                        <Font size="11.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="20.0" />
+                     </VBox.margin>
+                  </Label>
       				<HBox prefHeight="100.0" prefWidth="200.0">
       					<HBox.margin>
       						<Insets right="25" top="25.0" />
@@ -114,7 +122,18 @@
       						<Spinner fx:id="minuteSpinnerValue" initialValue="00" max="59" min="0" />
       					</children>
       				</HBox>
-                  <Button alignment="BOTTOM_RIGHT" mnemonicParsing="false" onAction="#generateChosenTimeDisplay" text="Add time" textAlignment="CENTER" />
+                  <Label layoutX="15.0" layoutY="30.0" text="Click on an entered time to remove it from the list" wrapText="true">
+                     <font>
+                        <Font size="13.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets left="10.0" top="-50.0" />
+                     </VBox.margin>
+                  </Label>
+                  <Button alignment="BOTTOM_RIGHT" mnemonicParsing="false" onAction="#generateChosenTimeDisplay" text="Add time" textAlignment="CENTER">
+                     <VBox.margin>
+                        <Insets left="150.0" top="10.0" />
+                     </VBox.margin></Button>
                </children>
             </VBox>
 			</children>
