@@ -75,6 +75,8 @@ public class HandleMedInfoController {
 	private ArrayList<Integer> weeklyScheduleInput = new ArrayList<Integer>();
 	private String weeklySchedInputString = "";
 	
+	private int editMedId = -1;
+	
 	private float dosageValue = 0;
 	
 	private String finalDailyScheduleInput = "";
@@ -82,6 +84,7 @@ public class HandleMedInfoController {
 	private String nameOfMed = "";
 	
 	private String dosageUnit = "";
+	
 	
 	@FXML
 	/**
@@ -164,7 +167,6 @@ public class HandleMedInfoController {
 		for (Integer s : weeklyScheduleInput) {
 			weeklySchedInputString += s;
 		}
-		System.out.println(weeklySchedInputString);
 	}
 	
 	/**
@@ -193,7 +195,6 @@ public class HandleMedInfoController {
 			int timesIndex = 0;
         	for(String s : dailyScheduleInput) {    			
         		if(s.equals(hourDisplay + minutesDisplay)){
-        			System.out.println("Deleted");
         			choseTimesDisplay.getChildren().remove(timesIndex);
         			dailyScheduleInput.remove(hourDisplay+minutesDisplay);
         			break;
@@ -284,14 +285,20 @@ public class HandleMedInfoController {
 	 * @return indicates if the scene display will change to the main scene.
 	 */
 	public Boolean submitMedInfo() {
+		if(editMedId != -1) {
+			MedList.deleteMedicationFromList(MedList.retrieveMedById(editMedId));
+		}
 		if (checkValidInput()) {
 			MedList.addMedications(nameOfMed, dosageValue, dosageUnit, weeklySchedInputString, finalDailyScheduleInput);
-			System.out.print("Med Created");
 			return true;
 		} else return false;
 	}
-
-	public void editMedSetter(String medName, float dosage, String dosageUnit, ArrayList<ArrayList<Integer>> sched) {
+	
+	
+	public void editMedSetter(Medication target) {
+		
+		editMedId = target.getId();
+		
 		ArrayList<RadioButton> rbId = new ArrayList<RadioButton>();
 		rbId.add(sunSelect);
 		rbId.add(monSelect);
@@ -300,17 +307,18 @@ public class HandleMedInfoController {
 		rbId.add(thursSelect);
 		rbId.add(friSelect);
 		rbId.add(satSelect);
-		nameOfMedTextField.setText(medName);
-		dosageOfMedTextField.setText("" + dosage);
-		dosageUnitChoiceBox.setValue(dosageUnit);
+		nameOfMedTextField.setText(target.getTradeName());
+		dosageOfMedTextField.setText("" + Float.parseFloat(target.getDosage().split(" ")[0]));
+		dosageUnitChoiceBox.setValue(target.getDosage().split(" ")[1]);
+		
 		for (int i = 0; i<=6; i++) {
-			if(sched.get(0).get(i) != -1) {
+			if(target.getSchedule().get(0).get(i) != -1) {
 				rbId.get(i).setSelected(true);
 				weeklySchedInputString += i;
 			}
-			
 		}
-		for (int time : sched.get(1)) {
+		
+		for (int time : target.getSchedule().get(1)) {
 			// hourSpinnerValue minuteSpinnerValue
 			hourSpinnerValue.getValueFactory().setValue(time/100);
 			minuteSpinnerValue.getValueFactory().setValue(time%100);
