@@ -1,12 +1,15 @@
 package application;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import java.time.format.TextStyle;
 
 import javafx.util.Duration;
 
 import java.util.ArrayList;
+import java.util.Locale;
 
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -52,6 +55,9 @@ public class MainDisplayPaneController {
 
 	@FXML
 	private VBox dailyMedsDisplay;
+	
+	@FXML
+	private VBox dayButtons;
 
 	private int daySelected;
 
@@ -125,8 +131,31 @@ public class MainDisplayPaneController {
 		menuButton.setPrefWidth(0);
 
 		//triggers listener to handle deletion of dose (not medication)
-		MenuItem delete = new MenuItem("Delete this dose of medication (affects all days of med schedule!)");
-		menuButton.getItems().addAll(delete);
+		MenuItem delete = new MenuItem("Delete this dose of medication");
+		MenuItem edit = new MenuItem("Edit this medication");
+
+		menuButton.getItems().addAll(edit, delete);
+		
+		edit.setOnAction(e -> {
+			Medication toBeEdited = MedList.retrieveMedById(keyId);
+			try {
+				FXMLLoader loader = new FXMLLoader();
+				loader.setLocation(getClass().getResource("HandleMedInfo.fxml"));
+				Parent root = loader.load();
+				HandleMedInfoController editMedController = loader.getController();
+
+				editMedController.editMedSetter(toBeEdited);
+				
+				Stage editMedWindow =  (Stage) currentTime.getScene().getWindow() ;
+				editMedWindow.setTitle("Edit Medication");
+				Scene editMedView = new Scene(root);
+				editMedWindow.setScene(editMedView) ;
+				editMedWindow.show();
+			} catch (IOException e1) {
+				System.out.println(e1.getMessage());
+			}
+		});
+		
 		delete.setOnAction(e -> {
 			deleteStatus.set(true);
 		});
@@ -155,7 +184,14 @@ public class MainDisplayPaneController {
 	 */
 	public void getSelectedDay(ActionEvent e) {
 		String selectedDayValue = ((Button)e.getSource()).getText();
-		System.out.println("Day select = " + selectedDayValue);
+		for (Node node : dayButtons.getChildren()) {
+		    if (node instanceof Button) {
+		        Button button = (Button) node;
+		        button.setStyle("-fx-background-color: transparent;");
+		    }
+		}
+		((Button)e.getSource()).setStyle("-fx-background-color: rgba(0, 0, 255, 0.15);");;
+
 		switch(selectedDayValue) {
 		case "Sunday":
 			renderMedList(0);
@@ -227,8 +263,6 @@ public class MainDisplayPaneController {
 							outputButton.setStyle("-fx-background-color: rgba(255, 0, 0, 0.25);");
 							outputButton.setOnMouseEntered(e -> outputButton.setStyle("-fx-background-color: rgba(255, 0, 0, 0.15);"));
 							outputButton.setOnMouseExited(e -> outputButton.setStyle("-fx-background-color: rgba(255, 0, 0, 0.25);"));
-						} else if (i.checkAdminStatusPerDose(j)=="Not due yet") {
-							System.out.println("Not due yet");
 						}
 						timeTracker.add(indexCounter, timesDue.get(j));
 						dailyMedsDisplay.getChildren().add(indexCounter, outputButton);
@@ -262,13 +296,26 @@ public class MainDisplayPaneController {
 	 * after the FXML file has been loaded.
 	 */
 	void initialize() {
+		for (Node node : dayButtons.getChildren()) {
+		    if (node instanceof Button) {
+		        Button button = (Button) node;
+		        button.setStyle("-fx-background-color: transparent;");
+		        if (button.getText().equals(LocalDateTime.now().getDayOfWeek().getDisplayName(TextStyle.FULL, Locale.CANADA))) {
+		        	button.setStyle("-fx-background-color: rgba(0, 0, 255, 0.15);");
+		        }
+		    }
+		}
+		
 		//using a time-based animation to display the current time
 		Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(1), event -> {
-			LocalTime time = LocalTime.now();
+			LocalDateTime time = LocalDateTime.now();
 			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("hh:mm a");
 			String formattedTime = time.format(formatter);
-			currentTime.setText(formattedTime);
+			currentTime.setText(formattedTime + " " + time.getMonth().getDisplayName(TextStyle.FULL, Locale.CANADA) + " " + time.getDayOfMonth()+ ", " + time.getYear());
 		}));
+		
+		renderMedList(Schedule.getTodaysDayAsNum());
+		
 		timeline.setCycleCount(Timeline.INDEFINITE);
 		timeline.play();
 	}
