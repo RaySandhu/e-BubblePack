@@ -163,7 +163,11 @@ public class MainDisplayPaneController extends ScheduleElements {
 			Medication clickedMed = MedList.retrieveMedById(keyId);
 			int doseIndex = clickedMed.getSchedule().get(1).indexOf(singleDoseTime);
 
-			clickedMed.deleteMedDose(doseIndex);
+			if(clickedMed.getSchedule().get(1).size() != 1){
+				clickedMed.deleteMedDose(doseIndex);
+			} else if (clickedMed.getSchedule().get(1).size() == 1) {
+				MedList.deleteMedicationFromList(clickedMed);
+			}
 			medDisplayButton.setDisable(true);
 			medNameDisplay.setText(medNameDisplay.getText() + " (Deleted)");
 		});
@@ -311,7 +315,7 @@ public class MainDisplayPaneController extends ScheduleElements {
 			currentTime.setText(formattedTime + " " + time.getMonth().getDisplayName(TextStyle.FULL, Locale.CANADA) + " " + time.getDayOfMonth()+ ", " + time.getYear());
 		}));
 		
-		renderMedList(Schedule.getTodaysDayAsNum());
+		renderMedList(getTodaysDayAsNum());
 		
 		timeline.setCycleCount(Timeline.INDEFINITE);
 		timeline.play();
