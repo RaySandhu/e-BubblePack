@@ -5,7 +5,7 @@ import java.util.ArrayList;
 /**
 *  The fundamental blueprint of all the data for each medication stored
 */
-public class Medication {
+public class Medication extends ScheduleElements {
 
 	private int keyId;
 	private String tradeName;
@@ -148,7 +148,7 @@ public class Medication {
 	public void updateMissedMeds() {
 		ArrayList<Integer> timesDue = schedule.getScheduleData().get(1);
 		for(int i=0; i<timesDue.size(); i++) {
-			if(Schedule.getCurrentTimeAsInt() > timesDue.get(i)) {	
+			if(getCurrentTimeAsInt() > timesDue.get(i)) {	
 				//checks that the med has not been administered and the current time is later than the dose time.
 				schedule.getAdministrationStatus().get(i).set(1, true);
 			} 
@@ -162,8 +162,8 @@ public class Medication {
 	public String nextDose() {
 		ArrayList<Integer> timesDue = schedule.getScheduleData().get(1);
 		for(int i : timesDue) {
-			if(Schedule.getCurrentTimeAsInt() < i) {	
-				return "The next dose is due at " + Schedule.getTimeAsString(i);
+			if(getCurrentTimeAsInt() < i) {	
+				return "The next dose is due at " + getTimeAsString(i);
 			}
 		}
 		return "The next dose is not due today!";
