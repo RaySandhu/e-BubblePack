@@ -12,6 +12,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
@@ -61,10 +62,20 @@ public class HandleMedInfoController {
 	@FXML
 	private Spinner<Integer> minuteSpinnerValue;
 	
+	@FXML
+	private HBox weekendSelect;
+
+	@FXML
+	private HBox weekDaySelect;
+	
+	@FXML private RadioButton sunSelect, satSelect, monSelect, tuesSelect, wedSelect, thursSelect, friSelect;
+		
 	private ArrayList<String> dailyScheduleInput = new ArrayList<String>();
 	
 	private ArrayList<Integer> weeklyScheduleInput = new ArrayList<Integer>();
 	private String weeklySchedInputString = "";
+	
+	private int editMedId = -1;
 	
 	private float dosageValue = 0;
 	
@@ -73,6 +84,7 @@ public class HandleMedInfoController {
 	private String nameOfMed = "";
 	
 	private String dosageUnit = "";
+	
 	
 	@FXML
 	/**
@@ -151,12 +163,10 @@ public class HandleMedInfoController {
 		}
 		
 		Collections.sort(weeklyScheduleInput);
-		weeklySchedInputString = "";
 		
 		for (Integer s : weeklyScheduleInput) {
 			weeklySchedInputString += s;
 		}
-		System.out.println(weeklySchedInputString);
 	}
 	
 	/**
@@ -180,12 +190,11 @@ public class HandleMedInfoController {
 		dailyScheduleInput.add(hourDisplay + minutesDisplay);
 		
 		Button timeChoice = new Button(hourDisplay + ":" + minutesDisplay);
-		timeChoice.setPrefSize(245, 25);
+		timeChoice.setPrefSize(173, 25);
 		timeChoice.setOnMouseClicked(e -> {
 			int timesIndex = 0;
         	for(String s : dailyScheduleInput) {    			
         		if(s.equals(hourDisplay + minutesDisplay)){
-        			System.out.println("Deleted");
         			choseTimesDisplay.getChildren().remove(timesIndex);
         			dailyScheduleInput.remove(hourDisplay+minutesDisplay);
         			break;
@@ -256,7 +265,7 @@ public class HandleMedInfoController {
         	if(dosageValue == 0) {
         		dosageLabel.setText("Dosage of Medication"+" **");
         	}
-        	if(!dosageUnit.equals("") && dosageUnit != null) {
+        	if(dosageUnit == null || dosageUnit.equals("")) {
         		dosageUnitLabel.setText("Dosage Unit"+" **");
         	}
         	if(weeklySchedInputString.equals("")) {
@@ -276,10 +285,47 @@ public class HandleMedInfoController {
 	 * @return indicates if the scene display will change to the main scene.
 	 */
 	public Boolean submitMedInfo() {
+		if(editMedId != -1) {
+			MedList.deleteMedicationFromList(MedList.retrieveMedById(editMedId));
+		}
 		if (checkValidInput()) {
 			MedList.addMedications(nameOfMed, dosageValue, dosageUnit, weeklySchedInputString, finalDailyScheduleInput);
 			return true;
 		} else return false;
+	}
+	
+	
+	public void editMedSetter(Medication target) {
+		
+		editMedId = target.getId();
+		
+		ArrayList<RadioButton> rbId = new ArrayList<RadioButton>();
+		rbId.add(sunSelect);
+		rbId.add(monSelect);
+		rbId.add(tuesSelect);
+		rbId.add(wedSelect);
+		rbId.add(thursSelect);
+		rbId.add(friSelect);
+		rbId.add(satSelect);
+		nameOfMedTextField.setText(target.getTradeName());
+		dosageOfMedTextField.setText("" + Float.parseFloat(target.getDosage().split(" ")[0]));
+		dosageUnitChoiceBox.setValue(target.getDosage().split(" ")[1]);
+		
+		for (int i = 0; i<=6; i++) {
+			if(target.getSchedule().get(0).get(i) != -1) {
+				rbId.get(i).setSelected(true);
+				weeklySchedInputString += i;
+			}
+		}
+		
+		for (int time : target.getSchedule().get(1)) {
+			// hourSpinnerValue minuteSpinnerValue
+			hourSpinnerValue.getValueFactory().setValue(time/100);
+			minuteSpinnerValue.getValueFactory().setValue(time%100);
+			generateChosenTimeDisplay();
+		}
+		hourSpinnerValue.getValueFactory().setValue(0);
+		minuteSpinnerValue.getValueFactory().setValue(0);
 	}
 
 }
