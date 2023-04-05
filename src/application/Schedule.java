@@ -1,6 +1,5 @@
 package application;
 
-import java.time.*;
 import java.util.*;
 
 /**
@@ -8,9 +7,6 @@ import java.util.*;
  */
 public class Schedule {
 
-	private static LocalDate currentDate = LocalDate.now();
-	private static LocalTime currentTime = LocalTime.now();
-	private static int today = currentDate.getDayOfWeek().getValue();	
 	private ArrayList<Integer> daysDue; 
 	private ArrayList<Integer> timesDue; 
 	private ArrayList<ArrayList<Boolean>> administrationStatusPerDose = new ArrayList<>();	// index 0 = administration status and 1 = missed status
@@ -117,52 +113,4 @@ public class Schedule {
 		daysDue = setDaysDue(weeklySchedule);
 	}
 
-	/**
-	 *Gets the current day of the week as an integer, where 0 represents Sunday and 6 represents Saturday.
-	 *@return An integer representing the current day of the week.
-	 */
-	public static int getTodaysDayAsNum() {
-		if(today == 7) {
-			return 0;
-		} else return today;
-	}
-
-	/**
-	 *Gets the current time as an integer, where the integer is in the format "HHMM".
-	 *@return An integer representing the current time.
-	 */
-	public static int getCurrentTimeAsInt() {
-		int timeAsInt = (currentTime.getHour() * 100) + currentTime.getMinute();
-		return timeAsInt;
-	}
-
-	/**
-	 *Converts an integer in the format "HHMM" to a string in the format "HH:MM".
-	 *@param timeAsInt An integer representing the time in the format "HHMM".
-	 *@return A string representing the time in the format "HH:MM", or "Invalid input" if the input is not valid.
-	 */
-	public static String getTimeAsString(int timeAsInt) {
-
-		String hourDisplay;
-		String minutesDisplay;
-		if (timeAsInt < 0 || timeAsInt > 2400) {
-			return "Invalid input";
-		}
-		int hours = timeAsInt / 100;
-		int minutes = timeAsInt % 100;
-
-		if(minutes >= 60) {
-			hours+=1;
-			minutes-=60;
-		}
-		if (hours < 10) {
-			hourDisplay = "0" + hours;
-		} else hourDisplay = "" + hours;
-
-		if (minutes < 10) {
-			minutesDisplay = "0" + minutes;
-		} else minutesDisplay = "" + minutes;
-
-		return (hourDisplay + ":" + minutesDisplay);
-	}
 }

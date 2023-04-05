@@ -32,7 +32,7 @@ import javafx.stage.Stage;
  * switching between days to view medication schedules and
  * opening the window for adding new medications, 
  */
-public class MainDisplayPaneController {
+public class MainDisplayPaneController extends ScheduleElements {
 
 
 	@FXML
@@ -52,8 +52,6 @@ public class MainDisplayPaneController {
 
 	@FXML
 	private VBox dailyMedsDisplay;
-
-	private int daySelected;
 
 	/**
 	 * Generates a styled button displaying all the parameters to the users for necessary information.
@@ -114,7 +112,7 @@ public class MainDisplayPaneController {
 		Pane spacer = new Pane();
 		spacer.setPrefSize(200, 75);
 
-		Label medDoseTimeDisplay = new Label(Schedule.getTimeAsString(singleDoseTime));
+		Label medDoseTimeDisplay = new Label(getTimeAsString(singleDoseTime));
 		medDoseTimeDisplay.setPrefWidth(100);
 		medDoseTimeDisplay.setFont(new Font(18));
 		HBox.setMargin(medDoseTimeDisplay, new Insets(0, 10, 0, 0));
@@ -189,8 +187,7 @@ public class MainDisplayPaneController {
 	 */
 	public void renderMedList(int selectedDay) {
 
-		daySelected = selectedDay;
-		ArrayList<Medication> listToRender = Display.dailyMedicationList(selectedDay);
+		ArrayList<Medication> listToRender = dailyMedicationList(selectedDay);
 		ArrayList<Integer> timeTracker = new ArrayList<Integer>();
 		timeTracker.add(2400);	// only used as an outlier value to trigger the for loops for chronological sorting
 
@@ -206,10 +203,10 @@ public class MainDisplayPaneController {
 				
 				i.getAdministrationRecord().get(j).set(1, false);
 
-				if(selectedDay < Schedule.getTodaysDayAsNum()) {
+				if(selectedDay < getTodaysDayAsNum()) {
 					//checks that the med has not been administered and the current time is later than the dose time.
 					i.getAdministrationRecord().get(j).set(1, true);
-				} else if (selectedDay == Schedule.getTodaysDayAsNum()) {
+				} else if (selectedDay == getTodaysDayAsNum()) {
 					i.updateMissedMeds();
 				}
 
